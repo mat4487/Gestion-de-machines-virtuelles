@@ -1,0 +1,15 @@
+Logiciels a utilisés:
+	-Ganeti http://docs.ganeti.org/ganeti/master/html/install.html
+	-OpenXenManager http://sourceforge.net/projects/openxenmanager/
+	-virt-manager http://virt-manager.org/
+	-Archipel https://github.com/primalmotion/archipel/wiki
+
+Résultats attendus :
+	-guide d'installation et d'utilisation synthétique
+	-scripts
+	-démos à grande échelles sur grid5k
+	-avis critique: quels outils recommanderiez-vous pour quels usages?
+		-une seule machine avec plusieurs VMs?
+		-une 50aine de machines hébergzants des VMs?
+		-différents critères: facilité de mise en place,d'utilisation, performances,paddage à l'échelle...
+Ouverture possible vers des solutions de cloud privé(OpenNebula,OpenStack etc...)
