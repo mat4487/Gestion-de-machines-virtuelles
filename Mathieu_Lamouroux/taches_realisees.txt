@@ -1,0 +1,7 @@
+Mardi 24 Janvier:
+-création du dépot sur github
+-découverte de git
+
+Jeudi 26 Janvier 2012:
+-début de rédaction du rapport hebdomadaire
+-connexion à grid5000
