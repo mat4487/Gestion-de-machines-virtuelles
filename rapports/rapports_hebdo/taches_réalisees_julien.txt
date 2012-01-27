@@ -1,0 +1,5 @@
+mardi 24 janvier 2012:
+	-comprendre grid5k
+Jeudi 25 janvier 2012:
+      	-tutoriel :Understanding Grid'5000
+	-tutoriel :Cluster experiment
