@@ -1,0 +1,178 @@
+root      1965  0.0  0.0   5928   620 tty1     Ss+  11:19   0:00 /sbin/getty 384
+root      1966  0.0  0.0   5928   624 tty2     Ss+  11:19   0:00 /sbin/getty 384
+root      1967  0.0  0.0   5928   624 tty3     Ss+  11:19   0:00 /sbin/getty 384
+root      1968  0.0  0.0   5928   624 tty4     Ss+  11:19   0:00 /sbin/getty 384
+root      1969  0.0  0.0   5928   624 tty5     Ss+  11:19   0:00 /sbin/getty 384
+root      1970  0.0  0.0   5928   624 tty6     Ss+  11:19   0:00 /sbin/getty 384
+root      1971  0.0  0.0   5928   632 ttyS0    Ss+  11:19   0:00 /sbin/getty -L
+postfix   2546  0.0  0.0  33380  2204 ?        S    12:58   0:00 pickup -l -t fi
+oar       2670  0.0  0.0  38784  4768 ?        S    13:23   0:00 perl - 351753 O
+root      2671  0.0  0.0  68288  3312 ?        Ss   13:23   0:00 sshd: oar@pts/0
+oar       2672  0.0  0.0  10608  1392 pts/0    Ss   13:23   0:00 /bin/bash -c ba
+10418     2687  0.0  0.0  10612  1380 pts/0    S    13:23   0:00 bash --noprofil
+10418     2690  0.0  0.0  11012  1844 pts/0    S    13:23   0:00 -bash
+10418     2696  0.0  0.0   8132  1024 pts/0    R+   13:26   0:00 ps aux
+mlamouroux@griffon-77:~$ who
+oar      pts/0        2012-01-27 13:23 (fnancy.nancy.grid5000.fr)
+mlamouroux@griffon-77:~$ id
+uid=10418(mlamouroux) gid=8000(users) groups=8000(users),9004(user),14000(nancy)
+mlamouroux@griffon-77:~$ ls
+hello  hello.tgz  public
+mlamouroux@griffon-77:~$ cd hello
+mlamouroux@griffon-77:~/hello$ run
+runcon       run-mailcap  run-parts    
+mlamouroux@griffon-77:~/hello$ run
+runcon       run-mailcap  run-parts    
+mlamouroux@griffon-77:~/hello$ run
+runcon       run-mailcap  run-parts    
+mlamouroux@griffon-77:~/hello$ ls
+hello_mpi  hello_mpi.c	helloworld  run_hello_mpi
+mlamouroux@griffon-77:~/hello$ ./run_hello_mpi 
+INFO: 8 cpu(s) will be used for this example
+INFO: /usr/bin/mpirun will be used
+Hello world from process (1) of (8) running on griffon-77.nancy.grid5000.fr
+ (1) : I'm tired. I'm going to sleep a bit.
+Hello world from process (2) of (8) running on griffon-77.nancy.grid5000.fr
+ (2) : I'm tired. I'm going to sleep a bit.
+Hello world from process (3) of (8) running on griffon-77.nancy.grid5000.fr
+ (3) : I'm tired. I'm going to sleep a bit.
+Hello world from process (4) of (8) running on griffon-77.nancy.grid5000.fr
+ (4) : I'm tired. I'm going to sleep a bit.
+Hello world from process (5) of (8) running on griffon-77.nancy.grid5000.fr
+ (5) : I'm tired. I'm going to sleep a bit.
+Hello world from process (6) of (8) running on griffon-77.nancy.grid5000.fr
+ (6) : I'm tired. I'm going to sleep a bit.
+Hello world from process (7) of (8) running on griffon-77.nancy.grid5000.fr
+ (7) : I'm tired. I'm going to sleep a bit.
+Hello world from process (8) of (8) running on griffon-77.nancy.grid5000.fr
+ (8) : I'm tired. I'm going to sleep a bit.
+ (5) : Mmmm... What? Ok, It was short but good :-)
+ (7) : Mmmm... What? Ok, It was short but good :-)
+ (4) : Mmmm... What? Ok, It was short but good :-)
+ (1) : Mmmm... What? Ok, It was short but good :-)
+ (2) : Mmmm... What? Ok, It was short but good :-)
+ (3) : Mmmm... What? Ok, It was short but good :-)
+ (8) : Mmmm... What? Ok, It was short but good :-)
+ (6) : Mmmm... What? Ok, It was short but good :-)
+mlamouroux@griffon-77:~/hello$ ls
+hello_mpi  hello_mpi.c	helloworld  run_hello_mpi
+mlamouroux@griffon-77:~/hello$ cd ..
+mlamouroux@griffon-77:~$ ls
+mlamouroux@fnancy:~$ kadeploy3 -e lenny-x64-base -m griffon-77.nancy.grid5000.fr
+You do not have the rights to deploy on the node griffon-77.nancy.grid5000.fr:/dev/sda3
+ERROR: You do not have the right to deploy on all the nodes
+mlamouroux@fnancy:~$ echo $OAR_FILE_NODES
+
+mlamouroux@fnancy:~$ echo $OAR_NODE_FILE
+
+mlamouroux@fnancy:~$ oarsub -C 351753
+/!\ ERROR : the job 351753 is not running. Its current state is Terminated.
+mlamouroux@fnancy:~$ oarsub -l -t deploy -l'{rconsole="YES"}/nodes=1,walltime=1'
+/!\ Cannot recognize the resource description : -t
+mlamouroux@fnancy:~$ oarsub -l -t deploy -l '{rconsole="YES"}/nodes=1,walltime=1'
+/!\ Cannot recognize the resource description : -t
+mlamouroux@fnancy:~$ oarsub -I
+[ADMISSION RULE] Set default walltime to 3600.
+[ADMISSION RULE] Modify resource description with type constraints
+Generate a job key...
+OAR_JOB_ID=351759
+Interactive mode : waiting...
+Starting...
+
+Connect to OAR job 351759 via the node griffon-85.nancy.grid5000.fr
+mlamouroux@griffon-85:~$ logout
+Connection to griffon-85.nancy.grid5000.fr closed.
+Disconnected from OAR job 351759
+mlamouroux@fnancy:~$ oarsub -I -t deploy -l '{rconsole="YES"}/nodes=1,walltime=3'
+[ADMISSION RULE] Modify resource description with type constraints
+Generate a job key...
+OAR_JOB_ID=351761
+Interactive mode : waiting...
+Starting...
+
+Connect to OAR job 351761 via the node fnancy.nancy.grid5000.fr
+mlamouroux@fnancy:~$ cat $OAR_FILE_NODES
+griffon-87.nancy.grid5000.fr
+griffon-87.nancy.grid5000.fr
+griffon-87.nancy.grid5000.fr
+griffon-87.nancy.grid5000.fr
+griffon-87.nancy.grid5000.fr
+griffon-87.nancy.grid5000.fr
+griffon-87.nancy.grid5000.fr
+griffon-87.nancy.grid5000.fr
+mlamouroux@fnancy:~$ 
+mlamouroux@fnancy:~$ kadeploy3 -e lenny-x64-base -m griffon-87.nancy.grid5000.fr 
+Launching a deployment ...
+Performing a SetDeploymentEnvUntrusted step on the nodes: griffon-87.nancy.grid5000.fr
+--- switch_pxe (griffon cluster)
+  >>>  griffon-87.nancy.grid5000.fr
+--- reboot (griffon cluster)
+  >>>  griffon-87.nancy.grid5000.fr
+  *** A soft reboot will be performed on the nodes griffon-87.nancy.grid5000.fr
+--- wait_reboot (griffon cluster)
+  >>>  griffon-87.nancy.grid5000.fr
+
+--- send_key_in_deploy_env (griffon cluster)
+  >>>  griffon-87.nancy.grid5000.fr
+  *** No key has been specified
+--- create_partition_table (griffon cluster)
+  >>>  griffon-87.nancy.grid5000.fr
+--- format_deploy_part (griffon cluster)
+  >>>  griffon-87.nancy.grid5000.fr
+--- mount_deploy_part (griffon cluster)
+  >>>  griffon-87.nancy.grid5000.fr
+--- format_tmp_part (griffon cluster)
+  >>>  griffon-87.nancy.grid5000.fr
+  *** Bypass the format of the tmp part
+--- format_swap_part (griffon cluster)
+  >>>  griffon-87.nancy.grid5000.fr
+  *** Bypass the format of the swap part
+Performing a BroadcastEnvKastafior step on the nodes: griffon-87.nancy.grid5000.fr
+--- send_environment (griffon cluster)
+  >>>  griffon-87.nancy.grid5000.fr
+  *** Broadcast time: 46 seconds
+--- manage_admin_post_install (griffon cluster)
+  >>>  griffon-87.nancy.grid5000.fr
+--- manage_user_post_install (griffon cluster)
+  >>>  griffon-87.nancy.grid5000.fr
+--- send_key (griffon cluster)
+  >>>  griffon-87.nancy.grid5000.fr
+--- install_bootloader (griffon cluster)
+  >>>  griffon-87.nancy.grid5000.fr
+Performing a BootNewEnvClassical step on the nodes: griffon-87.nancy.grid5000.fr
+--- switch_pxe (griffon cluster)
+  >>>  griffon-87.nancy.grid5000.fr
+--- umount_deploy_part (griffon cluster)
+  >>>  griffon-87.nancy.grid5000.fr
+--- reboot_from_deploy_env (griffon cluster)
+  >>>  griffon-87.nancy.grid5000.fr
+--- set_vlan (griffon cluster)
+  >>>  griffon-87.nancy.grid5000.fr
+  *** Bypass the VLAN setting
+--- wait_reboot (griffon cluster)
+  >>>  griffon-87.nancy.grid5000.fr
+Nodes correctly deployed on cluster griffon
+griffon-87.nancy.grid5000.fr
+mlamouroux@fnancy:~$ 
+mlamouroux@fnancy:~$ ssh root@griffon-87.nancy.grid5000.fr
+Warning: Permanently added 'griffon-87.nancy.grid5000.fr,172.16.65.87' (RSA) to the list of known hosts.
+root@griffon-87.nancy.grid5000.fr's password: 
+Linux griffon-87.nancy.grid5000.fr 2.6.26-2-amd64 #1 SMP Wed Sep 21 03:36:44 UTC 2011 x86_64
+
+Lenny-x64-base-2.4 (Image based on Debian Lenny for AMD64/EM64T)
+  Maintained by support-staff <support-staff@lists.grid5000.fr>
+
+Applications
+  * Text: Vim, nano
+  * Script: Perl, Python, Ruby
+  (Type "dpkg -l" to see complete installed package list)
+
+Misc
+  * SSH has X11 forwarding enabled
+  * Max open files: 65536
+
+More details: https://www.grid5000.fr/mediawiki/index.php/Lenny-x64-base-2.4
+griffon-87:~# who
+root     pts/0        2012-01-27 14:15 (fnancy.nancy.grid5000.fr)
+griffon-87:~# 
+
