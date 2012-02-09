@@ -25,4 +25,4 @@ root@griffon-61.nancy.grid5000.fr
 
 ssh root@node.site.grid5000.fr
 
-
+http://wiki.xensource.com/xenwiki/XenNetworking
