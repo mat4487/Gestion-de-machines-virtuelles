@@ -1,0 +1,21 @@
+http://code.google.com/p/ganeti/
+
+Tuto d'installation :
+http://docs.ganeti.org/ganeti/current/html/install.html
+
+
+Installé Ganeti :
+
+/etc/hosts doit resembler à ça :
+
+127.0.0.1       localhost
+192.0.2.1     node1.example.com node1
+
+ 192.0.2.1 with your node’s address. Also, the file /etc/hostname which configures the hostname of the system should contain node1.example.com and not just node1 (you need to run the command /etc/init.d/hostname.sh start after changing the file) .
+
+En remplacent 192.0.2.1 par l'adresse du node.
+Le fichier /etc/hostname doit contenir node1.exemple.com et pas seulement node1 (Il faudra executer la commance /etc/init.d/hostnames.sh start).
+
+
+
+

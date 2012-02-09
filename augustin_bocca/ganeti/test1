@@ -1,0 +1,60 @@
+ifconfig :
+
+eth0      Link encap:Ethernet  HWaddr 00:e0:81:b2:c1:e2  
+          inet addr:172.16.65.61  Bcast:172.16.79.255  Mask:255.255.240.0
+          inet6 addr: fe80::2e0:81ff:feb2:c1e2/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:168987 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:17010 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:139709217 (133.2 MiB)  TX bytes:1355566 (1.2 MiB)
+
+ib0       Link encap:UNSPEC  HWaddr 80-00-00-48-FE-80-00-00-00-00-00-00-00-00-00-00  
+          inet addr:172.18.65.61  Bcast:172.18.79.255  Mask:255.255.240.0
+          UP BROADCAST RUNNING MULTICAST  MTU:65520  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:256 
+          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:16436  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
+
+peth0     Link encap:Ethernet  HWaddr 00:e0:81:b2:c1:e2  
+          inet6 addr: fe80::2e0:81ff:feb2:c1e2/64 Scope:Link
+          UP BROADCAST RUNNING PROMISC MULTICAST  MTU:1500  Metric:1
+          RX packets:169360 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:17037 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:142290196 (135.6 MiB)  TX bytes:1358170 (1.2 MiB)
+          Interrupt:18 Memory:dca00000-dca20000 
+
+
+
+
+Alors dans /etc/hosts :
+
+127.0.0.1 localhost
+172.18.65.61 griffon-61.grid5000.fr
+# The following lines are desirable for IPv6 capable hosts
+::1     ip6-localhost ip6-loopback
+fe00::0 ip6-localnet
+ff00::0 ip6-mcastprefix
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+ff02::3 ip6-allhosts1.2.3.4    domU domU
+~                                                                                                                                          
+~                                                
+cat /etc/hostname :
+
+griffon-61.nancy.grid5000.fr
+
+/etc/init.d/hostname.sh start
+
+
