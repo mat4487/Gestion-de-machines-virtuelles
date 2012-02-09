@@ -16,3 +16,13 @@ ssh abocca@access.grid5000.fr
 
 Changer de site :
 access.nancy.grid5000.fr
+
+LAncer les scripts pour deployer les environemnts.
+
+se connecter à un environement :
+
+root@griffon-61.nancy.grid5000.fr
+
+ssh root@node.site.grid5000.fr
+
+
