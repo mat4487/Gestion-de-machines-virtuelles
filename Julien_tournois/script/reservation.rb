@@ -20,8 +20,7 @@ loop do
     temps = gets
     puts "\nVous avez reserve #{noeuds} noeuds pour une duree de #{temps}"
     puts "-----------------------------------------"
-    exec "oarsub -I -t deploy -l nodes=#{noeuds},walltime=#{temps}"
-    oarstat | grep $USER |tail -1 | cut -d ' ' -f1`
+    exec "oarsub -I -t deploy -n'virtu' -l slash_22=1+nodes=#{noeuds},walltime=#{temps}"
     break;
   end
 end

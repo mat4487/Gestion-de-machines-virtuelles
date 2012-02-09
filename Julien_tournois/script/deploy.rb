@@ -28,7 +28,10 @@ loop do
     version = gets.chomp
     version = debian+version
     puts version
-    exec "kadeploy3 -e #{version} -f $OAR_FILE_NODES"
+    exec"kadeploy3 -e #{version} -f $OAR_FILE_NODES -k $HOME/.ssh/id_rsa.pub"
     break;
   end
 end
+
+
+
