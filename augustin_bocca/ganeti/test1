@@ -9,36 +9,6 @@ eth0      Link encap:Ethernet  HWaddr 00:e0:81:b2:c1:e2
           collisions:0 txqueuelen:0 
           RX bytes:139709217 (133.2 MiB)  TX bytes:1355566 (1.2 MiB)
 
-ib0       Link encap:UNSPEC  HWaddr 80-00-00-48-FE-80-00-00-00-00-00-00-00-00-00-00  
-          inet addr:172.18.65.61  Bcast:172.18.79.255  Mask:255.255.240.0
-          UP BROADCAST RUNNING MULTICAST  MTU:65520  Metric:1
-          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
-          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
-          collisions:0 txqueuelen:256 
-          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
-
-lo        Link encap:Local Loopback  
-          inet addr:127.0.0.1  Mask:255.0.0.0
-          inet6 addr: ::1/128 Scope:Host
-          UP LOOPBACK RUNNING  MTU:16436  Metric:1
-          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
-          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
-          collisions:0 txqueuelen:0 
-          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
-
-peth0     Link encap:Ethernet  HWaddr 00:e0:81:b2:c1:e2  
-          inet6 addr: fe80::2e0:81ff:feb2:c1e2/64 Scope:Link
-          UP BROADCAST RUNNING PROMISC MULTICAST  MTU:1500  Metric:1
-          RX packets:169360 errors:0 dropped:0 overruns:0 frame:0
-          TX packets:17037 errors:0 dropped:0 overruns:0 carrier:0
-          collisions:0 txqueuelen:1000 
-          RX bytes:142290196 (135.6 MiB)  TX bytes:1358170 (1.2 MiB)
-          Interrupt:18 Memory:dca00000-dca20000 
-
-
-
-
-Alors dans /etc/hosts :
 
 127.0.0.1 localhost
 172.18.65.61 griffon-61.grid5000.fr
@@ -130,11 +100,26 @@ apt-get install lvm2 ssh bridge-utils iproute iputils-arping ndisc6 python pytho
 
 You also need to copy the file doc/examples/ganeti.initd from the source archive to /etc/init.d/ganeti and register it with your distribution’s startup scripts, for example in Debian:
 
+cp doc/examples/ganeti.initd /etc/init.d/ganeti
+chmod +x /etc/init.d/ganeti
 update-rc.d ganeti defaults 20 80
-
 
 apt-get install debootstrap dump kpartx
 
+./configure
+make
+make install
+
 Ganeti est installé mais il maintenant ajouter un node au cluster :
+
+Dans /etc/hosts ajouter la ligne :
+
+10.144.0.254 cluster1
+
+Il faut donner une adresse IP au cluster.
+
+initialiser le cluster :
+
+gnt-cluster init --no-drbd-storage cluster1
 
 
