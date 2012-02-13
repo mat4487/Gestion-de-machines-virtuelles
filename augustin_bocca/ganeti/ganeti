@@ -9,7 +9,7 @@ apt-get install ganeti2 ganeti-htools ganeti-instance-debootstrap
 Dans /etc/host ajouter l'adresse IP du node avec le nom de l'host ainsi que l'adresse du cluster :
 
 10.144.64.1 cluster1
-172.16.65.56 griffon-56.nancy.grid5000.fr griffon-56
+172.16.65.56 griffon-56.nancy.grid5000.fr
 
 Dans /boot/ creer des liens symboliques :
 
@@ -23,7 +23,7 @@ umout /dev/sda5
 pvcreate /dev/sda5
 vgcreate xenvg /dev/sda5
 
-Dans /ect/network/interface renplacer le paragraphe de eth0 par celle du brige xen-br0 :
+Dans /ect/network/interface remplacer le paragraphe de eth0 par celle du brige xen-br0 :
 
 auto xen-br0
 iface xen-br0 inet static
