@@ -1,66 +1,53 @@
-http://code.google.com/p/ganeti/
+Passer en squeeze pour une version plus recente.
 
-Tuto d'installation :
-http://docs.ganeti.org/ganeti/current/html/install.html
+apt-get update && apt dist-upgrade
 
+installer ganeti :
 
-Installé Ganeti :
+apt-get install ganeti2 ganeti-htools ganeti-instance-debootstrap
 
-/etc/hosts doit resembler à ça :
+Dans /etc/host ajouter l'adresse IP du node avec le nom de l'host ainsi que l'adresse du cluster :
 
-127.0.0.1       localhost
-192.0.2.1     node1.example.com node1
+10.144.64.1 cluster1
+172.16.65.56 griffon-56.nancy.grid5000.fr griffon-56
 
-Le fichier /etc/hostname doit contenir node1.exemple.com et pas seulement node1 (Il faudra executer la commance /etc/init.d/hostnames.sh start).
+Dans /boot/ creer des liens symboliques :
 
-
-------------------------------------------------------------------------------------------------------------------------
-Xen settings
-
-It’s recommended that dom0 is restricted to a low amount of memory (512MiB or 1GiB is reasonable) and that memory ballooning is disabled in the file /etc/xen/xend-config.sxp by setting the value dom0-min-mem to 0, like this:
-
-(dom0-min-mem 0)
-
-It is recommended that you disable xen’s automatic save of virtual machines at system shutdown and subsequent restore of them at reboot. To obtain this make sure the variable XENDOMAINS_SAVE in the file /etc/default/xendomains is set to an empty value.
-
-========================================================================================================================
-
-Debian
-
-After installation of the xen-linux-system package, you need to run (replace the exact version number with the one you have):
-
-cd /boot
-ln -s vmlinuz-2.6.26-1-xen-amd64 vmlinuz-2.6-xenU
-ln -s initrd.img-2.6.26-1-xen-amd64 initrd-2.6-xenU
-
-------------------------------------------------------------------------------------------------------------------------
-Configuring LVM
-
-Mandatory on all nodes.
-
-The volume group is required to be at least 20GiB.
-
-If you haven’t configured your LVM volume group at install time you need to do it before trying to initialize the Ganeti cluster. This is done by formatting the devices/partitions you want to use for it and then adding them to the relevant volume group:
-
-pvcreate /dev/sda3
-vgcreate xenvg /dev/sda3
-
-INSTALATION DE GANETI :
-
-Il faut installer les paquets suivants :
-
-apt-get install lvm2 ssh bridge-utils iproute iputils-arping ndisc6 python python-pyopenssl openssl python-pyparsing python-simplejson python-pyinotify python-pycurl socat
-
-tar xvzf ganeti-2.0.0.tar.gz
-cd ganeti-2.0.0
-./configure --localstatedir=/var --sysconfdir=/etc
-make
-make install
-mkdir /srv/ganeti/ /srv/ganeti/os /srv/ganeti/export
+ln -s vmlinuz-2.6.32-5-xen-amd64 vmlinuz-2.6.xenU
+ln -s initrd.img-2.6.32-5-xen-amd64 initrd.img-2.6.xenU
 
 
-u also need to copy the file doc/examples/ganeti.initd from the source archive to /etc/init.d/ganeti and register it with your distribution’s startup scripts, for example in Debian:
+Creer un LVM d'au moins 20Go (Obligatoire) :
 
-update-rc.d ganeti defaults 20 80
+umout /dev/sda5
+pvcreate /dev/sda5
+vgcreate xenvg /dev/sda5
 
-apt-get install debootstrap dump kpartx
+Dans /ect/network/interface renplacer le paragraphe de eth0 par celle du brige xen-br0 :
+
+auto xen-br0
+iface xen-br0 inet static
+ address 172.16.65.56 #Adresse du node
+ netmask 255.255.240.0 
+ network 172.16.64.0
+ broadcast 172.16.79.255
+ gateway 10.144.64.254
+ bridge_ports eth0
+ bridge_stp off
+ bridge_fd 0
+
+Initialiser le cluster avec ganeti :
+gnt-custer init --no-drbd-storage cluster1
+
+ajouter le node
+gnt-node add griffon-56.nancy.grid5000.fr
+
+et verifier avec :
+gnt-node list
+
+Qui devrait renvoyer quelque chose comme cela :
+
+Node                         DTotal  DFree MTotal MNode MFree Pinst Sinst
+griffon-56.nancy.grid5000.fr 283.2G 283.2G      -     -     -     0     0
+
+
