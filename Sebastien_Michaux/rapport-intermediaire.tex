@@ -13,27 +13,27 @@
 \section*{Machine virtuelle}
 
 
-\paragraph{Une machine virtuelle est un conteneur isolÃ© capable d\textquoteright{}exÃ©cuter
-ses propres systÃ¨me d\textquoteright{}exploitation et applications.
+\paragraph{Une machine virtuelle est un conteneur isolé capable d\textquoteright{}exécuter
+ses propres système d\textquoteright{}exploitation et applications.
 Une machine virtuelle se comporte exactement comme un ordinateur physique
-et contient ses propres processeur, mÃ©moire RAM, disque dur et carte
-d\textquoteright{}interface rÃ©seau virtuels.Une machine virtuelle
-a pour but de gÃ©nÃ©rer sur une mÃªme machine un ou plusieurs environnements
-d'exÃ©cution applicative. On en distingue deux types d'application
+et contient ses propres processeur, mémoire RAM, disque dur et carte
+d\textquoteright{}interface réseau virtuels.Une machine virtuelle
+a pour but de générer sur une même machine un ou plusieurs environnements
+d'exécution applicative. On en distingue deux types d'application
 : d'une part la virtualisation par le biais d'un hyperviseur jouant
-le rÃ´le d'Ã©mulateur de systÃ¨me (PC ou serveur), d'autre part la virtualisation
+le rôle d'émulateur de système (PC ou serveur), d'autre part la virtualisation
 applicative qui permet de faire tourner un application sur un poste
-client quelque soit le systÃ¨me sous-jacent. }
+client quelque soit le système sous-jacent. }
 
 
 \subsection{Hyperviseur }
 
 
-\paragraph{La machine virtuelle avec hyperviseur est utilisÃ©e pour gÃ©nÃ©rer au
-dessus d'un systÃ¨me d'exploitation serveur une couche logicielle sous
-la forme d'un Ã©mulateur permettant de crÃ©er plusieurs environnements
-d'exÃ©cution serveur. Cet Ã©mulateur se place comme un niveau supplÃ©mentaire
-qui se greffe sur le systÃ¨me d'origine.}
+\paragraph{La machine virtuelle avec hyperviseur est utilisée pour générer au
+dessus d'un système d'exploitation serveur une couche logicielle sous
+la forme d'un émulateur permettant de créer plusieurs environnements
+d'exécution serveur. Cet émulateur se place comme un niveau supplémentaire
+qui se greffe sur le système d'origine.}
 
 
 \section*{Enjeux de la virtualisation}
@@ -43,38 +43,67 @@ qui se greffe sur le systÃ¨me d'origine.}
 pas couverts.}
 
 
-\paragraph{Au niveau de la sÃ©curitÃ©, les entreprises souhaiteraient isoler les
-services sur des serveurs diffÃ©rents. Pour la maintenance, il serait
-utilser d'amÃ©liorer des services tels que la disponibilitÃ©, la migration,
-la redondance,la flexibilitÃ© ou le temps de rÃ©ponse. Il serait Ã©galement
-bienvenu de tester, dÃ©lÃ©guer l\textquoteright{}administration d\textquoteright{}un
-systÃ¨me ...}
+\paragraph{Au niveau de la sécurité, les entreprises souhaiteraient isoler les
+services sur des serveurs différents. Pour la maintenance, il serait
+utilser d'améliorer des services tels que la disponibilité, la migration,
+la redondance,la flexibilité ou le temps de réponse. Il serait également
+bienvenu de tester, déléguer l\textquoteright{}administration d\textquoteright{}un
+système ...}
 
 
-\paragraph{Une des solutions pour rÃ©pondre Ã  ces besoins serait d\textquoteright{}acquÃ©rir
+\paragraph{Une des solutions pour répondre à ces besoins serait d\textquoteright{}acquérir
 davantage de plateformes de travail.}
 
 
 \paragraph{La multiplications des serveurs pose cependant un certain nombre
-de problÃ¨me, augmenter sans cesse son parc informatique est impossible
+de problème, augmenter sans cesse son parc informatique est impossible
 pour plusieurs raison : }
 \begin{itemize}
-\item Tout d'abord au niveau Ã©cologie cela entrainerait un surplus de dÃ©chets
-Ã©lectronique,une consommation d'energie directe et de l'Ã©nergie utilisÃ©e
+\item Tout d'abord au niveau écologie cela entrainerait un surplus de déchets
+électronique,une consommation d'energie directe et de l'énergie utilisée
 pour refroidir les salles serveur.
-\item Au niveau de la surface utilisÃ©e, les salles machine seraient vite
-encombrÃ©es, puis apparaitra des problÃ¨mes tel que la nuisance sonore,
+\item Au niveau de la surface utilisée, les salles machine seraient vite
+encombrées, puis apparaitra des problèmes tel que la nuisance sonore,
 le manque de puissance pour alimenter les salles serveur. 
-\item Au niveau Ã©conomique les couts d'achat, de recyclage, de fonctionnement,
-de maintenance seraient trop chÃ¨re. La mise en place de serveur de
-virtualisation est une solution pour rÃ©soudre ces problÃ¨mes.
+\item Au niveau économique les couts d'achat, de recyclage, de fonctionnement,
+de maintenance seraient trop chère. La mise en place de serveur de
+virtualisation est une solution pour résoudre ces problèmes.
 \end{itemize}
 
-\paragraph{Le but de la virtualisation est de donner un environnement systÃ¨me
-au programme pour qu\textquoteright{}il croie Ãªtre dans un environnement
-matÃ©riel. Pour cela, une machine virtuelle est utilisÃ©e. Ainsi, plusieurs
-environnements d\textquoteright{}exÃ©cution sont crÃ©Ã©s sur une seule
-machine, dont chacun Ã©mule la machine hÃ´te. L\textquoteright{}utilisateur
-pense possÃ©der un ordinateur complet pour chaque systÃ¨me d\textquoteright{}exploitation
-alors que toutes les machines virtuelles sont isolÃ©es entre elles.}
+\paragraph{Le but de la virtualisation est de donner un environnement système
+au programme pour qu\textquoteright{}il croie être dans un environnement
+matériel. Pour cela, une machine virtuelle est utilisée. Ainsi, plusieurs
+environnements d\textquoteright{}exécution sont créés sur une seule
+machine, dont chacun émule la machine hôte. L\textquoteright{}utilisateur
+pense posséder un ordinateur complet pour chaque système d\textquoteright{}exploitation
+alors que toutes les machines virtuelles sont isolées entre elles.}
+
+
+\section{Histoire de la virtualisation}
+
+
+\paragraph{La virtualisation est un concept qui a été mis au point pour la première
+fois dans les années 1960 pour permettre la partition d\textquoteright{}une
+vaste gamme de matériel mainframe et optimiser l'utilisation du matériel.
+De nos jours, les ordinateurs basés sur l'architecture x86 sont confrontés
+aux mêmes problèmes de rigidité et de sous-utilisation que les mainframes
+dans les années 1960. VMware a inventé la virtualisation pour la plate-forme
+x86 dans les années 1990 afin de répondre notamment aux problèmes
+de sous-utilisation, et a surmonté les nombreux défis émergeant au
+cours de ce processus. Aujourd'hui, VMware est devenu le leader mondial
+de la virtualisation x86 avec plus de 190 000 clients, dont la totalité
+des membres du classement Fortune 100. }
+
+
+\subsection{Au commencement, la virtualisation des mainframes}
+
+
+\paragraph{La virtualisation a été mise en ½uvre pour la première fois il y
+a plus de 30 ans par IBM pour partitionner logiquement des mainframes
+en machines virtuelles distinctes. Ces partitions permettaient un
+traitement « multitâche », à savoir l\textquoteright{}exécution simultanée
+de plusieurs applications et processus. Étant donné que les mainframes
+consommaient beaucoup de ressources en même temps, le partitionnement
+constituait un moyen naturel de tirer pleinement parti de l\textquoteright{}investissement
+matériel.}
 \end{document}
