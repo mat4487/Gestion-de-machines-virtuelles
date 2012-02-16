@@ -26,7 +26,7 @@ applicative qui permet de faire tourner un application sur un poste
 client quelque soit le système sous-jacent. }
 
 
-\subsection{Hyperviseur }
+\subsection*{Hyperviseur }
 
 
 \paragraph{La machine virtuelle avec hyperviseur est utilisée pour générer au
@@ -79,7 +79,7 @@ pense posséder un ordinateur complet pour chaque système d\textquoteright{}explo
 alors que toutes les machines virtuelles sont isolées entre elles.}
 
 
-\section{Histoire de la virtualisation}
+\section*{Histoire de la virtualisation}
 
 
 \paragraph{La virtualisation est un concept qui a été mis au point pour la première
@@ -95,7 +95,7 @@ de la virtualisation x86 avec plus de 190 000 clients, dont la totalité
 des membres du classement Fortune 100. }
 
 
-\subsection{Au commencement, la virtualisation des mainframes}
+\subsection*{Au commencement, la virtualisation des mainframes}
 
 
 \paragraph{La virtualisation a été mise en ½uvre pour la première fois il y
@@ -106,4 +106,87 @@ de plusieurs applications et processus. Étant donné que les mainframes
 consommaient beaucoup de ressources en même temps, le partitionnement
 constituait un moyen naturel de tirer pleinement parti de l\textquoteright{}investissement
 matériel.}
+
+
+\part*{Grid5000 environnement}
+
+
+\section*{La plateforme}
+
+
+\paragraph{Grid'5000 est un instrument scientifique destiné à soutenir la recherche
+axée sur l'expérience dans tous les domaines de l'informatique liés
+à la parallèle, l'informatique à grande échelle ou distribuée et mise
+en réseau.}
+
+
+\section*{COMPOSITION DE GRID5000}
+
+
+\subsection*{SITE }
+
+
+\paragraph{Un site fait référence à la zone géographique du laboratoire d'hébergement
+des machines. Presque tous les sites de Grid'5000 hébergent plus d'un
+cluster.}
+
+
+\paragraph{Historiquement, Grid'5000 matériel a été acquis par étapes progressives
+sur chacun des sites, formant ainsi des grappes à chaque acquisition.}
+
+
+\subsection*{CLUSTER }
+
+
+\paragraph{Un cluster est un ensemble d'ordinateurs qui présentent des propriétés
+homogènes.Un cluster est connecté à une architecture réseau donné
+et est physiquement installée sur un site donné.Tous les clusters
+à partir d'un site donné s'appuyer sur une infrastructure de réseau
+commune.}
+
+
+\subsection*{NODE }
+
+
+\paragraph{Un ordinateur qui fait partie d'un cluster est appelé un n½ud. Nous
+pouvons ainsi définir deux types de n½uds:}
+\begin{itemize}
+\item Les n½uds de calcul: l'élément de base d'un cluster, sur laquelle
+les calculs sont exécutés; ils sont généralement référés comme des
+n½uds. 
+\item Des n½uds de service: ces machines ne sont pas destinés à exécuter
+les applications des utilisateurs, mais sont dédiés à accueillir les
+services d'infrastructure de grille. Certains n½uds de services sont
+appelés interfaces en raison de leur rôle particulier.
+\end{itemize}
+
+\paragraph{Chaque n½ud peut offrir plusieurs ressources pour les utilisateurs.
+Sur Grid'5000, la ressource la plus fine est le noyau.}
+
+
+\subsection*{ARCHITECTURE }
+
+
+\paragraph{Chaque groupe est habituellement composé de:}
+\begin{itemize}
+\item Un ou plusieurs noeud de service (également appelé frontend) :
+\item du côté de l'uitilisateur ces machines sont principalement utilisées
+pour l'accès, la réservation de ressources et le déploiement.
+\item du côté de l'administrateur,ces machines accueillent les hôtes virtuels
+et les services d'infrastructure.
+\item Les n½uds de calcul: la puissance de calcul principale. 
+\item Chaque noeud peut avoir plusieurs processeurs, et chaque CPU peut
+éventuellement avoir plusieurs noyaux. Le gestionnaire des ressources
+Grid'5000 permet des réservations au niveau du \textquotedbl{}node
+level\textquotedbl{}, et \textquotedbl{}du core level\textquotedbl{}. 
+\end{itemize}
+
+\paragraph{Les n½uds de services hébergement de tous les services d'infrastructure:
+leurs systèmes s'appuie sur la virtualisation pour les besoins d'isolation}
+
+
+\section*{Les outils OAR}
+
+
+\subsection*{Les réservation}
 \end{document}
