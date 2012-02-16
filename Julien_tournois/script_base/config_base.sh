@@ -1,7 +1,12 @@
 #!/bin/bash
 
-cat $OAR_FILE_NODES | sort -u  > $HOME/script/list_nodes
-list_nodes="$HOME/script/list_nodes"
+########################################################
+#------------------Configuration minimale--------------#
+#______________________________________________________#
+
+#recuperation des noeuds reserves
+cat $OAR_FILE_NODES | uniq  > $HOME/script_base/list_nodes
+list_nodes="$HOME/script_base/list_nodes"
 
 echo "-----------------------------------"
 echo "Liste des machines reservee:"
@@ -16,9 +21,7 @@ echo "-----------------------------------"
 
 #mise a jour des noyaux
 taktuk -l root -f $list_nodes broadcast exec [ apt-get update ]
-taktuk -l root -f $list_nodes broadcast exec [ apt-get dist-upgrade ]
+taktuk -l root -f $list_nodes broadcast exec [ apt-get dist-upgrade -q -y --force-yes ]
 #changement des mdp root
 taktuk -l root -f $list_nodes broadcast exec [ 'echo -e "pttvirtu\npttvirtu" | passwd root' ]
 
-#paquets-perso
-taktuk -l root -f $list_nodes broadcast exec [ apt-get install emacs23-nox ]
