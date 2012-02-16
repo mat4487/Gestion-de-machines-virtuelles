@@ -189,4 +189,53 @@ leurs systèmes s'appuie sur la virtualisation pour les besoins d'isolation}
 
 
 \subsection*{Les réservation}
+
+
+\part*{OPENXENMANAGER }
+
+
+\paragraph{XenseMaking Project développe un client lourd, ainsi qu'un client
+web, pour manager XenServer. C'est un clone du XenCenter, qui fonctionne
+avec Linux, BSD, Windows et MacOSX, alors que le XenCenter ne fonctionne
+qu'avec Windows. OpenXenManager/OpenXenCenter un le client lourd qui
+permet de manager XenServer.Il a été développé en Python avec pygtk
+et gtk-vnc.}
+
+
+\paragraph{Les fonctionnalités actuellement implémentées sont les suivantes
+:}
+\begin{itemize}
+\item - monitoring des machines virtuelles - accès à la console des machines
+virtuelles
+\item - opérations d'administration (démarrage, arrêt, reboot, ...)
+\item - création de machines virtuelles
+\end{itemize}
+
+\section*{GUIDE D'INSTALLATION D'OPENXENMANAGER}
+
+
+\paragraph{Pour l'installation nous avons besoin des pacquets suivant: }
+\begin{itemize}
+\item -apt-get install subversion bzip2 python-glade2 python-gtk-vnc shared-mime-info
+graphviz
+\end{itemize}
+
+\paragraph{On télécharge la dernière version d'openxenmanager dans le dépôt
+subversion:}
+\begin{itemize}
+\item svn co https://openxenmanager.svn.sourceforge.net/svnroot/openxenmanager
+openxenmanager
+\end{itemize}
+
+\paragraph{On se déplace dans le répertoire trunk: }
+\begin{itemize}
+\item cd openxenmanager/trunk
+\end{itemize}
+
+\paragraph{Finalement on lance openxenmanager avec la commande suivante: }
+\begin{itemize}
+\item python window.py
+\end{itemize}
+
+\paragraph{Une interface graphique d'openxenmanger apparait. }
 \end{document}
