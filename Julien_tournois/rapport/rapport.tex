@@ -1,0 +1,237 @@
+%requis
+\documentclass[a4paper,11pt]{report}
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[frenchb]{babel}
+\usepackage{graphicx}
+\usepackage{array}
+\usepackage{fancyhdr}
+\usepackage{listings}
+\pagestyle{fancy}
+\usepackage{color}
+
+\definecolor{javared}{rgb}{0.6,0,0} % for strings
+\definecolor{javagreen}{rgb}{0.25,0.5,0.35} % comments
+\definecolor{javapurple}{rgb}{0.5,0,0.35} % keywords
+\definecolor{javadocblue}{rgb}{0.25,0.35,0.75} % javadoc
+
+\lstset{
+  language=ruby,
+  basicstyle=\ttfamily,
+  keywordstyle=\color{javapurple}\bfseries,
+  stringstyle=\color{javared},
+  commentstyle=\color{javagreen},
+  morecomment=[s][\color{javadocblue}]{/**}{*/},
+  numbers=left,
+  numberstyle=\tiny\color{black},
+  showspaces=false,
+  showstringspaces=false
+}
+
+% premiere Page
+\title{\Huge \textbf{\fontfamily{phv}Projet tutoré \\
+Outils de gestion centralisée de machines virtuelles}}
+\author{Bocca Augustin,Lamouroux Mathieu,Michaux Sebastien,Tournois Julien}
+\date{vendredi 17 février}
+
+\begin{document}
+
+%formattage de l'entete
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}} \renewcommand{\sectionmark}[1]{\markright{#1}}
+\renewcommand{\headrulewidth}{0.25mm}
+\lfoot{\center Outils de gestion centralisée de machines virtuelles}
+\renewcommand{\footrulewidth}{0.25mm}
+%titre
+\maketitle
+
+\textbf{Préambule:}
+\tableofcontents
+  \chapter{Introduction}
+    \section{Présentation de Grid5000}
+
+Aujourd’hui, grâce à Internet, il est possible
+d’interconnecter des machines du monde entier pour
+traiter et stocker des masses de données. Cette collection
+hétérogène et distribuée de ressources de stockage et de
+calcul a donné naissance à un nouveau concept : les
+grilles informatiques. L’idée de mutualiser les ressources
+informatiques vient de plusieurs facteurs, évolution de la
+recherche en parallélisme qui, après avoir étudié les
+machines homogènes, s’est attaquée aux environnements
+hétérogènes puis distribués ; besoins croissants des
+applications qui nécessitent l’utilisation toujours plus
+importante de moyens informatiques forcément répartis.
+La notion de grille peut avoir plusieurs sens suivant le
+contexte : grappes de grappes, environnements de type
+GridRPC (appel de procédure à distance sur une grille).,
+réseaux pair-à-pair, systèmes de calcul sur Internet, etc...
+Il s’agit d’une manière générale de systèmes dynamiques,
+hétérogènes et distribués à large échelle. Un grand
+nombre de problématiques de recherche sont soulevées
+par les grilles informatiques. Elles touchent plusieurs
+domaines
+de l’informatique :algorithmique,
+programmation, intergiciels, applications, réseaux.
+L’objectif de GRID’5000 est de construire un instrument
+pour réaliser des expériences en informatique dans le
+domaine des systèmes distribués à grande échelle (GRID).
+Cette plate-forme, ouverte depuis 2006 aux chercheurs de
+la communauté grille, regroupe un certain nombre de sites
+répartis sur le territoire national. Chaque site héberge une
+ou plusieurs grappes de processeurs. Ces grappes sont
+alors interconnectées via une infrastructure réseau dédiée
+à 10 Gb/s fournie par RENATER. À ce jour, GRID’5000
+est composé de 9 sites: Lille, Rennes, Orsay, Nancy,
+Bordeaux, Lyon, Grenoble, Toulouse et Nice. Début 2007,
+GRID’5000 regroupait plus de 2500 processeurs et près
+de 3500 cœurs.
+
+\newpage
+\begin{center}
+\includegraphics{g5k.png}
+\underline{\textit{Architecture Grid5000}}
+\end{center}
+
+     \newpage
+     \section{Présentation du projet}
+     \paragraph{Objectif}
+Mettre en place, évaluer et comparer différents outils permettant de gérer de manière
+centralisée et automatisée une infrastructure basée sur des machines virtuelles: Ganeti,
+OpenXenManager, virt-manager, Archipel...
+      \section{Introduction à la virtualisation}
+
+    \chapter{Ganeti}
+      \section{Introduction}
+Ganeti est un outil de gestion de machines virtuelles se basant sur les technologies de virtualisation existantes comme XEN et KVM.\\
+Ganeti nécessite un logiciel de virtualisation pré-installé sur les serveurs afin de pouvoir fonctionner. Une fois installé, 
+l'outil prendra en charge la partie gestion des instances virtuelles (Xen DomU), par exemple, la gestion de création de disque, 
+l'installation du système d'exploitation (en coopération avec les scripts d'installation du système d'exploitation 
+spécifique), et le démarrage, l'arrêt, le basculement entre les systèmes physiques. Il a été conçu pour faciliter la gestion de 
+cluster de serveurs virtuels et de fournir une récupération rapide et simple.
+      \section{Installation}
+      \section{Utilisation}
+
+    \chapter{Scripts}
+      \section{réservation}
+      \begin{lstlisting}
+puts "-----------------------------------------"
+puts "Souhaitez vous reserver des noeuds?(y/n)"
+loop do
+  test = gets.chomp
+  if test.eql?("n")
+    puts "#####################"
+    puts "#sortie du programme#"
+    puts "#####################"
+    break;
+  end
+  if test.eql?("y")
+    #Reservation de machines                                                 
+    puts "---------Script de reservation-----------"
+    puts "Choisir un nombre de noeud:"
+    noeuds = gets.chomp.to_i
+    puts "Choisir un temps de reservation(HH:MM:SS):"
+    temps = gets
+    puts "\nVous avez reserve #{noeuds} noeuds 
+	  pour une duree de #{temps}"
+    puts "-----------------------------------------"
+    exec "oarsub -I -t deploy -n'virtu' -l 
+	  slash_22=1+nodes=#{noeuds},walltime=#{temps}"
+    break;
+  end
+end
+      \end{lstlisting}
+      
+      \newpage
+      \section{déploiment}
+      \begin{lstlisting}
+#Deployer une image cree
+puts "Voulez vous deployer une image?(y/n)"
+loop do
+  test = gets.chomp
+  if test.eql?("n")
+    puts "#####################"
+    puts "#sortie du programme#"
+    puts "#####################"
+    break;
+  end
+  if test.eql?("y")
+    #choix de l'image                                                                                                                 
+    puts "-----------------------------------------------"
+    puts "image disponibles:"
+    puts `ls /home/$USER/image | grep .env`
+    puts "-----------------------------------------------"
+    puts "Choix de la distibution(tout saisir):"
+    debian = gets.chomp
+    puts "-----------------------------------------------"
+    exec"kadeploy3 -f $OAR_FILE_NODES -a #{debian} -k 
+	$HOME/.ssh/id_rsa.pub"
+    break;
+  end
+end
+#Deploiment de l environement sur les noeuds reserves                          
+puts "Voulez vous deployer un environement?(y/n)"
+loop do
+  test = gets.chomp
+  if test.eql?("n")
+    puts "#####################"
+    puts "#sortie du programme#"
+    puts "#####################"
+    break;
+  end
+  if test.eql?("y")                                                            
+    #choix de la version a deployer                                            
+    puts "-----------------------------------------------"
+    puts "distributions disponibles:"
+    puts `kaenv3 -l | cut -d - -f1 | uniq | tail -n +3`
+    puts "-----------------------------------------------"
+    puts "Choix de la distibution:"
+    debian = gets.chomp
+    puts "-----------------------------------------------"
+    puts "version de la distribution:"
+    puts `kaenv3 -l | grep #{debian}| cut -d ' ' -f1`
+    debian = debian+"-x64-"
+    puts "-----------------------------------------------"
+    puts "Choix de la version de la distribution a deployee 
+	  (sans #{debian}):"
+    version = gets.chomp
+    version = debian+version
+    puts version
+    exec"kadeploy3 -e #{version} -f $OAR_FILE_NODES -k 
+	$HOME/.ssh/id_rsa.pub"
+    break;
+  end
+end
+      \end{lstlisting}
+
+      \newpage
+      \section{configuration de base}
+      \begin{lstlisting}
+########################################################
+#------------------Configuration minimale--------------#
+#______________________________________________________#
+
+#recuperation des noeuds reserves
+cat $OAR_FILE_NODES | uniq  > $HOME/script_base/list_nodes
+list_nodes="$HOME/script_base/list_nodes"
+
+echo "-----------------------------------"
+echo "Liste des machines reservee:"
+cat $list_nodes
+echo "-----------------------------------"
+echo "Copie des clees SSH vers toutes les machines."
+for node in $(cat $list_nodes)
+do
+	scp $HOME/.ssh/id_rsa* root@$node:~/.ssh/
+done
+echo "-----------------------------------"
+
+#mise a jour des noyaux
+taktuk -l root -f $list_nodes broadcast exec [ apt-get update ]
+taktuk -l root -f $list_nodes broadcast exec [ apt-get dist-upgrade 
+      -q -y --force-yes ]
+#changement des mdp root
+taktuk -l root -f $list_nodes broadcast exec [ 'echo -e 
+      pttvirtu\npttvirtu" | passwd root' ]
+      \end{lstlisting}
+
+\end{document}          
