@@ -1,0 +1,34 @@
+\lstset{language=bash}
+\chapter{OpenXENManager}
+XenseMaking Project développe un client lourd, ainsi qu'un client
+web, pour manager XenServer. C'est un clone du XenCenter, qui fonctionne
+avec Linux, BSD, Windows et MacOSX, alors que le XenCenter ne fonctionne
+qu'avec Windows. OpenXenManager/OpenXenCenter un le client lourd qui
+permet de manager XenServer.Il a été développé en Python avec pygtk
+et gtk-vnc.
+Les fonctionnalités actuellement implémentées sont les suivantes :
+\begin{itemize}
+\item - monitoring des machines virtuelles - accès à la console des machines
+virtuelles
+\item - opérations d'administration (démarrage, arrêt, reboot, ...)
+\item - création de machines virtuelles
+\end{itemize}
+\section{Guide d'installation d'OpenXenManager}
+Pour l'installation nous avons besoin des paquets suivant:
+\begin{lstlisting}
+apt-get install subversion bzip2 python-glade2 python-gtk-vnc shared-mime-info graphviz
+\end{lstlisting}
+On télécharge la dernière version d'openxenmanager dans le dépôt
+subversion
+\begin{lstlisting}
+svn co https://openxenmanager.svn.sourceforge.net/svnroot/openxenmanager openxenmanager
+\end{lstlisting}
+On se déplace dans le répertoire trunk:
+\begin{lstlisting}
+cd openxenmanager/trunk
+\end{lstlisting}
+Finalement on lance openxenmanager avec la commande suivante
+\begin{lstlisting}
+python window.py
+\end{lstlisting}
+Une interface graphique d'openxenmanger apparait.

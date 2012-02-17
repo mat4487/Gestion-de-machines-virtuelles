@@ -1,0 +1,57 @@
+\lstset{language=bash}
+\chapter{installation de ganeti}
+\section{installer ganeti}
+installer ganeti :
+\begin{lstlisting}
+apt-get install ganeti2 ganeti-htools ganeti-instance-debootstrap
+\end{lstlisting}
+Dans /etc/host ajouter l'adresse IP du node avec le nom de l'host ainsi que l'adresse du cluster :
+
+10.144.64.1 cluster1
+172.16.65.56 griffon-56.nancy.grid5000.fr
+
+Lorsque on aura plusieur nodes il faudra une autre adresse Ip au cluster car elle doit etre accessible à tous les nodes
+
+Dans /boot/ creer des liens symboliques :
+\begin{lstlisting}
+ln -s vmlinuz-2.6.32-5-xen-amd64 vmlinuz-2.6.xenU
+ln -s initrd.img-2.6.32-5-xen-amd64 initrd.img-2.6.xenU
+\end{lstlisting}
+
+Creer un LVM d'au moins 20Go (Obligatoire) :
+\begin{lstlisting}
+umout /dev/sda5
+pvcreate /dev/sda5
+vgcreate xenvg /dev/sda5
+\end{lstlisting}
+Dans /ect/network/interface remplacer le paragraphe de eth0 par celle du brige xen-br0 :
+\begin{lstlisting}
+auto xen-br0
+iface xen-br0 inet static
+ address 172.16.65.56 #Adresse du node
+ netmask 255.255.240.0 
+ network 172.16.64.0
+ broadcast 172.16.79.255
+ gateway 10.144.64.254
+ bridge_ports eth0
+ bridge_stp off
+ bridge_fd 0
+ \end{lstlisting}
+\Chatper{Utilisation de ganeti}
+
+Initialiser le cluster avec ganeti :
+\begin{lstlisting}
+gnt-custer init --no-drbd-storage cluster1
+\end{lstlisting}
+ajouter le node
+gnt-node add griffon-56.nancy.grid5000.fr
+
+et verifier avec :
+gnt-node list
+
+Qui devrait renvoyer quelque chose comme cela :
+
+Node                         DTotal  DFree MTotal MNode MFree Pinst Sinst
+griffon-56.nancy.grid5000.fr 283.2G 283.2G      -     -     -     0     0
+
+
