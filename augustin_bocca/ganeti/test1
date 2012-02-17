@@ -1,4 +1,4 @@
-ifconfig :
+ifconfig : 
 
 eth0      Link encap:Ethernet  HWaddr 00:e0:81:b2:c1:e2  
           inet addr:172.16.65.61  Bcast:172.16.79.255  Mask:255.255.240.0
@@ -122,4 +122,4 @@ initialiser le cluster :
 
 gnt-cluster init --no-drbd-storage cluster1
 
-
+10.144.64  à 67
