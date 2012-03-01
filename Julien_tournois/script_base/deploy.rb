@@ -1,7 +1,31 @@
 # -*- coding: utf-8 -*-
 #!/usr/bin/ruby -w
 
-#déploiment de l'environement sur les noeuds réservés                          
+#Deployer une image cree
+puts "Voulez vous d?ployer une image?(y/n)"
+loop do
+  test = gets.chomp
+  if test.eql?("n")
+    puts "#####################"
+    puts "#sortie du programme#"
+    puts "#####################"
+    break;
+  end
+  if test.eql?("y")
+    #choix de l'image                                                                                                                 
+    puts "-----------------------------------------------"
+    puts "image disponibles:"
+    puts `ls /home/$USER/image | grep .env`
+    puts "-----------------------------------------------"
+    puts "Choix de la distibution(tout saisir):"
+    debian = gets.chomp
+    puts "-----------------------------------------------"
+    exec"kadeploy3 -f $OAR_FILE_NODES -a #{debian} -k $HOME/.ssh/id_rsa.pub"
+    break;
+  end
+end
+
+#Déploiment de l'environement sur les noeuds réservés                          
 puts "Voulez vous déployer un environement?(y/n)"
 loop do
   test = gets.chomp

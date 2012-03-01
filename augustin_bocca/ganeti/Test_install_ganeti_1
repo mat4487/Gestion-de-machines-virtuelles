@@ -1,0 +1,125 @@
+ifconfig :
+
+eth0      Link encap:Ethernet  HWaddr 00:e0:81:b2:c1:e2  
+          inet addr:172.16.65.61  Bcast:172.16.79.255  Mask:255.255.240.0
+          inet6 addr: fe80::2e0:81ff:feb2:c1e2/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:168987 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:17010 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:139709217 (133.2 MiB)  TX bytes:1355566 (1.2 MiB)
+
+
+127.0.0.1 localhost
+172.18.65.61 griffon-61.grid5000.fr
+# The following lines are desirable for IPv6 capable hosts
+::1     ip6-localhost ip6-loopback
+fe00::0 ip6-localnet
+ff00::0 ip6-mcastprefix
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+ff02::3 ip6-allhosts1.2.3.4    domU domU
+~                                                                                                                                          
+~                                                
+cat /etc/hostname :
+
+griffon-61.nancy.grid5000.fr
+
+
+/etc/init.d/hostname.sh start
+
+Mettre dom0-min mem à 0 dans /etc/xen/xend-config.sxp
+
+rk-script network-bridge)
+(vif-script vif-bridge)
+(dom0-min-mem 0)
+(dom0-cpus 0)
+(vncpasswd '')
+~                                      
+
+Il vaut mieu desactiver les sauvegarde automatiques de Xen. Mettre une valeure nulle à XENDOMAINS_SAVE dans /etc/default/xendomains :
+
+XENDOMAINS_SAVE=""
+
+
+J'ai pas résussit à aller plus loin dans la conf de xen, je vais essayer sansi le truc de la memoire. A cause de grub.
+=======================================================================================================================
+
+Création de liens pour ganeti :
+
+root@griffon-8:/etc/xen# cd /boot/
+root@griffon-8:/boot# ls
+config-2.6.32-5-xen-amd64      System.map-2.6.32-5-xen-amd64  xen-4.0-amd64.gz
+initrd.img-2.6.32-5-xen-amd64  vmlinuz-2.6.32-5-xen-amd64
+root@griffon-8:/boot# ln -s vmlinuz-2.6.32-5-xen-amd64 vmlinuz-2.6-xenU
+root@griffon-8:/boot# ln -s initrd.img-2.6.32-5-xen-amd64 initrd-2.6-xenU
+
+-------------------------------------------------------------------------------------------------------------------------
+Création du LVM :
+
+root@griffon-8:/dev# fdisk -l
+
+Disk /dev/sda: 320.1 GB, 320072933376 bytes
+255 heads, 63 sectors/track, 38913 cylinders
+Units = cylinders of 16065 * 512 = 8225280 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0x00085680
+
+   Device Boot      Start         End      Blocks   Id  System
+/dev/sda1               1         487     3911796   82  Linux swap / Solaris
+/dev/sda2             488        1217     5863725   83  Linux
+/dev/sda3            1218        1947     5863725   83  Linux
+/dev/sda4            1948       38913   296929395    5  Extended
+/dev/sda5            1948       38913   296929363+  83  Linux
+root@griffon-8:/dev# df -h
+Filesystem            Size  Used Avail Use% Mounted on
+/dev/sda3             5.6G  1.9G  3.5G  35% /
+tmpfs                 484M     0  484M   0% /lib/init/rw
+udev                  429M   96K  429M   1% /dev
+tmpfs                 484M  4.0K  484M   1% /dev/shm
+/dev/sda5             279G  192M  265G   1% /tmp
+root@griffon-8:/dev# pvcreate /dev/sda4
+  Device /dev/sda4 not found (or ignored by filtering).
+root@griffon-8:/dev# pvcreate /dev/sda5
+  Can't open /dev/sda5 exclusively.  Mounted filesystem?
+root@griffon-8:/dev# umount /dev/sda5
+root@griffon-8:/dev# pvcreate /dev/sda5
+  Physical volume "/dev/sda5" successfully created
+root@griffon-8:/dev# vgcreate xenvg /dev/sda5
+  Volume group "xenvg" successfully created
+
+
+Copie de ganeti sur le node :
+
+scp ganeti-2.4.5.tar.gz root@griffon-8:/root/
+
+INSTALLATION DE GANETI :
+
+apt-get install lvm2 ssh bridge-utils iproute iputils-arping ndisc6 python python-pyopenssl openssl python-pyparsing python-simplejson python-pyinotify python-pycurl socat
+
+You also need to copy the file doc/examples/ganeti.initd from the source archive to /etc/init.d/ganeti and register it with your distribution’s startup scripts, for example in Debian:
+
+cp doc/examples/ganeti.initd /etc/init.d/ganeti
+chmod +x /etc/init.d/ganeti
+update-rc.d ganeti defaults 20 80
+
+apt-get install debootstrap dump kpartx
+
+./configure
+make
+make install
+
+Ganeti est installé mais il maintenant ajouter un node au cluster :
+
+Dans /etc/hosts ajouter la ligne :
+
+10.144.0.254 cluster1
+
+Il faut donner une adresse IP au cluster.
+
+initialiser le cluster :
+
+gnt-cluster init --no-drbd-storage cluster1
+
+

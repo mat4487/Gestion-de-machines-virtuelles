@@ -1,0 +1,14 @@
+CONSEILS AFIN D'HARMONISER LES PARTIES DE CHACUN
+°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
+
+- utiliser la classe lstlisting pour les portions de codes
+     \begin{lstlisting}
+	code.....
+     \end{lstlisting}
+
+  il est possible d'indiquer le language souhaité en ajoutant au début
+     \lstset{language=bash}
+
+- créer les documents sous linux ou essayer de les convertir en UTF-8
+
+- 

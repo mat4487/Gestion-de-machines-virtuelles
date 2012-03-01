@@ -1,0 +1,77 @@
+\documentclass{report}[a4paper,12pt]
+\usepackage[utf8]{inputenc}
+\usepackage[frenchb]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{array}
+%\usepackage{fancyhdr}
+\usepackage{listings}
+%\pagestyle{fancy}
+\usepackage{color}
+%\definecolor{javared}{rgb}{0.6,0,0} % for strings
+%\definecolor{javagreen}{rgb}{0.25,0.5,0.35} % comments
+%\definecolor{javapurple}{rgb}{0.5,0,0.35} % keywords
+%\definecolor{javadocblue}{rgb}{0.25,0.35,0.75} % javadoc
+\definecolor{hellgelb}{rgb}{1,1,0.8}
+\definecolor{colKeys}{rgb}{0,0,1}
+\definecolor{colIdentifier}{rgb}{0,0,0}
+\definecolor{colComments}{rgb}{1,0,0}
+\definecolor{colString}{rgb}{0,0.5,0}
+\lstset{%
+language=ruby%
+morekeywords={}%
+float=hbp,%
+basicstyle=\ttfamily\small, %
+identifierstyle=\color{colIdentifier}, %
+keywordstyle=\color{colKeys}, %
+stringstyle=\color{colString}, %
+commentstyle=\color{colComments}, %
+columns=flexible, %
+tabsize=2, %
+frame=single, %
+extendedchars=true, %
+showspaces=false, %
+showstringspaces=false, %
+numbers=left, %
+numberstyle=\tiny, %
+breaklines=true, %
+backgroundcolor=\color{hellgelb}, %
+breakautoindent=true, %
+captionpos=b%
+}
+\title{Projet Tuteurés -Outils de gestion centralisée de machines virtuelles\\\\Tuteur : Lucas Nussbaum}
+\author{Sébastien Michaux - Augustin Bocca - Julien Tournois - Mathieu Lamouroux}
+\date{\today}
+\begin{document}
+\maketitle
+\begin{abstract}
+%%%%%%%%%%%%%%%%%%%%%%
+%% Résumé du projet %%
+%%%%%%%%%%%%%%%%%%%%%%
+\end{abstract}
+\input{parties_rapport/remerciements.tex}
+\newpage
+\tableofcontents
+\newpage
+\input{parties_rapport/introduction.tex}
+\input{parties_rapport/ganeti.tex}
+\input{parties_rapport/openxenmanager.tex}
+\appendix
+\chapter{Sources}
+\begin{description}
+\item[www.grid5000.fr : ]le wiki disponible sur le site internet de grid5000 fut principale source de renseignements pour le démarrage du projet.
+\item[www.loria.fr/lnussbau/ : ]nous avons pu y consulter des anciens projets sur Grid5000 ce qui nous a permis d'avoir un premier aperçu de ses possibilités.
+\end{description}
+\chapter{Scripts}
+\input{parties_rapport/script_reservation.tex}
+\newpage
+\input{parties_rapport/script_deploy.tex}
+\input{parties_rapport/script_config.tex}
+\newpage
+\input{parties_rapport/script_ganeti_install.tex}
+\chapter{Glossaire}
+\begin{description}
+\item[]
+\item[]
+\end{description}
+\end{document}
