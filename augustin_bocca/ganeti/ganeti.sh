@@ -26,7 +26,7 @@ hostname=`cat /etc/hostname`
 #ip du node
 ifconfig eth0 > troll
 ipnode=`head -2 troll | tail -1 | cut -d':' -f2 | cut -d' ' -f1`
-echo $ipnode $hostname >> /etc/hosts
+echo $ipnode " " $hostname >> /etc/hosts
 
 #ip du broadcast
 ipbroadcast=`head -2 troll | tail -1 | cut -d'B' -f2 | cut -d':' -f2 | cut -d' ' -f1`
@@ -72,6 +72,8 @@ echo "bridge_fd 0" >> /etc/network/interfaces
 sed -i '9d' /etc/network/interfaces
 sed -i '9d' /etc/network/interfaces
 
+#Redemarage du network
+/etc/init.d/networking restart
 
 #supression des fichier temporaires
 rm troll ipcluster  ipgateway  ipnetwork
