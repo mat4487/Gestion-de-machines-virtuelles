@@ -12,7 +12,7 @@ echo "deb-src http://ftp.fr.debian.org/debian/ wheezy main contrib non-free" >> 
 
 #Installation de ganeti 
 apt-get update && apt-get dist-upgrade -y --force-yes
-apt-get install ganeti2 ganeti-htools ganeti-instance-debootstrap
+apt-get install -y --force-yes ganeti2 ganeti-htools ganeti-instance-debootstrap
 
 echo "Ajout du node dans /etc/hosts"
 hostname=`cat /etc/hostname`
@@ -42,8 +42,8 @@ ipcluster=`cat ipcluster`
 echo $ipcluster "cluster1" >> /etc/hosts
 
 #Dans /boot/ creer des liens symboliques :
-#ln -s vmlinuz-2.6.32-5-xen-amd64 vmlinuz-2.6.xenU
-#ln -s initrd.img-2.6.32-5-xen-amd64 initrd.img-2.6.xenU
+ln -s vmlinuz-2.6.32-5-xen-amd64 vmlinuz-2.6.xenU
+ln -s initrd.img-2.6.32-5-xen-amd64 initrd.img-2.6.xenU
 
 #Pour le moment changera surement.
 echo "creation du LVM"
@@ -66,7 +66,7 @@ echo "bridge_fd 0" >> /etc/network/interfaces
 
 #Suppression des ligne de eth0
 sed -i '9d' /etc/network/interfaces
-sed -i '10d' /etc/network/interfaces
+sed -i '9d' /etc/network/interfaces
 
 
 #supression des fichier temporaires
