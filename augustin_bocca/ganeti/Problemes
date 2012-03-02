@@ -7,3 +7,24 @@ An error occured:
 
 Certains node n'ont que 4 CPU es ce un probleme de créer 7 VM dessus ?
 
+
+ganeti :
+
+root@griffon-88:~# gnt-instance add -n griffon-88.nancy.grid5000.fr -o debootstrap -t plain -s 1000 test1
+Failure: command execution error:
+Hypervisor parameter validation failed on node griffon-88.nancy.grid5000.fr: Parameter 'kernel_path' fails validation: not found or not a file (current value: '/boot/vmlinuz-2.6-xenU')
+root@griffon-88:~# cat /etc/hosts
+127.0.0.1 localhost
+
+# The following lines are desirable for IPv6 capable hosts
+::1     ip6-localhost ip6-loopback
+fe00::0 ip6-localnet
+ff00::0 ip6-mcastprefix
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+ff02::3 ip6-allhosts1.2.3.4    domU domU
+10.144.0.1 cluster1
+172.16.65.88    griffon-88.nancy.grid5000.fr griffon-88
+10.0.0.1 test1
+root@griffon-88:~# 
+

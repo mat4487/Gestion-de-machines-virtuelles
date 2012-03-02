@@ -46,6 +46,7 @@ ipcluster=`cat ipcluster`
 echo $ipcluster "cluster1" >> /etc/hosts
 
 #Dans /boot/ creer des liens symboliques :
+cd /boot
 ln -s vmlinuz-2.6.32-5-xen-amd64 vmlinuz-2.6.xenU
 ln -s initrd.img-2.6.32-5-xen-amd64 initrd.img-2.6.xenU
 
