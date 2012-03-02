@@ -1,4 +1,6 @@
 #!/bin/bash
+#La mise à jour doit etre effectuer avant de lancer le script 
+#atp-get update && apt-get dist-upgrade
 
 #Creation de la place pour les vm
 mkdir /media/vm
