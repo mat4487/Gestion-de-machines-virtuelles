@@ -44,7 +44,9 @@ Name
 debootstrap+default
 
 
-Pour corriger cette Erreur :
+Solution :
+
+-o debootstrap+default
 
 root@griffon-82:/boot# gnt-instance add -n griffon-82.nancy.grid5000.fr -o debootstrap+default -t plain -s 1000 test1
 Fri Mar  2 19:46:44 2012 * disk 0, vg xenvg, name 8f9064e3-fe8d-4c08-acde-6a95f98ebfbf.disk0
@@ -76,25 +78,8 @@ sfdisk: ERROR: sector 0 does not have an msdos signature
     I: Retrieving Release
     E: Failed getting release file http://ftp.us.debian.org/debian/dists/lenny/Release
 
+Solution :
 
 Il faut remplacer "us" par "fr" ...
 
-
-root@griffon-82:/usr/share/ganeti/os/debootstrap# find / -name ganeti
-/usr/share/ganeti
-/usr/share/doc-base/ganeti
-/usr/share/pyshared/ganeti
-/usr/lib/pymodules/python2.6/ganeti
-/usr/lib/pymodules/python2.7/ganeti
-/usr/lib/ganeti
-/etc/default/ganeti
-/etc/cron.d/ganeti
-/etc/ganeti
-/etc/bash_completion.d/ganeti
-/etc/init.d/ganeti
-/var/log/ganeti
-/var/run/ganeti
-/var/lib/update-rc.d/ganeti
-/var/lib/ganeti
-/srv/ganeti
-
+Probleme : Je ne sais pas comment faire ... Peut etre en utilisant un proxy.
