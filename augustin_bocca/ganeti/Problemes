@@ -7,24 +7,94 @@ An error occured:
 
 Certains node n'ont que 4 CPU es ce un probleme de créer 7 VM dessus ?
 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ganeti :
+
+Ajouter :
+
+10.0.0.1 test1
+
+dans /etc/hosts
 
 root@griffon-88:~# gnt-instance add -n griffon-88.nancy.grid5000.fr -o debootstrap -t plain -s 1000 test1
 Failure: command execution error:
 Hypervisor parameter validation failed on node griffon-88.nancy.grid5000.fr: Parameter 'kernel_path' fails validation: not found or not a file (current value: '/boot/vmlinuz-2.6-xenU')
-root@griffon-88:~# cat /etc/hosts
-127.0.0.1 localhost
 
-# The following lines are desirable for IPv6 capable hosts
-::1     ip6-localhost ip6-loopback
-fe00::0 ip6-localnet
-ff00::0 ip6-mcastprefix
-ff02::1 ip6-allnodes
-ff02::2 ip6-allrouters
-ff02::3 ip6-allhosts1.2.3.4    domU domU
-10.144.0.1 cluster1
-172.16.65.88    griffon-88.nancy.grid5000.fr griffon-88
-10.0.0.1 test1
-root@griffon-88:~# 
+Je n'ai pas réussit à changer le Kernel_path dans ganeti.
+Une solution consiste à copier et non pas seulement à faire un lien de vmlinuz-2.6.32-5-xen-amd64 et initrd.img-2.6.32-5-xen-amd64 :
+
+cp initrd.img-2.6.32-5-xen-amd64 initrd.img-2.6.xenU
+cp vmlinuz-2.6.32-5-xen-amd64 vmlinuz-2.6-xenU
+
+Nouvelle erreur :
+
+root@griffon-82:/boot# gnt-instance add -n griffon-82.nancy.grid5000.fr -o debootstrap -t plain -s 1000 test1
+Failure: prerequisites not met for this operation:
+error type: wrong_input, error details:
+OS name must include a variant
+
+gnt-os diagnose
+OS: debootstrap [global status: valid]
+Variants: [default]
+Node: griffon-82.nancy.grid5000.fr, status: valid (path: /usr/share/ganeti/os/debootstrap) [API versions: 5, 10, 15] [variants: default]
+
+gnt-os list
+Name               
+debootstrap+default
+
+
+Pour corriger cette Erreur :
+
+root@griffon-82:/boot# gnt-instance add -n griffon-82.nancy.grid5000.fr -o debootstrap+default -t plain -s 1000 test1
+Fri Mar  2 19:46:44 2012 * disk 0, vg xenvg, name 8f9064e3-fe8d-4c08-acde-6a95f98ebfbf.disk0
+Fri Mar  2 19:46:44 2012 * creating instance disks...
+Fri Mar  2 19:46:44 2012 adding instance test1 to cluster config
+Fri Mar  2 19:46:45 2012  - INFO: Waiting for instance test1 to sync disks.
+Fri Mar  2 19:46:45 2012  - INFO: Instance test1's disks are in sync.
+Fri Mar  2 19:46:45 2012 * running the instance OS create scripts...
+Failure: command execution error:
+Could not add os for instance test1 on node griffon-82.nancy.grid5000.fr: OS create script failed (exited with exit code 1), last lines in the log file:
+
+sfdisk: ERROR: sector 0 does not have an msdos signature
+ /dev/xenvg/8f9064e3-fe8d-4c08-acde-6a95f98ebfbf.disk0: unrecognized partition table type
+ Old situation:
+ No partitions found
+ New situation:
+ Units = cylinders of 8225280 bytes, blocks of 1024 bytes, counting from 0
+
+    Device Boot Start     End   #cyls    #blocks   Id  System
+    /dev/xenvg/8f9064e3-fe8d-4c08-acde-6a95f98ebfbf.disk0p1   *      0+    126     127-   1020127   83  Linux
+    /dev/xenvg/8f9064e3-fe8d-4c08-acde-6a95f98ebfbf.disk0p2          0       -       0          0    0  Empty
+    /dev/xenvg/8f9064e3-fe8d-4c08-acde-6a95f98ebfbf.disk0p3          0       -       0          0    0  Empty
+    /dev/xenvg/8f9064e3-fe8d-4c08-acde-6a95f98ebfbf.disk0p4          0       -       0          0    0  Empty
+    Successfully wrote the new partition table
+
+    Re-reading the partition table ...
+    BLKRRPART: Invalid argument
+
+    I: Retrieving Release
+    E: Failed getting release file http://ftp.us.debian.org/debian/dists/lenny/Release
+
+
+Il faut remplacer "us" par "fr" ...
+
+
+root@griffon-82:/usr/share/ganeti/os/debootstrap# find / -name ganeti
+/usr/share/ganeti
+/usr/share/doc-base/ganeti
+/usr/share/pyshared/ganeti
+/usr/lib/pymodules/python2.6/ganeti
+/usr/lib/pymodules/python2.7/ganeti
+/usr/lib/ganeti
+/etc/default/ganeti
+/etc/cron.d/ganeti
+/etc/ganeti
+/etc/bash_completion.d/ganeti
+/etc/init.d/ganeti
+/var/log/ganeti
+/var/run/ganeti
+/var/lib/update-rc.d/ganeti
+/var/lib/ganeti
+/srv/ganeti
 
