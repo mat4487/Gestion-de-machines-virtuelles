@@ -47,8 +47,8 @@ echo $ipcluster "cluster1" >> /etc/hosts
 
 #Dans /boot/ creer des liens symboliques :
 cd /boot
-ln -s vmlinuz-2.6.32-5-xen-amd64 vmlinuz-2.6.xenU
-ln -s initrd.img-2.6.32-5-xen-amd64 initrd.img-2.6.xenU
+cp vmlinuz-2.6.32-5-xen-amd64 vmlinuz-2.6.xenU
+cp initrd.img-2.6.32-5-xen-amd64 initrd.img-2.6.xenU
 
 #Pour le moment changera surement.
 echo "creation du LVM"
