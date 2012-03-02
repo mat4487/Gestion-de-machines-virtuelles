@@ -62,7 +62,7 @@ echo "on_reboot   = 'restart'" >> /etc/xen/domU$i.cfg
 echo "on_crash    = 'restart'" >> /etc/xen/domU$i.cfg
 done
 
-#Copie à partir de la premiere vm (A adapter, changer /media/vm/domU$i par monchemin/domU$i la où seront stockées les disques des vm. Dans la partion sda5 /tmp ca à l'air pas mal)
+#Copie à partir de la premiere vm (A adapter, changer /media/vm/domU$i par monchemin/domU$i la où seront stockées les disques des vm. Dans /tmp ca à l'air pas mal.)
 echo "copie des disk"
 for i in `seq 1 7`;
 do
