@@ -23,8 +23,8 @@ echo "#  Kernel + memory size" >> /etc/xen/domU$i.cfg
 echo "#" >> /etc/xen/domU$i.cfg
 echo "kernel      = '/boot/vmlinuz-2.6.32-5-xen-amd64'" >> /etc/xen/domU$i.cfg
 echo "ramdisk     = '/boot/initrd.img-2.6.32-5-xen-amd64'" >> /etc/xen/domU$i.cfg
-echo "vcpus       = '1'" >> /etc/xen/domU$i.cfg" >> /etc/xen/domU$i.cfg
-echo "memory      = '128'" >> /etc/xen/domU$i.cfg" >> /etc/xen/domU$i.cfg
+echo "vcpus       = '1'" >> /etc/xen/domU$i.cfg
+echo "memory      = '128'" >> /etc/xen/domU$i.cfg
 echo "#" >> /etc/xen/domU$i.cfg
 echo "#  Disk device(s)." >> /etc/xen/domU$i.cfg
 echo "#" >> /etc/xen/domU$i.cfg
