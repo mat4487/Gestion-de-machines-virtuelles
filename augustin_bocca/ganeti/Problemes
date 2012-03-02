@@ -1,0 +1,7 @@
+Lorsque je suis connecté à un noeud la commande g5k-subnets -i -o ip_list.txt revoie :
+
+abocca@fnancy:~/script$ g5k-subnets -i -o ip_list.txt
+/usr/bin/oarprint: no input data available
+An error occured:
+#<RuntimeError: Failed to retrieve properties>
+
