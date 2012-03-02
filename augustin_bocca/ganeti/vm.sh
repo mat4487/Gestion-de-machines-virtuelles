@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #Création des loop pour les VMs (A supprimer pour adaptation)
-options loop max_loop=64 > /etc/modprobe.d/xen.conf
+echo "options loop max_loop=64" > /etc/modprobe.d/xen.conf
 modprobe loop
 
 

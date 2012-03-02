@@ -5,3 +5,5 @@ abocca@fnancy:~/script$ g5k-subnets -i -o ip_list.txt
 An error occured:
 #<RuntimeError: Failed to retrieve properties>
 
+Certains node n'ont que 4 CPU es ce un probleme de créer 7 VM dessus ?
+
