@@ -1,6 +1,12 @@
 #!/bin/bash
+
+#Création des loop pour les VMs (A supprimer pour adaptation)
+options loop max_loop=64 > /etc/modprobe.d/xen.conf
+modprobe loop
+
+
 #Ce script créer des vm sur le LVM créer plutot.
-#Mountage du LVM dans /media/vm
+#Mountage du LVM dans /media/vm (A supprimer pour adaptation)
 lvcreate -L10000 -n vm xenvg
 mkfs.ext4 /dev/xenvg/vm
 mkdir -p /media/vm
@@ -56,14 +62,9 @@ echo "on_reboot   = 'restart'" >> /etc/xen/domU$i.cfg
 echo "on_crash    = 'restart'" >> /etc/xen/domU$i.cfg
 done
 
-#Création de la premiere vm
-xm create /etc/xen/domU1.cfg
-
-mv domU.cfg domU.cfg.old
-
-#Copie à partir de la premiere vm
+#Copie à partir de la premiere vm (A adapter, changer /media/vm/domU$i par monchemin/domU$i la où seront stockées les disques des vm. Dans la partion sda5 /tmp ca à l'air pas mal)
 echo "copie des disk"
-for i in `seq 2 7`;
+for i in `seq 1 7`;
 do
     mkdir -p /media/vm/domU$i/
     cp /opt/xen/domains/domU1/disk.img /media/vm/domU$i/
@@ -71,12 +72,11 @@ do
 done
 
 
-
 echo "xen g5k restart"
 /etc/init.d/xen-g5k restart
 
 echo "creation des vm"
-for i in `seq 2 7`;
+for i in `seq 1 7`;
 do
     xm create /etc/xen/domU$i.cfg
 done

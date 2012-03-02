@@ -1,0 +1,41 @@
+\Chapter {Finalement installer ganeti et xen}
+
+Pour installer ganeti et xen sur un même node il faut rester en squeeze pour xen et installer ganeti à partir  de la branche testing.
+
+pour commencer, éditer le fichier /etc/apt/sources.list.:
+
+Ajouter les depots de wheezy :
+
+##Wheezy
+deb http://ftp.fr.debian.org/debian/ wheezy main contrib non-free
+deb-src http://ftp.fr.debian.org/debian/ wheezy main contrib non-free
+
+## wheezy security
+deb http://security.debian.org/ wheezy/updates main contrib non-free
+deb-src http://security.debian.org/ wheezy/updates main contrib non-free
+
+
+On va ensuite dans le répertoire /etc/apt/apt.conf.d et on crée un fichier 80default-distrib (le nom du fichier est libre). On ajoute la  suivante:
+
+APT::Default-Release "stable";
+
+On peut ensuite installer ganeti avec :
+apt-get -t testing install ganeti2
+
+\section {ganeti.sh}
+
+ganeti.sh permet d'automatiser l'intallation de ganeti sur une debian squeeze.
+Le script effectue l'opération précédente ainsi que la configuration du fichier /etc/network/interfaces dans le quel on définie le bridge de xen xen-br0 et la création du LVM de 20Go nécessaire pour ganeti.
+Le script configure aussi les fichiers hosts et hostname.
+Et enfin il initialise le cluster de ganeti et il ajoute le node master.
+
+\section {vm.sh}
+
+Le sript vm.sh créer des machines virtuelles xen sur un noeud.
+Tout d'abort le script créer le fichier /etc/modprobe.d/xen qui permet de créer suffisament de loop pour les machines virtuelles.
+Ensuite il créer un Volume Logique dans le LVM créer pour ganeti. Dans ce LV seront stockées les machines virtuelles.
+Puis les différents fichiers de configurations des machines virtuelles (/etc/xen/domUX) sont créés en leurs attribuant des adresses IP locale (10.0.0.1 à 10.0.0.7) et des adresses MAC aléatoires.
+Ensuite les fichiers  /opt/xen/domains/domU1/disk.img et /opt/xen/domains/domU1/swap.img sont copiés dans /media/vm/domUX/ (C'est le LV créér par le script).
+Et enfin les machines sont créées avec la commande xm create /etc/xen/domUX
+
+
