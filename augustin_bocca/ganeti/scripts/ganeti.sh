@@ -100,6 +100,6 @@ echo "création d'instances pour ganeti."
 for i in `seq 1 7`;
 do
         echo "10.0.0.$i instance$i" >> /etc/hosts
-        gnt-instance add -n $hostname -o debootstrap+default -t plain -s 15 instance$i
+        gnt-instance add -n $hostname -o debootstrap+default -t plain -s 2000 instance$i
 done
 

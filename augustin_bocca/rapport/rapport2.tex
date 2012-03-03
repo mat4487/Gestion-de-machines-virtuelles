@@ -39,3 +39,24 @@ Ensuite les fichiers  /opt/xen/domains/domU1/disk.img et /opt/xen/domains/domU1/
 Et enfin les machines sont créées avec la commande xm create /etc/xen/domUX
 
 J'ai créer vmganeti.sh pour créer les VMs dans le contexte spécifique à ganeti et vm.sh pour créer des VMs dans un contexte general.
+
+\section {gnt-instance}
+
+En faite ganeti gere la creation des instances, le script vmganeti.sh est obsolète.
+Pour créer une instance avec ganeti il faut utiliser : 
+
+gnt-instance add -n griffon-82.nancy.grid5000.fr -o debootstrap+default -t plain -s 1000 test1
+
+En ayant ajouter dans le fichier /etc/hosts les instances avec une adresse IP valide par exemple :
+
+10.0.0.1 instance1
+10.0.0.2 instance2
+.
+.
+.
+
+J'ai donc rajouter une section dans ganeti.sh qui ajoute les instance dans /etc/hosts et qui lance leur création.
+
+La seule OS disponible de base est : debootstrap+default
+
+

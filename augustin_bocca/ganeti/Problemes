@@ -90,7 +90,29 @@ Pour la config de l'hyperviseur par exemple le kernel_path, il faut editer le fi
 
 Je suis pas sur que le probleme de depot soit important.
 
-Pour l'otion -s de gnt-instance add j'ai l'impression que c'est en 100ene de Mo car -s 10 créer un disque de 1000Mo
+Pour l'otion -s 1 = 1Mo
+
+Pour changer le fichier de source : 
+# note: we don't set a default mirror since debian and ubuntu have
+# different defaults, and it's better to use the default
+
+# only if the user want to specify a mirror in the defaults file we
+# will use it, this declaration is to make sure the variable is set
+: ${MIRROR:="http://ftp.fr.debian.org/debian/"}
+: ${PROXY:=""}
+: ${SUITE:="squeeze"}
+: ${ARCH:=""}
+: ${EXTRA_PKGS:=""}
+: ${CUSTOMIZE_DIR:="/etc/ganeti/instance-debootstrap/hooks"}
+: ${VARIANTS_DIR:="/etc/ganeti/instance-debootstrap/variants"}
+: ${GENERATE_CACHE:="yes"}
+: ${CLEAN_CACHE:="14"} # number of days to keep a cache file
+
+On peut cahnger le depot mais l'erreur reste toujours ...
+
+
+I: Retrieving Release
+E: Failed getting release file http://ftp.fr.debian.org/debian/dists/squeeze/Release
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
