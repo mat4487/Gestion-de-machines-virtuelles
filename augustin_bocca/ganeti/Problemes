@@ -83,3 +83,15 @@ Solution :
 Il faut remplacer "us" par "fr" ...
 
 Probleme : Je ne sais pas comment faire ... Peut etre en utilisant un proxy.
+
+Pour ganeti finalement il n'y a peut etre pas besoin de créer les vm avec xm create. J'essaye sans.
+
+Pour la config de l'hyperviseur par exemple le kernel_path, il faut editer le fichier : "/var/lib/ganeti/config.data.
+
+Je suis pas sur que le probleme de depot soit important.
+
+Pour l'otion -s de gnt-instance add j'ai l'impression que c'est en 100ene de Mo car -s 10 créer un disque de 1000Mo
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Sinon il va falloir configurer crrectement xen-br0, la config que j'ai fait est bancale. Pareillement pour cluster1 je ne sais pas quelle adresse lui attribuer.

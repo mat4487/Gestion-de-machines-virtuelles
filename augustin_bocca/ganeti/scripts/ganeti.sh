@@ -47,8 +47,8 @@ echo $ipcluster "cluster1" >> /etc/hosts
 
 #Dans /boot/ creer des liens symboliques :
 cd /boot
-cp vmlinuz-2.6.32-5-xen-amd64 vmlinuz-2.6.xenU
-cp initrd.img-2.6.32-5-xen-amd64 initrd.img-2.6.xenU
+cp vmlinuz-2.6.32-5-xen-amd64 vmlinuz-2.6-xenU
+cp initrd.img-2.6.32-5-xen-amd64 initrd.img-2.6-xenU
 
 #Pour le moment changera surement.
 echo "creation du LVM"
@@ -74,7 +74,8 @@ sed -i '9d' /etc/network/interfaces
 sed -i '9d' /etc/network/interfaces
 
 #Redemarage du network
-/etc/init.d/networking restart
+/etc/init.d/networking stop
+/etc/init.d/networking start
 
 #supression des fichier temporaires
 rm troll ipcluster  ipgateway  ipnetwork
@@ -88,4 +89,17 @@ gnt-node add $hostname
 #et verifier
 gnt-node list
 
+#Pour l'instant les instances ne sont crées que sur un node, dans le futur peut etre faudra t-il les créer sur 2 nodes. Pour cela la commande gnt-instance add -n node1:node2
+
+echo "création d'instances pour ganeti."
+
+#récupération du hostname.
+#hostname=`cat /etc/hostname`
+
+#Création ajout dans le fichier /etc/hosts et création des instances ganeti.
+for i in `seq 1 7`;
+do
+        echo "10.0.0.$i instance$i" >> /etc/hosts
+        gnt-instance add -n $hostname -o debootstrap+default -t plain -s 15 instance$i
+done
 
