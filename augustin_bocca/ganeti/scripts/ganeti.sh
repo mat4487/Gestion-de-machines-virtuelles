@@ -78,13 +78,15 @@ sed -i '9d' /etc/network/interfaces
 /etc/init.d/networking start
 
 #supression des fichier temporaires
+cd /root/
 rm troll ipcluster  ipgateway  ipnetwork
+
 
 #initialisation du cluster
 gnt-cluster init --no-drbd-storage cluster1
 
 #ajouter le node 
-gnt-node add $hostname
+#gnt-node add $hostname
 
 #et verifier
 gnt-node list

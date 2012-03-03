@@ -92,14 +92,15 @@ Je suis pas sur que le probleme de depot soit important.
 
 Pour l'otion -s 1 = 1Mo
 
-Pour changer le fichier de source : 
+
+Pour changer le fichier de source dans /usr/share/ganeti/os/debootstrap/common.sh :
 # note: we don't set a default mirror since debian and ubuntu have
 # different defaults, and it's better to use the default
 
 # only if the user want to specify a mirror in the defaults file we
 # will use it, this declaration is to make sure the variable is set
 : ${MIRROR:="http://ftp.fr.debian.org/debian/"}
-: ${PROXY:=""}
+: ${PROXY:="http://proxy:3128/"}
 : ${SUITE:="squeeze"}
 : ${ARCH:=""}
 : ${EXTRA_PKGS:=""}
@@ -114,6 +115,84 @@ On peut cahnger le depot mais l'erreur reste toujours ...
 I: Retrieving Release
 E: Failed getting release file http://ftp.fr.debian.org/debian/dists/squeeze/Release
 
+Ne pas oublier de renseigner le proxy :
+
+ ${PROXY:="http://proxy:3128/"}
+
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-Sinon il va falloir configurer crrectement xen-br0, la config que j'ai fait est bancale. Pareillement pour cluster1 je ne sais pas quelle adresse lui attribuer.
+Sinon il va falloir configurer correctement xen-br0, la config que j'ai fait est bancale. Pareillement pour cluster1 je ne sais pas quelle adresse lui attribuer.
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Test avec 2 nodes :
+
+Sur le Master faire l'installation normale.
+Sur le master candidate faire l'install mais initialiser le cluster !
+
+Ajouter le node2 sur le master :
+
+root@griffon-54:~# gnt-node add griffon-52.nancy.grid5000.fr
+-- WARNING -- 
+Performing this operation is going to replace the ssh daemon keypair
+on the target machine (griffon-52.nancy.grid5000.fr) with the ones of the current one
+and grant full intra-cluster ssh root access to/from it
+
+Unable to verify hostkey of host griffon-52.nancy.grid5000.fr:
+dd:46:6b:bb:2a:5a:8b:92:f1:04:76:1d:65:b3:4f:78. Do you want to accept
+it?
+y/[n]/?: y
+2012-03-03 14:11:06,867: MainThread Authentication to griffon-52.nancy.grid5000.fr via public key failed, trying password
+root password:
+Sat Mar  3 14:11:18 2012  - INFO: Node will be a master candidate
+
+
+
+root@griffon-54:~# gnt-node list
+Node                         DTotal  DFree MTotal MNode MFree Pinst Sinst
+griffon-52.nancy.grid5000.fr 283.2G 283.2G  16.0G  965M 14.8G     0     0
+griffon-54.nancy.grid5000.fr 283.2G 273.4G  16.0G  965M 14.8G     1     0
+
+
+
+Tentative de création d'instance sur 2 nodes :
+
+gnt-instance add -n griffon-54.nancy.grid5000.fr:griffon-52.nancy.grid5000.fr -o debootstrap -t plain -s 10000 instance1
+
+Ca ne fonctione pas.
+
+root@griffon-54:~# gnt-cluster verify
+Sat Mar  3 14:49:20 2012 * Verifying global settings
+Sat Mar  3 14:49:20 2012 * Gathering data (2 nodes)
+Sat Mar  3 14:49:21 2012 * Gathering disk information (2 nodes)
+Sat Mar  3 14:49:22 2012 * Verifying node status
+Sat Mar  3 14:49:22 2012   - ERROR: node griffon-52.nancy.grid5000.fr: file '/etc/hosts' has wrong checksum
+Sat Mar  3 14:49:22 2012   - ERROR: node griffon-52.nancy.grid5000.fr: cannot parse drbd status file: The file /proc/drbd cannot be opened, check if the module is loaded ([Errno 2] No such file or directory: '/proc/drbd')
+Sat Mar  3 14:49:22 2012   - ERROR: node griffon-54.nancy.grid5000.fr: cannot parse drbd status file: The file /proc/drbd cannot be opened, check if the module is loaded ([Errno 2] No such file or directory: '/proc/drbd')
+Sat Mar  3 14:49:22 2012 * Verifying instance status
+Sat Mar  3 14:49:22 2012   - ERROR: instance instance2: instance not running on its primary node griffon-54.nancy.grid5000.fr
+Sat Mar  3 14:49:22 2012 * Verifying orphan volumes
+Sat Mar  3 14:49:22 2012 * Verifying orphan instances
+Sat Mar  3 14:49:22 2012 * Verifying N+1 Memory redundancy
+Sat Mar  3 14:49:22 2012 * Other Notes
+Sat Mar  3 14:49:22 2012   - NOTICE: 2 non-redundant instance(s) found.
+Sat Mar  3 14:49:22 2012 * Hooks Results
+
+Tentative de creation sur le 2 eme node seulement :
+
+root@griffon-54:~# gnt-instance add -n griffon-52.nancy.grid5000.fr -o debootstrap+default -t plain -s 10000 instance3
+Sat Mar  3 14:53:05 2012 * disk 0, vg xenvg, name b294ae8f-34fb-441c-9f3f-22eaf4971064.disk0
+Sat Mar  3 14:53:05 2012 * creating instance disks...
+Sat Mar  3 14:53:06 2012 adding instance instance3 to cluster config
+Sat Mar  3 14:53:10 2012  - INFO: Waiting for instance instance3 to sync disks.
+Sat Mar  3 14:53:10 2012  - INFO: Instance instance3's disks are in sync.
+Sat Mar  3 14:53:10 2012 * running the instance OS create scripts...
+Sat Mar  3 14:54:37 2012 * starting instance...
+root@griffon-54:~# gnt-instance list
+Instance  Hypervisor OS                  Primary_node                 Status     Memory
+instance1 xen-pvm    debootstrap+default griffon-54.nancy.grid5000.fr ADMIN_down      -
+instance2 xen-pvm    debootstrap+default griffon-54.nancy.grid5000.fr ERROR_down      -
+instance3 xen-pvm    debootstrap+default griffon-52.nancy.grid5000.fr ERROR_down      -
+
+Ca fonctionne.
+
+En revanche les VM sont toujours en ERROR_down.
