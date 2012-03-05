@@ -8,7 +8,7 @@ apt-get update
 apt-get upgrade -y
 
 # Installation de libvirt pour communiquer avec le démon xend
-apt-get install libvirt-bin
+apt-get install libvirt-bin -y
 
 # Activation des sockets Unix
 # (nécessaire pour la communication entre libvirt et xend)
@@ -18,7 +18,7 @@ cat "(xend-unix-server yes)" >> /etc/xen/xend-config.sxp
 /etc/init.d/xend restart
 
 # Installation de virt-manager
-apt-get install virt-manager
+apt-get install virt-manager -y
 
 #############
 # Optionnel #
