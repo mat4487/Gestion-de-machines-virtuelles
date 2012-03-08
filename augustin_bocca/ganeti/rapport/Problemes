@@ -196,3 +196,119 @@ instance3 xen-pvm    debootstrap+default griffon-52.nancy.grid5000.fr ERROR_down
 Ca fonctionne.
 
 En revanche les VM sont toujours en ERROR_down.
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+Essaie d'installation avec taktuk :
+
+Beaucoup d'erreur avec taktuk :
+
+griffon-86.nancy.grid5000.fr-1: sh ganeti_master.sh (1800): error > Use of uninitialized value $val in substitution (s///) at /usr/share/perl5/Debconf/Format/822.pm line 83, <GEN1> line 10.
+griffon-86.nancy.grid5000.fr-1: sh ganeti_master.sh (1800): error > Use of uninitialized value $val in concatenation (.) or string at /usr/share/perl5/Debconf/Format/822.pm line 84, <GEN1> line 10.
+griffon-86.nancy.grid5000.fr-1: sh ganeti_master.sh (1800): error > Use of uninitialized value $val in substitution (s///) at /usr/share/perl5/Debconf/Format/822.pm line 83, <GEN1> line 10.
+griffon-86.nancy.grid5000.fr-1: sh ganeti_master.sh (1800): error > Use of uninitialized value $val in concatenation (.) or string at /usr/share/perl5/Debconf/Format/822.pm line 84,
+
+griffon-86.nancy.grid5000.fr-1: sh ganeti_master.sh (1800): error > debconf: unable to initialize frontend: Dialog
+griffon-86.nancy.grid5000.fr-1: sh ganeti_master.sh (1800): error > debconf: (TERM is not set, so the dialog frontend is not usable.)
+griffon-86.nancy.grid5000.fr-1: sh ganeti_master.sh (1800): error > debconf: falling back to frontend: Readline
+griffon-86.nancy.grid5000.fr-1: sh ganeti_master.sh (1800): error > debconf: unable to initialize frontend: Readline
+griffon-86.nancy.grid5000.fr-1: sh ganeti_master.sh (1800): error > debconf: (This frontend requires a controlling tty.)
+griffon-86.nancy.grid5000.fr-1: sh ganeti_master.sh (1800): error > debconf: falling back to frontend: Teletype
+griffon-86.nancy.grid5000.fr-1: sh ganeti_master.sh (1800): error > dpkg: gcc-4.3: dependency problems, but removing anyway as you requested:
+griffon-86.nancy.grid5000.fr-1: sh ganeti_master.sh (1800): error >  linux-headers-2.6.32-5-amd64 depends on gcc-4.3.
+
+Ensuite on ne peut ajouter de node a part le master :
+
+root@griffon-86:~# gnt-node list
+Node                         DTotal  DFree MTotal MNode MFree Pinst Sinst
+griffon-86.nancy.grid5000.fr 283.2G 283.2G  16.0G  965M 14.8G     0     0
+root@griffon-86:~# gnt-node add griffon-90.nancy.grid5000.fr
+-- WARNING -- 
+Performing this operation is going to replace the ssh daemon keypair
+on the target machine (griffon-90.nancy.grid5000.fr) with the ones of the current one
+and grant full intra-cluster ssh root access to/from it
+
+Unable to verify hostkey of host griffon-90.nancy.grid5000.fr:
+af:16:37:6e:55:a8:11:65:19:e7:2d:f3:04:1e:76:41. Do you want to accept
+it?
+y/[n]/?: y
+2012-03-08 13:25:51,927: MainThread Authentication to griffon-90.nancy.grid5000.fr via public key failed, trying password
+root password:
+2012-03-08 13:25:56,758: MainThread During setup of griffon-90.nancy.grid5000.fr: '/usr/lib/ganeti/daemon-util reload-ssh-keys' exited with status code 127, output 'bash: /usr/lib/ganeti/daemon-util: No such file or directory\n'
+Traceback (most recent call last):
+File "/usr/lib/ganeti/tools/setup-ssh", line 471, in main
+ SetupSSH(transport)
+File "/usr/lib/ganeti/tools/setup-ssh", line 222, in SetupSSH
+_InvokeDaemonUtil(transport, "reload-ssh-keys")
+File "/usr/lib/ganeti/tools/setup-ssh", line 138, in _InvokeDaemonUtil
+_RunRemoteCommand(transport, "%s %s" % (constants.DAEMON_UTIL, command))
+File "/usr/lib/ganeti/tools/setup-ssh", line 125, in _RunRemoteCommand
+raise RemoteCommandError(out_msg)
+RemoteCommandError: '/usr/lib/ganeti/daemon-util reload-ssh-keys' exited with status code 127, output 'bash: /usr/lib/ganeti/daemon-util: No such file or directory\n'
+Failure: command execution error:
+Command '/usr/lib/ganeti/tools/setup-ssh griffon-90.nancy.grid5000.fr' failed with exit code 1; output ''
+
+Ca ne fonctionne pas bien avec Taktuk.
+
+
+Essaie de manière manuelle (postinstall et ganeti.sh) :
+
+C'est bon.Taktuk c'est le mal.
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Penser à bien éditer le fichier /usr/share/ganeti/os/debootstrap/common.sh sur tous les node où seron installés des instances !
+
+Les instances sont toujours en Error_down.
+
+Les commande : gnt-instance remove
+
+root@griffon-51:~# gnt-instance list
+Instance  Hypervisor OS                  Primary_node                 Status     Memory
+instance1 xen-pvm    debootstrap+default griffon-89.nancy.grid5000.fr ADMIN_down      -
+instance2 xen-pvm    debootstrap+default griffon-89.nancy.grid5000.fr ADMIN_down      -
+instance3 xen-pvm    debootstrap+default griffon-89.nancy.grid5000.fr ERROR_down      -
+instance4 xen-pvm    debootstrap+default griffon-51.nancy.grid5000.fr ADMIN_down      -
+instance5 xen-pvm    debootstrap+default griffon-51.nancy.grid5000.fr ERROR_down      -
+instance6 xen-pvm    debootstrap+default griffon-89.nancy.grid5000.fr ERROR_down      -
+root@griffon-51:~# gnt-instance remove instance1
+This will remove the volumes of the instance instance1 (including
+mirrors), thus removing all the data of the instance. Continue?
+y/[n]/?: y
+
+root@griffon-51:~# gnt-instance list
+Instance  Hypervisor OS                  Primary_node                 Status     Memory
+instance2 xen-pvm    debootstrap+default griffon-89.nancy.grid5000.fr ADMIN_down      -
+instance3 xen-pvm    debootstrap+default griffon-89.nancy.grid5000.fr ERROR_down      -
+instance4 xen-pvm    debootstrap+default griffon-51.nancy.grid5000.fr ADMIN_down      -
+instance5 xen-pvm    debootstrap+default griffon-51.nancy.grid5000.fr ERROR_down      -
+instance6 xen-pvm    debootstrap+default griffon-89.nancy.grid5000.fr ERROR_down      -
+
+
+gnt-instance remove et add fonctionnent.
+
+
+
+
+
+root@griffon-51:~# gnt-instance shutdown instance3
+Waiting for job 44 for instance3...
+
+instance3 xen-pvm    debootstrap+default griffon-89.nancy.grid5000.fr ADMIN_down 
+
+
+root@griffon-51:~# gnt-instance startup instance3
+Waiting for job 45 for instance3...
+
+instance3 xen-pvm    debootstrap+default griffon-89.nancy.grid5000.fr ERROR_down
+
+startup et shutdown fonctionnent.
+
+
+On peut avoir les infos :
+
+gnt-instance info instanceX
+
+
+essayer ca :
+
+gnt-cluster modify --hypervisor-parameter xen-pvm:initrd_path='/boot/initrd.img-2.6-xenU'

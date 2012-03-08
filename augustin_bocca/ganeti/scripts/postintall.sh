@@ -4,12 +4,17 @@
 
 
 #récupère l'adresse du cluster1 pour l'envoyer au node x.x.x.1
-g5k-subnets -i -o ip_list.txt
-ipnode=`head -1 ip_list.txt`
+#g5k-subnets -i -o ip_list.txt
+#ipnode=`head -1 ip_list.txt`
+ipnode=10.0.1.254
 echo $ipnode > ipcluster
 
+
+
+
 #recupere l'ip de la gateway x.x.x.254
-ipgateway=`head -254 ip_list.txt | tail -1`
+#ipgateway=`head -254 ip_list.txt | tail -1`
+ipgateway=10.0.1.253
 echo $ipgateway > ipgateway
 
 #récupère l'ip du reseau
