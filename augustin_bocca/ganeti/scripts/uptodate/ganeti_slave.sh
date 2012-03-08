@@ -15,8 +15,8 @@ echo "deb-src http://ftp.fr.debian.org/debian/ wheezy main contrib non-free" >> 
 echo "APT::Default-Release \"stable\";" > /etc/apt/apt.conf.d/80default-distrib
 
 #Installation de ganeti 
-apt-get update && apt-get dist-upgrade -y --force-yes
-apt-get -t testing install -y --force-yes ganeti2 ganeti-htools ganeti-instance-debootstrap
+apt-get update && apt-get dist-upgrade -q -y --force-yes
+apt-get -t testing install -q -y --force-yes ganeti2 ganeti-htools ganeti-instance-debootstrap
 
 echo "Ajout du node dans /etc/hosts"
 hostname=`cat /etc/hostname`
