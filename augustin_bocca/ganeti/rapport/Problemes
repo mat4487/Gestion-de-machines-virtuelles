@@ -102,7 +102,7 @@ Pour changer le fichier de source dans /usr/share/ganeti/os/debootstrap/common.s
 : ${MIRROR:="http://ftp.fr.debian.org/debian/"}
 : ${PROXY:="http://proxy:3128/"}
 : ${SUITE:="squeeze"}
-: ${ARCH:=""}
+: ${ARCH:="amd64"}
 : ${EXTRA_PKGS:=""}
 : ${CUSTOMIZE_DIR:="/etc/ganeti/instance-debootstrap/hooks"}
 : ${VARIANTS_DIR:="/etc/ganeti/instance-debootstrap/variants"}
@@ -312,3 +312,11 @@ gnt-instance info instanceX
 essayer ca :
 
 gnt-cluster modify --hypervisor-parameter xen-pvm:initrd_path='/boot/initrd.img-2.6-xenU'
+
+Ca fonctione !
+
+root@graphene-1:~# gnt-instance list
+Instance  Hypervisor OS                  Primary_node                 Status  Memory
+instance1 xen-pvm    debootstrap+default graphene-1.nancy.grid5000.fr running   128M
+
+Il faut renseigner initrd seulement sur le master.

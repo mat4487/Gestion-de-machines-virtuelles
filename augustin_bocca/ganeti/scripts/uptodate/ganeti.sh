@@ -59,7 +59,7 @@ vgcreate xenvg /dev/sda5
 #Creation du bridge xen-br0
 echo " " >> /etc/network/interfaces
 echo "auto xen-br0"  >> /etc/network/interfaces
-echo "iface xen-br0 inet static" >> /etc/network/interfaces 
+echo "iface xen-br0 inet static" >> /etc/network/interfaces
 echo "address" $ipnode >> /etc/network/interfaces
 echo "netmask " $ipmask >> /etc/network/interfaces
 echo "network" $ipnetwork >> /etc/network/interfaces
@@ -77,31 +77,26 @@ sed -i '9d' /etc/network/interfaces
 /etc/init.d/networking stop
 /etc/init.d/networking start
 
-#supression des fichier temporaires
+#supression des fichier temporaires et copie de common.sh
 cd /root/
 rm troll ipcluster  ipgateway  ipnetwork
-
+rm /usr/share/ganeti/os/deboorstrap/common.sh
+mv common.sh /usr/share/ganeti/os/deboorstrap/
 
 #initialisation du cluster
 gnt-cluster init --no-drbd-storage cluster1
 
-#ajouter le node 
-#gnt-node add $hostname
-
 #et verifier
 gnt-node list
 
-#Pour l'instant les instances ne sont crées que sur un node, dans le futur peut etre faudra t-il les créer sur 2 nodes. Pour cela la commande gnt-instance add -n node1:node2
-
-echo "création d'instances pour ganeti."
-
-#récupération du hostname.
-#hostname=`cat /etc/hostname`
+#reiseigner le inird pour les instances
+gnt-cluster modify --hypervisor-parameter xen-pvm:initrd_path='/boot/initrd.img-2.6-xenU'
 
 #Création ajout dans le fichier /etc/hosts et création des instances ganeti.
 for i in `seq 1 7`;
 do
-        echo "10.0.0.$i instance$i" >> /etc/hosts
-        gnt-instance add -n $hostname -o debootstrap+default -t plain -s 2000 instance$i
+        echo "10.0.1.$i instance$i" >> /etc/hosts
+#       gnt-instance add -n $hostname -o debootstrap+default -t plain -s 2000 instance$i
 done
+
 
