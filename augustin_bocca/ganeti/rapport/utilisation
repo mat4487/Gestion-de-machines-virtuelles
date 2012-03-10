@@ -14,6 +14,7 @@ Sat Mar 10 16:52:36 2012  - INFO: Waiting for instance instance1 to sync disks.
 Sat Mar 10 16:52:37 2012  - INFO: Instance instance1's disks are in sync.
 Sat Mar 10 16:52:37 2012 * running the instance OS create scripts...
 Sat Mar 10 16:54:05 2012 * starting instance...
+
 root@graphene-11:~# gnt-instance list
 Instance  Hypervisor OS                  Primary_node                  Status  Memory
 instance1 xen-pvm    debootstrap+default graphene-11.nancy.grid5000.fr running   128M
@@ -26,10 +27,104 @@ root@graphene-11:~# gnt-instance remove instance1
 This will remove the volumes of the instance instance1 (including
 mirrors), thus removing all the data of the instance. Continue?
 y/[n]/?: y
+
 root@graphene-11:~# gnt-instance list
 Instance Hypervisor OS Primary_node Status Memory
 
 L'instance à bien été supprimée. Cette commande supprime l'instance quelque soit le ou les neud où elle a été créer.
+
+
+Arret et demarrage d'une instance :
+
+root@graphene-11:~# gnt-instance list
+Instance  Hypervisor OS                  Primary_node                  Status  Memory
+instance1 xen-pvm    debootstrap+default graphene-11.nancy.grid5000.fr running   128M
+instance2 xen-pvm    debootstrap+default graphene-11.nancy.grid5000.fr running   128M
+
+root@graphene-11:~# gnt-instance shutdown instance2
+Waiting for job 21 for instance2...
+
+root@graphene-11:~# gnt-instance list
+Instance  Hypervisor OS                  Primary_node                  Status     Memory
+instance1 xen-pvm    debootstrap+default graphene-11.nancy.grid5000.fr running      128M
+instance2 xen-pvm    debootstrap+default graphene-11.nancy.grid5000.fr ADMIN_down      -
+
+On voit que le status de instance2 est ADMIN_down ce qui signifie qu'elle est éteinte.
+
+root@graphene-11:~# gnt-instance startup instance2
+Waiting for job 26 for instance2...
+
+root@graphene-11:~# gnt-instance list
+Instance  Hypervisor OS                  Primary_node                  Status  Memory
+instance1 xen-pvm    debootstrap+default graphene-11.nancy.grid5000.fr running   128M
+instance2 xen-pvm    debootstrap+default graphene-11.nancy.grid5000.fr running   128M
+
+Le status de instance2 est de nouveau "running" ce qui signifie qu'elle est en fonctionnement.
+
+Interroger les instances :
+
+root@graphene-11:~# gnt-instance info instance1
+
+Instance name: instance1
+UUID: 3c3bd5ac-a261-4cba-a7f3-6cc74e49ce4e
+Serial number: 2
+Creation time: 2012-03-10 17:06:56
+Modification time: 2012-03-10 17:07:04
+State: configured to be up, actual state is up
+  Nodes:
+    - primary: graphene-11.nancy.grid5000.fr
+    - secondaries: 
+  Operating system: debootstrap+default
+  Allocated network port: None
+  Hypervisor: xen-pvm
+    - blockdev_prefix: default (sd)
+    - bootloader_args: default ()
+    - bootloader_path: default ()
+    - initrd_path: default (/boot/initrd.img-2.6-xenU)
+    - kernel_args: default (ro)
+    - kernel_path: default (/boot/vmlinuz-2.6-xenU)
+    - root_path: default (/dev/sda1)
+    - use_bootloader: default (False)
+  Hardware:
+    - VCPUs: 1
+    - memory: 128MiB
+    - NICs:
+      - nic/0: MAC: aa:00:00:d8:c6:8a, IP: None, mode: bridged, link: xen-br0
+  Disk template: plain
+  Disks:
+    - disk/0: lvm, size 1000M
+      access mode: rw
+      logical_id:  xenvg/3fe11555-edcd-40dc-bf63-f3fb749825bb.disk0
+      on primary:  /dev/xenvg/3fe11555-edcd-40dc-bf63-f3fb749825bb.disk0 (254:0)
+
+Cette commande édite les informations relatives à l'instance.
+
+
+Import et export d'instances :
+
+Export :
+
+root@graphene-11:~# gnt-backup export -n graphene-11.nancy.grid5000.fr instance1
+
+Sat Mar 10 17:31:13 2012 Shutting down instance instance1
+Sat Mar 10 17:33:16 2012 Creating a snapshot of disk/0 on node graphene-11.nancy.grid5000.fr
+Sat Mar 10 17:33:17 2012 Starting instance instance1
+Sat Mar 10 17:33:19 2012 Exporting snapshot/0 from graphene-11.nancy.grid5000.fr to graphene-11.nancy.grid5000.fr
+Sat Mar 10 17:33:22 2012 snapshot/0 is now listening, starting export
+Sat Mar 10 17:33:25 2012 snapshot/0 is receiving data on graphene-11.nancy.grid5000.fr
+Sat Mar 10 17:33:25 2012 snapshot/0 is sending data on graphene-11.nancy.grid5000.fr
+Sat Mar 10 17:33:31 2012 snapshot/0 sent 39M, 7.8 MiB/s
+Sat Mar 10 17:33:46 2012 snapshot/0 finished receiving data
+Sat Mar 10 17:33:46 2012 snapshot/0 finished sending data
+Sat Mar 10 17:33:46 2012 Removing snapshot of disk/0 on node graphene-11.nancy.grid5000.fr
+Sat Mar 10 17:33:47 2012 Finalizing export on graphene-11.nancy.grid5000.fr
+
+
+L'instance à bien été exporté dans /srv/ganeti.
+
+Il est tout à fait possible d'exporter une instance sans la redémarer en utilisant l'option : --noshutdown.
+
+Import :
 
 
 
