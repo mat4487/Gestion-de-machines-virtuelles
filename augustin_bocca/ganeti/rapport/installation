@@ -320,3 +320,8 @@ Instance  Hypervisor OS                  Primary_node                 Status  Me
 instance1 xen-pvm    debootstrap+default graphene-1.nancy.grid5000.fr running   128M
 
 Il faut renseigner initrd seulement sur le master.
+
+gnt-instance add -n griffon-90.nancy.grid5000.fr -o debootstrap+default -t plain -s 1000 instance1
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

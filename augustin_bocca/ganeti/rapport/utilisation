@@ -1,0 +1,35 @@
+Après l'installation, l'utilisation de ganeti :
+
+Instance management :
+
+Ajouter une instance :
+
+root@graphene-11:~# gnt-instance add -n graphene-11.nancy.grid5000.fr -o debootstrap+default -t plain -s 1000 instance1
+
+root@graphene-11:~# gnt-instance add -n graphene-11.nancy.grid5000.fr -o debootstrap+default -t plain -s 1000 instance1
+Sat Mar 10 16:52:35 2012 * disk 0, vg xenvg, name 99370e22-9421-40d6-8d9d-59bb6ecfa959.disk0
+Sat Mar 10 16:52:35 2012 * creating instance disks...
+Sat Mar 10 16:52:36 2012 adding instance instance1 to cluster config
+Sat Mar 10 16:52:36 2012  - INFO: Waiting for instance instance1 to sync disks.
+Sat Mar 10 16:52:37 2012  - INFO: Instance instance1's disks are in sync.
+Sat Mar 10 16:52:37 2012 * running the instance OS create scripts...
+Sat Mar 10 16:54:05 2012 * starting instance...
+root@graphene-11:~# gnt-instance list
+Instance  Hypervisor OS                  Primary_node                  Status  Memory
+instance1 xen-pvm    debootstrap+default graphene-11.nancy.grid5000.fr running   128M
+
+L'instance est bien créer sur le neud. Il est possible à partir du maitre de créer des instances sur n'importe quels neud d'un cluster. Il aussi possible de créer une instance primaire sur un neud et une instance secondaire sur un autre.
+
+Enlever une instance :
+
+root@graphene-11:~# gnt-instance remove instance1
+This will remove the volumes of the instance instance1 (including
+mirrors), thus removing all the data of the instance. Continue?
+y/[n]/?: y
+root@graphene-11:~# gnt-instance list
+Instance Hypervisor OS Primary_node Status Memory
+
+L'instance à bien été supprimée. Cette commande supprime l'instance quelque soit le ou les neud où elle a été créer.
+
+
+
