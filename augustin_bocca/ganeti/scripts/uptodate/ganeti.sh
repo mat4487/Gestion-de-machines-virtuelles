@@ -80,8 +80,8 @@ sed -i '9d' /etc/network/interfaces
 #supression des fichier temporaires et copie de common.sh
 cd /root/
 rm troll ipcluster  ipgateway  ipnetwork
-rm /usr/share/ganeti/os/deboorstrap/common.sh
-mv common.sh /usr/share/ganeti/os/deboorstrap/
+rm /usr/share/ganeti/os/debootstrap/common.sh
+mv common.sh /usr/share/ganeti/os/debootstrap/
 
 #initialisation du cluster
 gnt-cluster init --no-drbd-storage cluster1
