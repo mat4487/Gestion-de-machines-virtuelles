@@ -40,7 +40,7 @@ ipnetwork=`head -1 ipnetwork`
 #ip de la passerelle
 ipgateway=`head -1 ipgateway`
 
-#ajout de cluster1 dans dans /etc/hosts
+#ajout de cluster1 dans /etc/hosts
 echo "ajout de cluster1 dans /etc/hosts"
 ipcluster=`cat ipcluster`
 echo $ipcluster "cluster1" >> /etc/hosts

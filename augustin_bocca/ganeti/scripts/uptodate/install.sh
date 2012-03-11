@@ -20,8 +20,12 @@ echo $ipgateway > ipgateway
 ipnetwork=172.16.69.0
 echo $ipnetwork > ipnetwork
 
+#recupère les nodes
+cat $OAR_FILE_NODES | uniq > node
+
+
 #envoi via ssh au node
-scp ipcluster ipgateway ipnetwork ganeti.sh common.sh root@$1:/root/
+scp ipcluster ipgateway ipnetwork ganeti.sh common.sh node root@$1:/root/
 
 #suppression des fichiers
 rm ipgateway ipnetwork ipcluster

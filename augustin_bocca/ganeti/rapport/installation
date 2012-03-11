@@ -323,5 +323,6 @@ Il faut renseigner initrd seulement sur le master.
 
 gnt-instance add -n griffon-90.nancy.grid5000.fr -o debootstrap+default -t plain -s 1000 instance1
 
-
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Ajouter les nodes esclaves dans /etc/hosts du master
