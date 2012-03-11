@@ -89,8 +89,9 @@ gnt-cluster init --no-drbd-storage cluster1
 #et verifier
 gnt-node list
 
-#reiseigner le inird pour les instances
+#reiseigner le inird pour les instances et le root_path
 gnt-cluster modify --hypervisor-parameter xen-pvm:initrd_path='/boot/initrd.img-2.6-xenU'
+gnt-cluster modify --hypervisor-parameter xen-pvm:root_path='/dev/xvda1'
 
 #Création ajout dans le fichier /etc/hosts et création des instances ganeti.
 for i in `seq 1 7`;

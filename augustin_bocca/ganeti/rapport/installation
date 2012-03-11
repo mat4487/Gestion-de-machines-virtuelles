@@ -325,4 +325,7 @@ gnt-instance add -n griffon-90.nancy.grid5000.fr -o debootstrap+default -t plain
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-Ajouter les nodes esclaves dans /etc/hosts du master
+Il faut aussi préciser le root_path sur le node master : 
+
+gnt-cluster modify --hypervisor-parameter xen-pvm:root_path='/dev/xvda1'
+

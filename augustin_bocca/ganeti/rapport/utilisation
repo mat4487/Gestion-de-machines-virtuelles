@@ -186,4 +186,8 @@ gnt-instance add -t plain -n HOME_NODE ... \
   --disk 0:adopt=lv_name[,vg=vg_name] INSTANCE_NAME
   This will take over the given logical volumes, rename them to the Ganeti standard (UUID-based), and without installing the OS on them start directly the instance. If you configure the hypervisor similar to the non-managed configuration that the instance had, the transition should be seamless for the instance. For more than one disk, just pass another disk parameter (e.g. --disk 1:adopt=...).
 
+Connexion à la console d'un instance :
+
+gnt-instance console instance5
+
 
