@@ -1,0 +1,242 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[frenchb]{babel}
+\usepackage{listings}
+\usepackage{color} 
+\definecolor{hellgelb}{rgb}{1,1,0.8}
+\definecolor{colKeys}{rgb}{0,0,1}
+\definecolor{colIdentifier}{rgb}{0,0,0}
+\definecolor{colComments}{rgb}{1,0,0}
+\definecolor{colString}{rgb}{0,0.5,0}
+\lstset{%
+language={},%
+morekeywords={} %
+}
+\lstset{%
+float=hbp,%
+basicstyle=\ttfamily\small, %
+identifierstyle=\color{colIdentifier}, %
+keywordstyle=\color{colKeys}, %
+stringstyle=\color{colString}, %
+commentstyle=\color{colComments}, %
+columns=flexible, %
+tabsize=2, %
+frame=single, %
+extendedchars=true, %
+showspaces=false, %
+showstringspaces=false, %
+numbers=left, %
+numberstyle=\tiny, %
+breaklines=true, %
+backgroundcolor=\color{hellgelb}, %
+breakautoindent=true, %
+captionpos=b%
+}
+\begin{document}
+\title{Virt-Manager}
+\author{Mathieu Lamouroux - Sébastien Michaux}
+\date{5 Mars 2012}
+\maketitle
+
+\begin{abstract}
+Rapport sur le test de déploiement de virt-manager sur Grid5000.\\
+Pour cela nous avons réservé 10 noeuds sur Grid5000 : un sera dévoué à virt-manager, les autres contiendront des machines virtuelles
+\end{abstract}
+\section{Contexte}
+Machines déployées : Debian Squeeze
+griffon-50.nancy.grid5000.fr -> MASTER
+
+griffon-51.nancy.grid5000.fr
+griffon-53.nancy.grid5000.fr
+griffon-65.nancy.grid5000.fr
+griffon-68.nancy.grid5000.fr
+griffon-70.nancy.grid5000.fr
+griffon-77.nancy.grid5000.fr
+griffon-79.nancy.grid5000.fr
+griffon-87.nancy.grid5000.fr
+griffon-90.nancy.grid5000.fr
+
+Nous allons déployer 7 machines virtuelles sur chacun des noeuds.
+\section{Déploiement}
+Paquets mis à jour sur les noeuds
+\begin{lstlisting}
+root@griffon-50:~# apt-get upgrade
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following packages will be upgraded:
+  base-files bzip2 curl dpkg dpkg-dev file firmware-linux-free ia32-libs
+  lib32bz2-1.0 libbz2-1.0 libc-bin libc-dev-bin libc6 libc6-dev libc6-i386
+  libcurl3 libdpkg-perl libgnutls26 libgssapi-krb5-2 libk5crypto3 libkrb5-3
+  libkrb5support0 libmagic1 libpng12-0 librpm1 librpmbuild1 librpmio1
+  libssl0.9.8 libxenstore3.0 libxml2 linux-base linux-headers-2.6.32-5-amd64
+  linux-headers-2.6.32-5-common linux-image-2.6.32-5-xen-amd64 linux-libc-dev
+  locales module-init-tools openssl perl perl-base perl-modules rpm rpm-common
+  rpm2cpio tzdata xen-hypervisor-4.0-amd64 xen-utils-4.0 xenstore-utils
+48 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+Need to get 110 MB of archives.
+After this operation, 434 kB disk space will be freed.
+Do you want to continue [Y/n]? 
+\end{lstlisting}
+Installation de libvirt
+\begin{lstlisting}
+root@griffon-50:~# apt-get install libvirt-bin
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following extra packages will be installed:
+  dnsmasq-base ebtables libaio1 libasyncns0 libbluetooth3 libbrlapi0.5
+  libcap-ng0 libcurl3-gnutls libdirectfb-1.2-9 libflac8 libnl1 libogg0
+  libparted0debian1 libpciaccess0 libpulse0 libsdl1.2debian
+  libsdl1.2debian-alsa libsndfile1 libsvga1 libts-0.0-0 libvdeplug2 libvirt0
+  libvorbis0a libvorbisenc2 libx86-1 libxml2-utils libxtst6 netcat-openbsd
+  qemu-kvm tsconf
+Suggested packages:
+  parted nparted libparted0-dev libparted0-i18n pulseaudio policykit-1 vde2
+  samba
+The following NEW packages will be installed:
+  dnsmasq-base ebtables libaio1 libasyncns0 libbluetooth3 libbrlapi0.5
+  libcap-ng0 libcurl3-gnutls libdirectfb-1.2-9 libflac8 libnl1 libogg0
+  libparted0debian1 libpciaccess0 libpulse0 libsdl1.2debian
+  libsdl1.2debian-alsa libsndfile1 libsvga1 libts-0.0-0 libvdeplug2
+  libvirt-bin libvirt0 libvorbis0a libvorbisenc2 libx86-1 libxml2-utils
+  libxtst6 netcat-openbsd qemu-kvm tsconf
+0 upgraded, 31 newly installed, 0 to remove and 0 not upgraded.
+Need to get 8,044 kB of archives.
+After this operation, 21.7 MB of additional disk space will be used.
+Do you want to continue [Y/n]? 
+\end{lstlisting}
+Il faut ensuite activer l'utilisation des sockets Unix pour permettre à libvirt de communiquer avec xen. Ceci se fait dans le fichier \emph{/etc/xen/xend-config.sxp} en ajoutant ou activant la ligne \emph{(xend-unix-server yes)} puis en redémarant le service xen.\\
+On s'assure que le service est bien actif
+\begin{lstlisting}
+root@griffon-50:~# virsh version
+Compiled against library: libvir 0.8.3
+Using library: libvir 0.8.3
+Using API: Xen 3.0.1
+Running hypervisor: Xen 4.0.0
+\end{lstlisting}
+Ensuite on installe le client virsh (uniquement sur griffon-50 dans notre cas)
+\begin{lstlisting}
+root@griffon-50:~# apt-get install virt-manager
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following extra packages will be installed:
+  consolekit dbus-x11 dosfstools esound-common etherboot-qemu gconf2
+  gconf2-common gnome-icon-theme gnome-mime-data gvfs hdparm libart-2.0-2
+  libatasmart4 libaudiofile0 libavahi-glib1 libblas3gf libbonobo2-0
+  libbonobo2-common libbonoboui2-0 libbonoboui2-common libck-connector0
+  libcroco3 libdbus-glib-1-2 libeggdbus-1-0 libesd0 libfam0 libffi5 libgail18
+  libgconf2-4 libgdu0 libgfortran3 libglade2-0 libgnome-keyring0 libgnome2-0
+  libgnome2-common libgnomecanvas2-0 libgnomecanvas2-common libgnomeui-0
+  libgnomeui-common libgnomevfs2-0 libgnomevfs2-common libgnomevfs2-extra
+  libgsf-1-114 libgsf-1-common libgtk-vnc-1.0-0 libgudev-1.0-0 libhal-storage1
+  libhal1 libidl0 liblapack3gf libntfs-3g75 libntfs10 liborbit2
+  libpam-ck-connector libpcap0.8 libpolkit-agent-1-0 libpolkit-backend-1-0
+  libpolkit-gobject-1-0 librsvg2-2 librsvg2-common libsgutils2-2 libsmbclient
+  libtalloc2 libvde0 libvte-common libvte9 libwbclient0 libxaw7 libxcb-atom1
+  libxmu6 libxpm4 libxt6 libxv1 libxxf86dga1 mtools ntfs-3g ntfsprogs
+  openbios-ppc openbios-sparc openhackware policykit-1 policykit-1-gnome
+  python-cairo python-dbus python-gconf python-glade2 python-gnome2
+  python-gobject python-gtk-vnc python-gtk2 python-libvirt python-libxml2
+  python-numpy python-pycurl python-pyorbit python-urlgrabber python-vte qemu
+  qemu-keymaps qemu-system qemu-user qemu-utils seabios udisks vde2 vgabios
+  virt-viewer virtinst x11-utils
+Suggested packages:
+  esound-clients gconf-defaults-service gvfs-backends apmd libbonobo2-bin
+  esound fam gnome-keyring desktop-base libgnomevfs2-bin librsvg2-bin
+  sg3-utils floppyd python-dbus-doc python-dbus-dbg python-gnome2-doc
+  python-gtk2-doc python-gobject-dbg python-numpy-doc python-numpy-dbg
+  python-nose python-dev gfortran libcurl4-gnutls-dev python-pycurl-dbg
+  qemu-user-static samba xfsprogs reiserfsprogs mdadm cryptsetup vde2-cryptcab
+  ssh-askpass mesa-utils
+The following NEW packages will be installed:
+  consolekit dbus-x11 dosfstools esound-common etherboot-qemu gconf2
+  gconf2-common gnome-icon-theme gnome-mime-data gvfs hdparm libart-2.0-2
+  libatasmart4 libaudiofile0 libavahi-glib1 libblas3gf libbonobo2-0
+  libbonobo2-common libbonoboui2-0 libbonoboui2-common libck-connector0
+  libcroco3 libdbus-glib-1-2 libeggdbus-1-0 libesd0 libfam0 libffi5 libgail18
+  libgconf2-4 libgdu0 libgfortran3 libglade2-0 libgnome-keyring0 libgnome2-0
+  libgnome2-common libgnomecanvas2-0 libgnomecanvas2-common libgnomeui-0
+  libgnomeui-common libgnomevfs2-0 libgnomevfs2-common libgnomevfs2-extra
+  libgsf-1-114 libgsf-1-common libgtk-vnc-1.0-0 libgudev-1.0-0 libhal-storage1
+  libhal1 libidl0 liblapack3gf libntfs-3g75 libntfs10 liborbit2
+  libpam-ck-connector libpcap0.8 libpolkit-agent-1-0 libpolkit-backend-1-0
+  libpolkit-gobject-1-0 librsvg2-2 librsvg2-common libsgutils2-2 libsmbclient
+  libtalloc2 libvde0 libvte-common libvte9 libwbclient0 libxaw7 libxcb-atom1
+  libxmu6 libxpm4 libxt6 libxv1 libxxf86dga1 mtools ntfs-3g ntfsprogs
+  openbios-ppc openbios-sparc openhackware policykit-1 policykit-1-gnome
+  python-cairo python-dbus python-gconf python-glade2 python-gnome2
+  python-gobject python-gtk-vnc python-gtk2 python-libvirt python-libxml2
+  python-numpy python-pycurl python-pyorbit python-urlgrabber python-vte qemu
+  qemu-keymaps qemu-system qemu-user qemu-utils seabios udisks vde2 vgabios
+  virt-manager virt-viewer virtinst x11-utils
+0 upgraded, 110 newly installed, 0 to remove and 0 not upgraded.
+Need to get 63.5 MB of archives.
+After this operation, 186 MB of additional disk space will be used.
+Do you want to continue [Y/n]? 
+root@griffon-50:~# apt-get install virt-manager
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following extra packages will be installed:
+  consolekit dbus-x11 dosfstools esound-common etherboot-qemu gconf2
+  gconf2-common gnome-icon-theme gnome-mime-data gvfs hdparm libart-2.0-2
+  libatasmart4 libaudiofile0 libavahi-glib1 libblas3gf libbonobo2-0
+  libbonobo2-common libbonoboui2-0 libbonoboui2-common libck-connector0
+  libcroco3 libdbus-glib-1-2 libeggdbus-1-0 libesd0 libfam0 libffi5 libgail18
+  libgconf2-4 libgdu0 libgfortran3 libglade2-0 libgnome-keyring0 libgnome2-0
+  libgnome2-common libgnomecanvas2-0 libgnomecanvas2-common libgnomeui-0
+  libgnomeui-common libgnomevfs2-0 libgnomevfs2-common libgnomevfs2-extra
+  libgsf-1-114 libgsf-1-common libgtk-vnc-1.0-0 libgudev-1.0-0 libhal-storage1
+  libhal1 libidl0 liblapack3gf libntfs-3g75 libntfs10 liborbit2
+  libpam-ck-connector libpcap0.8 libpolkit-agent-1-0 libpolkit-backend-1-0
+  libpolkit-gobject-1-0 librsvg2-2 librsvg2-common libsgutils2-2 libsmbclient
+  libtalloc2 libvde0 libvte-common libvte9 libwbclient0 libxaw7 libxcb-atom1
+  libxmu6 libxpm4 libxt6 libxv1 libxxf86dga1 mtools ntfs-3g ntfsprogs
+  openbios-ppc openbios-sparc openhackware policykit-1 policykit-1-gnome
+  python-cairo python-dbus python-gconf python-glade2 python-gnome2
+  python-gobject python-gtk-vnc python-gtk2 python-libvirt python-libxml2
+  python-numpy python-pycurl python-pyorbit python-urlgrabber python-vte qemu
+  qemu-keymaps qemu-system qemu-user qemu-utils seabios udisks vde2 vgabios
+  virt-viewer virtinst x11-utils
+Suggested packages:
+  esound-clients gconf-defaults-service gvfs-backends apmd libbonobo2-bin
+  esound fam gnome-keyring desktop-base libgnomevfs2-bin librsvg2-bin
+  sg3-utils floppyd python-dbus-doc python-dbus-dbg python-gnome2-doc
+  python-gtk2-doc python-gobject-dbg python-numpy-doc python-numpy-dbg
+  python-nose python-dev gfortran libcurl4-gnutls-dev python-pycurl-dbg
+  qemu-user-static samba xfsprogs reiserfsprogs mdadm cryptsetup vde2-cryptcab
+  ssh-askpass mesa-utils
+The following NEW packages will be installed:
+  consolekit dbus-x11 dosfstools esound-common etherboot-qemu gconf2
+  gconf2-common gnome-icon-theme gnome-mime-data gvfs hdparm libart-2.0-2
+  libatasmart4 libaudiofile0 libavahi-glib1 libblas3gf libbonobo2-0
+  libbonobo2-common libbonoboui2-0 libbonoboui2-common libck-connector0
+  libcroco3 libdbus-glib-1-2 libeggdbus-1-0 libesd0 libfam0 libffi5 libgail18
+  libgconf2-4 libgdu0 libgfortran3 libglade2-0 libgnome-keyring0 libgnome2-0
+  libgnome2-common libgnomecanvas2-0 libgnomecanvas2-common libgnomeui-0
+  libgnomeui-common libgnomevfs2-0 libgnomevfs2-common libgnomevfs2-extra
+  libgsf-1-114 libgsf-1-common libgtk-vnc-1.0-0 libgudev-1.0-0 libhal-storage1
+  libhal1 libidl0 liblapack3gf libntfs-3g75 libntfs10 liborbit2
+  libpam-ck-connector libpcap0.8 libpolkit-agent-1-0 libpolkit-backend-1-0
+  libpolkit-gobject-1-0 librsvg2-2 librsvg2-common libsgutils2-2 libsmbclient
+  libtalloc2 libvde0 libvte-common libvte9 libwbclient0 libxaw7 libxcb-atom1
+  libxmu6 libxpm4 libxt6 libxv1 libxxf86dga1 mtools ntfs-3g ntfsprogs
+  openbios-ppc openbios-sparc openhackware policykit-1 policykit-1-gnome
+  python-cairo python-dbus python-gconf python-glade2 python-gnome2
+  python-gobject python-gtk-vnc python-gtk2 python-libvirt python-libxml2
+  python-numpy python-pycurl python-pyorbit python-urlgrabber python-vte qemu
+  qemu-keymaps qemu-system qemu-user qemu-utils seabios udisks vde2 vgabios
+  virt-manager virt-viewer virtinst x11-utils
+0 upgraded, 110 newly installed, 0 to remove and 0 not upgraded.
+Need to get 63.5 MB of archives.
+After this operation, 186 MB of additional disk space will be used.
+Do you want to continue [Y/n]? 
+\end{lstlisting}
+
+\section{Installation}
+
+\section{}
+
+\end{document}

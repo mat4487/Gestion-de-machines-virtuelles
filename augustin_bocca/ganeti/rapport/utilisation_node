@@ -1,0 +1,124 @@
+Add/readd :
+
+Il est possible d'ajouter un node à tout moment :
+
+
+root@griffon-8:~# gnt-node add griffon-78.nancy.grid5000.fr
+
+-- WARNING -- 
+Performing this operation is going to replace the ssh daemon keypair
+on the target machine (griffon-78.nancy.grid5000.fr) with the ones of the current one
+and grant full intra-cluster ssh root access to/from it
+
+Unable to verify hostkey of host griffon-78.nancy.grid5000.fr:
+30:cb:8f:ec:16:6a:3b:f5:0c:2a:de:a6:4c:1d:00:19. Do you want to accept
+it?
+y/[n]/?: y
+2012-03-12 07:38:09,239: MainThread Authentication to griffon-78.nancy.grid5000.fr via public key failed, trying password
+root password:
+Mon Mar 12 07:38:16 2012  - INFO: Node will be a master candidate
+
+
+Il aussi possible de reconfigurer un node deja présent :
+
+root@griffon-8:~# gnt-node add --readd griffon-78.nancy.grid5000.fr
+
+Unable to verify hostkey of host griffon-78.nancy.grid5000.fr:
+6c:10:44:28:e2:2c:fc:7f:d4:5e:a3:bd:83:2c:b2:97. Do you want to accept
+it?
+y/[n]/?: y
+Mon Mar 12 07:39:36 2012  - INFO: Readding a node, the offline/drained flags were reset
+Mon Mar 12 07:39:36 2012  - INFO: Node will be a master candidate
+
+Changer les roles des nodes :
+
+Promouvoir un neud au rang de master :
+
+Il faut d'abord revoquer le rang de master du node principal, sur un node master-candidate :
+
+gnt-cluster master-failover
+
+root@griffon-81:~# gnt-instance list
+Failure: prerequisites not met for this operation:
+This is not the master node, please connect to node 'griffon-8.nancy.grid5000.fr' and rerun the command
+
+root@griffon-81:~# gnt-cluster master-failover
+
+root@griffon-81:~# gnt-node list
+Node                         DTotal  DFree MTotal MNode MFree Pinst Sinst
+griffon-8.nancy.grid5000.fr  283.2G 283.2G  16.0G  965M 14.8G     0     0
+griffon-78.nancy.grid5000.fr 283.2G 283.2G  16.0G  965M 14.8G     0     0
+griffon-81.nancy.grid5000.fr 283.2G 283.2G  16.0G  965M 14.8G     0     0
+
+On voit que le node griffon-81 n'était pas master avant l'utilisation de la commande. Ensuite il est possible d'executer les commandes master.
+
+Passer un neud en master-candidate :
+
+root@griffon-81:~# gnt-node modify -C yes griffon-8.nancy.grid5000.fr
+Modified node griffon-8.nancy.grid5000.fr
+ - master_candidate -> True
+ - drained -> False
+
+Passer un node en status drained :
+
+root@griffon-81:~# gnt-node modify -D yes griffon-8.nancy.grid5000.fr
+Modified node griffon-8.nancy.grid5000.fr
+ - master_candidate -> False
+ - drained -> True
+
+Passer un node en offline :
+
+root@griffon-81:~# gnt-node modify -O yes griffon-8.nancy.grid5000.fr
+Modified node griffon-8.nancy.grid5000.fr
+ - master_candidate -> False
+ - offline -> True
+
+Passer un node en mode regular (remise à zero de tous les flags) :
+
+root@griffon-81:~# gnt-node modify -O no -D no -C no griffon-8.nancy.grid5000.fr
+Mon Mar 12 08:26:01 2012  - INFO: Ignoring request to unset flag master_candidate, already unset
+Mon Mar 12 08:26:01 2012  - INFO: Ignoring request to unset flag drained, already unset
+Mon Mar 12 08:26:01 2012  - INFO: Auto-promoting node to master candidate
+Mon Mar 12 08:26:01 2012  - WARNING: Transitioning node from offline to online state without using re-add. Please make sure the node is healthy!
+Modified node griffon-8.nancy.grid5000.fr
+ - master_candidate -> True
+ - offline -> False
+
+Le node est de nouveau en master-candidate comme à l'origine.
+
+Supprimer un node :
+
+root@griffon-81:~# gnt-node list
+Node                         DTotal  DFree MTotal MNode MFree Pinst Sinst
+griffon-8.nancy.grid5000.fr  283.2G 282.2G  16.0G  965M 14.7G     1     0
+griffon-78.nancy.grid5000.fr 283.2G 283.2G  16.0G  965M 14.8G     0     0
+griffon-81.nancy.grid5000.fr 283.2G 283.2G  16.0G  965M 14.8G     0     0
+
+root@griffon-81:~# gnt-node remove griffon-78.nancy.grid5000.fr
+
+root@griffon-81:~# gnt-node list
+Node                         DTotal  DFree MTotal MNode MFree Pinst Sinst
+griffon-8.nancy.grid5000.fr  283.2G 282.2G  16.0G  965M 14.7G     1     0
+griffon-81.nancy.grid5000.fr 283.2G 283.2G  16.0G  965M 14.8G     0     0
+
+Le node griffon-78 à bien été effacer du cluster.
+
+Manipulation du stockage :
+
+Faire la liste des volumes sur lesquels sont les instances : 
+
+root@griffon-81:~# gnt-node volumes
+Node                         PhysDev   VG    Name                                        Size Instance 
+griffon-81.nancy.grid5000.fr /dev/sda5 xenvg 4b328fb6-1cc9-4599-9523-2c6a8cf7b861.disk0 1000M instance4
+griffon-8.nancy.grid5000.fr  /dev/sda5 xenvg 8a85c87b-39fa-4e88-886b-a60c8706cc65.disk0 1000M instance2
+griffon-8.nancy.grid5000.fr  /dev/sda5 xenvg d84f3842-04d5-4951-aded-b5ea76f19681.disk0 1000M instance1
+griffon-8.nancy.grid5000.fr  /dev/sda5 xenvg ddfea3fc-d7b1-4a06-ae37-3094b1f0de11.disk0 1000M instance3
+
+Il est possible de lancer une reparation sur les volume de stockage :
+
+root@griffon-81:~# gnt-node repair-storage griffon-8.nancy.grid5000.fr lvm-vg xenvg
+Mon Mar 12 09:56:23 2012 Repairing storage unit 'xenvg' on griffon-8.nancy.grid5000.fr ...
+
+Cela équivau à vgreduce --removemissing.
+
+

@@ -1,0 +1,193 @@
+Après l'installation, l'utilisation de ganeti :
+
+Instance management :
+
+Ajouter une instance :
+
+root@graphene-11:~# gnt-instance add -n graphene-11.nancy.grid5000.fr -o debootstrap+default -t plain -s 1000 instance1
+
+root@graphene-11:~# gnt-instance add -n graphene-11.nancy.grid5000.fr -o debootstrap+default -t plain -s 1000 instance1
+Sat Mar 10 16:52:35 2012 * disk 0, vg xenvg, name 99370e22-9421-40d6-8d9d-59bb6ecfa959.disk0
+Sat Mar 10 16:52:35 2012 * creating instance disks...
+Sat Mar 10 16:52:36 2012 adding instance instance1 to cluster config
+Sat Mar 10 16:52:36 2012  - INFO: Waiting for instance instance1 to sync disks.
+Sat Mar 10 16:52:37 2012  - INFO: Instance instance1's disks are in sync.
+Sat Mar 10 16:52:37 2012 * running the instance OS create scripts...
+Sat Mar 10 16:54:05 2012 * starting instance...
+
+root@graphene-11:~# gnt-instance list
+Instance  Hypervisor OS                  Primary_node                  Status  Memory
+instance1 xen-pvm    debootstrap+default graphene-11.nancy.grid5000.fr running   128M
+
+L'instance est bien créer sur le neud. Il est possible à partir du maitre de créer des instances sur n'importe quels neud d'un cluster. Il aussi possible de créer une instance primaire sur un neud et une instance secondaire sur un autre.
+
+Enlever une instance :
+
+root@graphene-11:~# gnt-instance remove instance1
+This will remove the volumes of the instance instance1 (including
+mirrors), thus removing all the data of the instance. Continue?
+y/[n]/?: y
+
+root@graphene-11:~# gnt-instance list
+Instance Hypervisor OS Primary_node Status Memory
+
+L'instance à bien été supprimée. Cette commande supprime l'instance quelque soit le ou les neud où elle a été créer.
+
+
+Arret et demarrage d'une instance :
+
+root@graphene-11:~# gnt-instance list
+Instance  Hypervisor OS                  Primary_node                  Status  Memory
+instance1 xen-pvm    debootstrap+default graphene-11.nancy.grid5000.fr running   128M
+instance2 xen-pvm    debootstrap+default graphene-11.nancy.grid5000.fr running   128M
+
+root@graphene-11:~# gnt-instance shutdown instance2
+Waiting for job 21 for instance2...
+
+root@graphene-11:~# gnt-instance list
+Instance  Hypervisor OS                  Primary_node                  Status     Memory
+instance1 xen-pvm    debootstrap+default graphene-11.nancy.grid5000.fr running      128M
+instance2 xen-pvm    debootstrap+default graphene-11.nancy.grid5000.fr ADMIN_down      -
+
+On voit que le status de instance2 est ADMIN_down ce qui signifie qu'elle est éteinte.
+
+root@graphene-11:~# gnt-instance startup instance2
+Waiting for job 26 for instance2...
+
+root@graphene-11:~# gnt-instance list
+Instance  Hypervisor OS                  Primary_node                  Status  Memory
+instance1 xen-pvm    debootstrap+default graphene-11.nancy.grid5000.fr running   128M
+instance2 xen-pvm    debootstrap+default graphene-11.nancy.grid5000.fr running   128M
+
+Le status de instance2 est de nouveau "running" ce qui signifie qu'elle est en fonctionnement.
+
+Interroger les instances :
+
+root@graphene-11:~# gnt-instance info instance1
+
+Instance name: instance1
+UUID: 3c3bd5ac-a261-4cba-a7f3-6cc74e49ce4e
+Serial number: 2
+Creation time: 2012-03-10 17:06:56
+Modification time: 2012-03-10 17:07:04
+State: configured to be up, actual state is up
+  Nodes:
+    - primary: graphene-11.nancy.grid5000.fr
+    - secondaries: 
+  Operating system: debootstrap+default
+  Allocated network port: None
+  Hypervisor: xen-pvm
+    - blockdev_prefix: default (sd)
+    - bootloader_args: default ()
+    - bootloader_path: default ()
+    - initrd_path: default (/boot/initrd.img-2.6-xenU)
+    - kernel_args: default (ro)
+    - kernel_path: default (/boot/vmlinuz-2.6-xenU)
+    - root_path: default (/dev/sda1)
+    - use_bootloader: default (False)
+  Hardware:
+    - VCPUs: 1
+    - memory: 128MiB
+    - NICs:
+      - nic/0: MAC: aa:00:00:d8:c6:8a, IP: None, mode: bridged, link: xen-br0
+  Disk template: plain
+  Disks:
+    - disk/0: lvm, size 1000M
+      access mode: rw
+      logical_id:  xenvg/3fe11555-edcd-40dc-bf63-f3fb749825bb.disk0
+      on primary:  /dev/xenvg/3fe11555-edcd-40dc-bf63-f3fb749825bb.disk0 (254:0)
+
+Cette commande édite les informations relatives à l'instance.
+
+
+Import et export d'instances :
+
+Export :
+
+root@graphene-100:~# gnt-backup export -n graphene-143.nancy.grid5000.fr instance1
+Sun Mar 11 14:06:04 2012 Shutting down instance instance1
+Sun Mar 11 14:08:07 2012 Creating a snapshot of disk/0 on node graphene-100.nancy.grid5000.fr
+Sun Mar 11 14:08:08 2012 Starting instance instance1
+Sun Mar 11 14:08:09 2012 Exporting snapshot/0 from graphene-100.nancy.grid5000.fr to graphene-143.nancy.grid5000.fr
+Sun Mar 11 14:08:13 2012 snapshot/0 is now listening, starting export
+Sun Mar 11 14:08:17 2012 snapshot/0 is receiving data on graphene-143.nancy.grid5000.fr
+Sun Mar 11 14:08:17 2012 snapshot/0 is sending data on graphene-100.nancy.grid5000.fr
+Sun Mar 11 14:08:22 2012 snapshot/0 sent 14M, 2.8 MiB/s
+Sun Mar 11 14:08:38 2012 snapshot/0 finished receiving data
+Sun Mar 11 14:08:38 2012 snapshot/0 finished sending data
+Sun Mar 11 14:08:38 2012 Removing snapshot of disk/0 on node graphene-100.nancy.grid5000.fr
+Sun Mar 11 14:08:39 2012 Finalizing export on graphene-143.nancy.grid5000.fr
+Sun Mar 11 14:08:40 2012 Removing old exports for instance instance1
+
+L'instance à bien été exporté dans graphene-143.nancy.grid5000.fr
+
+Il est tout à fait possible d'exporter une instance sans la redémarer en utilisant l'option : --noshutdown.
+
+Import :
+
+
+
+root@graphene-100:~# gnt-instance remove instance1
+This will remove the volumes of the instance instance1 (including
+mirrors), thus removing all the data of the instance. Continue?
+y/[n]/?: y
+
+root@graphene-100:~# gnt-instance list
+Instance  Hypervisor OS                  Primary_node                   Status  Memory
+instance2 xen-pvm    debootstrap+default graphene-100.nancy.grid5000.fr running   128M
+instance3 xen-pvm    debootstrap+default graphene-143.nancy.grid5000.fr running   128M
+
+Instance1 à été supprimée du cluster.
+
+root@graphene-100:~# gnt-backup import -n graphene-100.nancy.grid5000.fr --src-node=graphene-143.nancy.grid5000.fr -t plain instance1
+Sun Mar 11 14:22:29 2012 * disk 0, vg xenvg, name a4cc7447-5ed7-4417-b222-d33a0c2842a0.disk0
+Sun Mar 11 14:22:29 2012 * creating instance disks...
+Sun Mar 11 14:22:30 2012 adding instance instance1 to cluster config
+Sun Mar 11 14:22:30 2012  - INFO: Waiting for instance instance1 to sync disks.
+Sun Mar 11 14:22:30 2012  - INFO: Instance instance1's disks are in sync.
+Sun Mar 11 14:22:30 2012 * running the instance OS import scripts...
+Sun Mar 11 14:22:30 2012 Exporting disk/0 from graphene-143.nancy.grid5000.fr to graphene-100.nancy.grid5000.fr
+Sun Mar 11 14:22:34 2012 disk/0 is now listening, starting export
+Sun Mar 11 14:22:37 2012 disk/0 is receiving data on graphene-100.nancy.grid5000.fr
+Sun Mar 11 14:22:37 2012 disk/0 is sending data on graphene-143.nancy.grid5000.fr
+Sun Mar 11 14:22:42 2012 disk/0 sent 34M, 6.0 MiB/s, 19%, ETA 23s
+Sun Mar 11 14:23:08 2012 disk/0 finished sending data
+Sun Mar 11 14:23:14 2012 disk/0 finished receiving data
+
+On importe instance1 depuis graphene-143.nancy.grid5000.fr.
+
+root@graphene-100:~# gnt-instance list
+Instance  Hypervisor OS                  Primary_node                   Status     Memory
+instance1 xen-pvm    debootstrap+default graphene-100.nancy.grid5000.fr ADMIN_down      -
+instance2 xen-pvm    debootstrap+default graphene-100.nancy.grid5000.fr running      128M
+instance3 xen-pvm    debootstrap+default graphene-143.nancy.grid5000.fr running      128M
+
+L'instance à bien été importée.
+
+root@graphene-100:~# gnt-instance startup instance1
+Waiting for job 32 for instance1...
+
+root@graphene-100:~# gnt-instance list
+Instance  Hypervisor OS                  Primary_node                   Status  Memory
+instance1 xen-pvm    debootstrap+default graphene-100.nancy.grid5000.fr running   128M
+instance2 xen-pvm    debootstrap+default graphene-100.nancy.grid5000.fr running   128M
+instance3 xen-pvm    debootstrap+default graphene-143.nancy.grid5000.fr running   128M
+
+L'instance est fonctionnelle sur graphene-100.nancy.grid5000.fr
+
+
+IL est aussi possible d'importer une instance étrangère à ganeti dont le disque est deja dans un LVM, sans avoir à le recopier.
+
+There is a possibility to import a foreign instance whose disk data is already stored as LVM volumes without going through copying it: the disk adoption mode.
+
+For this, ensure that the original, non-managed instance is stopped, then create a Ganeti instance in the usual way, except that instead of passing the disk information you specify the current volumes:
+
+gnt-instance add -t plain -n HOME_NODE ... \
+  --disk 0:adopt=lv_name[,vg=vg_name] INSTANCE_NAME
+  This will take over the given logical volumes, rename them to the Ganeti standard (UUID-based), and without installing the OS on them start directly the instance. If you configure the hypervisor similar to the non-managed configuration that the instance had, the transition should be seamless for the instance. For more than one disk, just pass another disk parameter (e.g. --disk 1:adopt=...).
+
+Connexion à la console d'un instance :
+
+gnt-instance console instance5
+
+
