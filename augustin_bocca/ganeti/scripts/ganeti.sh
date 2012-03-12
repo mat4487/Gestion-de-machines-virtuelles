@@ -99,9 +99,9 @@ echo "création d'instances pour ganeti."
 #hostname=`cat /etc/hostname`
 
 #Création ajout dans le fichier /etc/hosts et création des instances ganeti.
-for i in `seq 1 7`;
-do
-        echo "10.0.0.$i instance$i" >> /etc/hosts
-        gnt-instance add -n $hostname -o debootstrap+default -t plain -s 2000 instance$i
-done
+#for i in `seq 1 7`;
+#do
+#        echo "10.0.0.$i instance$i" >> /etc/hosts
+#        gnt-instance add -n $hostname -o debootstrap+default -t plain -s 2000 instance$i
+#done
 
