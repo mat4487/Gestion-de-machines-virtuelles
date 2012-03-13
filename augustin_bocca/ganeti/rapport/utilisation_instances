@@ -125,8 +125,6 @@ Il est tout à fait possible d'exporter une instance sans la redémarer en utili
 
 Import :
 
-
-
 root@graphene-100:~# gnt-instance remove instance1
 This will remove the volumes of the instance instance1 (including
 mirrors), thus removing all the data of the instance. Continue?
