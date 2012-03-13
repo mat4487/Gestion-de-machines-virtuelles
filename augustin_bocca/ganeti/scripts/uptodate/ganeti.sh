@@ -84,7 +84,7 @@ rm /usr/share/ganeti/os/debootstrap/common.sh
 mv common.sh /usr/share/ganeti/os/debootstrap/
 
 #initialisation du cluster
-gnt-cluster init --no-drbd-storage cluster1
+gnt-cluster init --no-drbd-storage --nic-parameters link=eth0 cluster1
 
 #et verifier
 gnt-node list
