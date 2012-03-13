@@ -92,10 +92,3 @@ gnt-node list
 #renseigner le inird pour les instances et le root_path
 gnt-cluster modify --hypervisor-parameter xen-pvm:initrd_path='/boot/initrd.img-2.6-xenU'
 gnt-cluster modify --hypervisor-parameter xen-pvm:root_path='/dev/xvda1'
-
-#for i in `seq 1 7`;
-#do
-#        echo "10.0.1.$i instance$i" >> /etc/hosts
-#       gnt-instance add -n $hostname -o debootstrap+default -t plain -s 2000 instance$i
-#done
-
