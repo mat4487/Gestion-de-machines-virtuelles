@@ -1,29 +1,28 @@
 \lstset{language=bash}
 \chapter{OpenXENManager}
-XenseMaking Project développe un client lourd, ainsi qu'un client
+\section{PrÃ©sentation}
+XenseMaking Project dÃ©veloppe un client lourd, ainsi qu'un client
 web, pour manager XenServer. C'est un clone du XenCenter, qui fonctionne
 avec Linux, BSD, Windows et MacOSX, alors que le XenCenter ne fonctionne
 qu'avec Windows. OpenXenManager/OpenXenCenter un le client lourd qui
-permet de manager XenServer.Il a été développé en Python avec pygtk
+permet de manager XenServer.Il a Ã©tÃ© dÃ©veloppÃ© en Python avec pygtk
 et gtk-vnc.
-Les fonctionnalités actuellement implémentées sont les suivantes :
+Les fonctionnalitÃ©s actuellement implÃ©mentÃ©es sont les suivantes :
 \begin{itemize}
-\item - monitoring des machines virtuelles - accès à la console des machines
-virtuelles
-\item - opérations d'administration (démarrage, arrêt, reboot, ...)
-\item - création de machines virtuelles
+\item monitoring des machines virtuelles - accÃ¨s Ã  la console des machines virtuelles
+\item opÃ©rations d'administration (dÃ©marrage, arrÃ¨t, reboot, ...)
+\item crÃ©ation de machines virtuelles
 \end{itemize}
-\section{Guide d'installation d'OpenXenManager}
+\section{Installation}
 Pour l'installation nous avons besoin des paquets suivant:
 \begin{lstlisting}
 apt-get install subversion bzip2 python-glade2 python-gtk-vnc shared-mime-info graphviz
 \end{lstlisting}
-On télécharge la dernière version d'openxenmanager dans le dépôt
-subversion
+On tÃ©lÃ©charge la derniÃ¨re version d'openxenmanager dans le dÃ©pot subversion
 \begin{lstlisting}
 svn co https://openxenmanager.svn.sourceforge.net/svnroot/openxenmanager openxenmanager
 \end{lstlisting}
-On se déplace dans le répertoire trunk:
+On se dÃ©place dans le rÃ©pertoire trunk:
 \begin{lstlisting}
 cd openxenmanager/trunk
 \end{lstlisting}
@@ -32,3 +31,5 @@ Finalement on lance openxenmanager avec la commande suivante
 python window.py
 \end{lstlisting}
 Une interface graphique d'openxenmanger apparait.
+\section{Utilisation}
+Pour l'instant nous n'avons toujours pas rÃ©ussi Ã  utiliser ce logiciel. DU a diverses difficultÃ©es (pas de service distant sous squeeze et plus de xen lors de la migration sous unstable).
