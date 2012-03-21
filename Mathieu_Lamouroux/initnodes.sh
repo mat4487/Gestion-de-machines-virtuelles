@@ -9,8 +9,7 @@ echo "done\n"
 echo "creation du fichier avec la liste des ip......"
 g5k-subnets -i -o ip_list.txt
 echo "done\n"
-echo "creation du fichier avec la liste des machines attribuees......
-"
+echo "creation du fichier avec la liste des machines attribuees......"
 cat $OAR_FILE_NODES > vms_assigned.txt
 echo "done"
 for vm in `cat vms_assigned.txt`
