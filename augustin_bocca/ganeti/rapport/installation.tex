@@ -1,0 +1,81 @@
+\section {Installation}
+\subsection {Modification des sources}
+Nous avons intallé ganeti à partir de la branche testing de debian. Pour des raisons techniques le système est squeeze. Pour cela il faut ajouter les sources de testing dans le fichier /etc/apt/sources.list :
+
+##Wheezy
+deb http://ftp.fr.debian.org/debian/ wheezy main contrib non-free
+deb-src http://ftp.fr.debian.org/debian/ wheezy main contrib non-free
+
+## wheezy security
+deb http://security.debian.org/ wheezy/updates main contrib non-free
+deb-src http://security.debian.org/ wheezy/updates main contrib non-free
+
+
+IL faut ensuite créer le fichier de préférence de apt dans le répertoire /etc/apt/apt.conf.d. Nous avons appelé le  fichier 80default-distrib (le nom du fichier est libre). Il faut ajouter cette ligne au fichier qui défini la branche stable comme la branche par défaut :
+
+APT::Default-Release "stable";
+
+\subsection {Mise à jour et installation}
+On peut enfin alors mettre le système à jour et installer ganeti :
+
+apt-get update && apt-get dist-upgrade -q -y --force-yes
+apt-get -t testing install -q -y --force-yes ganeti2 ganeti-htools ganeti-instance-debootstrap
+
+\section {Configuration}
+
+La configuration est l'étape la plus complexe.
+
+\subsection {Configuration du fichier hosts}
+
+Dans le fichier hosts il faut renseigner l'adresse et le nom complet du node primaire de cette manière :
+
+172.16.68.10    griffon-10.nancy.grid5000.fr griffon-10
+
+iśubsection {Copie de vmlinuz-2.6.32-5-xen-amd64 et initrd.img-2.6.32-5-xen-amd64}
+
+- Dans /etc/boot copier les fichiers vmlinuz-2.6.32-5-xen-amd64 et initrd.img-2.6.32-5-xen-amd64 :
+
+cp vmlinuz-2.6.32-5-xen-amd64 vmlinuz-2.6-xenU
+cp initrd.img-2.6.32-5-xen-amd64 initrd.img-2.6-xenU
+
+\subsection {Création du bridge xen-br0}
+
+\subsection {Création du LVM}
+
+Ganeti requière un LVM d'au moins 20Go pour fonctionner.
+
+Sur les neud de grid5000 il est possible de créer un tel LVM sur la partition /dev/sd5.
+
+umount /dev/sda5
+pvcreate /dev/sda5
+vgcreate xenvg /dev/sda5
+
+On a créé un VG qui se nome xenvg sur /dev/sda5.
+
+\subsection {Edition de /usr/share/ganeti/os/debootstrap/common.sh}
+
+Il est nécessaire d'éditer ce fichier pour que ganeti puisse créer des instances :
+
+{Fichier de conf_common}
+
+Par defaut le mirroir utilisé par ganeti est http://ftp.us.debian.org/debian/. Sur Grid5000 les depots US sont bloqués. Il faut donc indiquer les depots francais.
+On indique aussi l'adresse du  proxy de grid5000.
+On peut choisir la version de Debian que l'on souhaite installer. Ici nous avons opter pour squeeze.
+L'architecture que nous choisi est amd64, car l'hote la supporte.
+La variable : EXTRA_PKGS permet d'installer des paquets supplémentaires.
+
+\subsection {Configuration et initialisation du cluster}
+L'initialisation du cluster se fait avec la commande gnt-cluster init clusterX
+
+#initialisation du cluster
+gnt-cluster init --no-drbd-storage --nic-parameters link=eth0 cluster1
+
+Ici nous avons précisé les options --no-drbd-storage --nic-parameters link=eth0.
+La première permet d'utiliser ganeti sans utiliser la haute disponibilité.
+La seconde permet de préciser un autre bridge que xen-br0
+
+Enfin il faut renseigner le inird et le root_path, cela est nécessaire pour la création des instances :
+
+gnt-cluster modify --hypervisor-parameter xen-pvm:initrd_path='/boot/initrd.img-2.6-xenU'
+gnt-cluster modify --hypervisor-parameter xen-pvm:root_path='/dev/xvda1'
+
