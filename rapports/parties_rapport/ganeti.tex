@@ -1,16 +1,21 @@
 \lstset{language=bash}
-\chapter{installation de ganeti}
-\section{installer ganeti}
+\chapter{Ganeti}
+\section{Présentation}
+Ganeti est un outil de gestion de machines virtuelles se basant sur les technologies de virtualisation existantes comme XEN et KVM.\\
+Ganeti nécessite un logiciel de virtualisation pré-installé sur les serveurs afin de pouvoir fonctionner. 
+
+Une fois installé, l'outil prendra en charge la partie gestion des instances virtuelles (Xen DomU), par exemple, la gestion de création de disque, l'installation du système d'exploitation (en coopération avec les scripts d'installation du système d'exploitation spécifique), et le démarrage, l'arrêt, le basculement entre les systèmes physiques. Il a été conçu pour faciliter la gestion de cluster de serveurs virtuels et de fournir une récupération rapide et simple.
+\section{Installation}
 installer ganeti :
 \begin{lstlisting}
 apt-get install ganeti2 ganeti-htools ganeti-instance-debootstrap
 \end{lstlisting}
 Dans /etc/host ajouter l'adresse IP du node avec le nom de l'host ainsi que l'adresse du cluster :
-
+\begin{lstlisting}
 10.144.64.1 cluster1
 172.16.65.56 griffon-56.nancy.grid5000.fr
-
-Lorsque on aura plusieur nodes il faudra une autre adresse Ip au cluster car elle doit etre accessible � tous les nodes
+\end{lstlisting}
+Lorsque on aura plusieur nodes il faudra une autre adresse Ip au cluster car elle doit etre accessible à tous les nodes
 
 Dans /boot/ creer des liens symboliques :
 \begin{lstlisting}
@@ -36,22 +41,23 @@ iface xen-br0 inet static
  bridge_ports eth0
  bridge_stp off
  bridge_fd 0
- \end{lstlisting}
-\Chatper{Utilisation de ganeti}
+\end{lstlisting}
+\section{Utilisation}
 
 Initialiser le cluster avec ganeti :
 \begin{lstlisting}
 gnt-custer init --no-drbd-storage cluster1
 \end{lstlisting}
 ajouter le node
+\begin{lstlisting}
 gnt-node add griffon-56.nancy.grid5000.fr
-
+\end{lstlisting}
 et verifier avec :
+\begin{lstlisting}
 gnt-node list
-
+\end{lstlisting}
 Qui devrait renvoyer quelque chose comme cela :
-
+\begin{lstlisting}
 Node                         DTotal  DFree MTotal MNode MFree Pinst Sinst
 griffon-56.nancy.grid5000.fr 283.2G 283.2G      -     -     -     0     0
-
-
+\end{lstlisting}

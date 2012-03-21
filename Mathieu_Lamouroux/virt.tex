@@ -43,19 +43,19 @@ Rapport sur le test de déploiement de virt-manager sur Grid5000.\\
 Pour cela nous avons réservé 10 noeuds sur Grid5000 : un sera dévoué à virt-manager, les autres contiendront des machines virtuelles
 \end{abstract}
 \section{Contexte}
-Machines déployées : Debian Squeeze
-griffon-50.nancy.grid5000.fr -> MASTER
-
-griffon-51.nancy.grid5000.fr
-griffon-53.nancy.grid5000.fr
-griffon-65.nancy.grid5000.fr
-griffon-68.nancy.grid5000.fr
-griffon-70.nancy.grid5000.fr
-griffon-77.nancy.grid5000.fr
-griffon-79.nancy.grid5000.fr
-griffon-87.nancy.grid5000.fr
-griffon-90.nancy.grid5000.fr
-
+Environnements déployés : Debian Squeeze (squeeze-x64-xen) \\
+griffon-50.nancy.grid5000.fr sera le noeud principal sur lequel sera installé virt-manager. Les autres noeuds utilisés pour héberger des machines virtuelles :
+\begin{itemize}
+  \item griffon-51.nancy.grid5000.fr
+  \item griffon-53.nancy.grid5000.fr
+  \item griffon-65.nancy.grid5000.fr
+  \item griffon-68.nancy.grid5000.fr
+  \item griffon-70.nancy.grid5000.fr
+  \item griffon-77.nancy.grid5000.fr
+  \item griffon-79.nancy.grid5000.fr
+  \item griffon-87.nancy.grid5000.fr
+  \item griffon-90.nancy.grid5000.fr
+\end{itemize}
 Nous allons déployer 7 machines virtuelles sur chacun des noeuds.
 \section{Déploiement}
 Paquets mis à jour sur les noeuds
@@ -234,9 +234,15 @@ Need to get 63.5 MB of archives.
 After this operation, 186 MB of additional disk space will be used.
 Do you want to continue [Y/n]? 
 \end{lstlisting}
-
+Après on peut lancer virt-manager via un tunnel X11 avec la commande \emph{virt-manager}
 \section{Installation}
+On lance ensuite l'installation de 7 machines virtuelles sur chacun des noeuds via le script crée par Augustin.
+%IMAGE DU SCRIPT
+%IMAGE DE VIRT
+Afin de controler les vms installés sur d'autres noeuds, il est nécessaire de passer via un tunnel ssh. Pour faire elà nous avons crée un couple clé privé/publique spécifique : \emph{key\_virt et key\_virt.pub}. Nous copions ces clefs sur tous les noeuds puis nous ajoutons le contenu de \emph{key\_virt.pub} dans le fichier \emph{.ssh/authorized\_keys}.
 
 \section{}
+
+
 
 \end{document}

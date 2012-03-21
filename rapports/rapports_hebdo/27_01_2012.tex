@@ -1,31 +1,64 @@
-\documentclass{report}
+\documentclass{article}
 \usepackage[utf8]{inputenc}
 \usepackage[frenchb]{babel}
+%Utilisé pour la mise en forme des portions de codes%
+\usepackage{listings}
+%Configuration du package listings
+\lstset{
+language=sh,
+basicstyle=\footnotesize,
+numbers=left
+numberstyle=\normalsize,
+numbersep=7pt,
+}
 \begin{document}
 \title{Projet Tuteurés -Outils de gestion centralisée de machines virtuelles (Tuteur : Lucas Nussbaum) }
 \author{Sébastien Michaux - Augustin Bocca - Julien Tournois - Mathieu Lamouroux}
-\date{27 Janvier 2012}
+\date{Rapport hebdomadaire - 27 Janvier 2012}
 \maketitle
 \chapter{Travaux réalisés}
-\section{}
-
-%BALISES UTILISEE POUR FORMATER LE CODE
+\section{Création du dépôt Git}
+\paragraph{}
+Mardi, nous nous sommes penchés sur la création du dépôt Git.
+Ne connaissant pas ce gestionnaire de versions, il nous a fallut prendre un peu de temps pour maitriser la création du dépot sur GitHub et celle des copies de travail sur chacun des ordinateurs des membres du groupe
+\paragraph{}
+Après une semaine d'utilisation, nous sommes désormais plus à l'aise pour la gestion du projet via GitHub. Chaque membre à pu récupérer une copie locale du dépot et des premiers documents sont ainsi partagés.
+Le projet GitHub est hébergé sur 
 \begin{verbatim}
-
+git://github.com/mat4487/Gestion-de-machines-virtuelles.git
 \end{verbatim}
 
-\section{}
-\subsection{}
+\section{Connexion à Grid5000}
+Jeudi et Vendredi, nous nous sommes penchés sur les tutoriaux du wiki de grid5000.
+Arrivés au tp2, nous avons pu tester la réservation d'une machine pour l'installation d'un debian lenny. (listing de connexion en annexe)
 
 \chapter{À poursuivre}
-
+\section{Git}
+Le dépot Git étant fonctionnel, il dispose actuellement d'une architecture simple :
+\begin{lstlisting}
+/Prenom_Nom -> contiennent les documents de chacun (taches réalisées, tutos,...)
+/rapports -> contient les sources et les pdf de tous les (futurs) rapports
+/rapports/parties_rapport -> contient les différents fichiers .tex des rapports 
+/rapports/rapports_hebdo -> contient les sources et pdf des rappots hebdomadaires
+\end{lstlisting}
+Cette organisation sera amenée à être évoluée au fur et à mesure de l'avancement du projet
+\section{Grid5000}
+Nous avons pu déployer un premier système sur un noeud de la grille de Nancy.
+L'objectif va être dans un premier temps la maitrise du déploiement simultanée de plusieurs machines aptes à héberger des machines virtuelles.
 \chapter{Problèmes rencontrés}
-
+\paragraph{}
+Les principaux obstacles ont étés la compréhension de Git d'une part et de Grid5000 d'autre part. N'étant pas, à l'origine, familiers de ces outils on a passé un peu de temps afin de commencer à avoir une bonne prise en main des outils.
+\paragraph{}
+Ces problèmes étant maintenant résolu nous n'avons pas de blocage pour l'instant.
 \appendix
 \chapter{Sources}
 \begin{description}
-\item[www.grid5000.fr : ]le wiki disponible sur le site internet de grid5000 fut principale source de renseignements pour le démarrage du projet.
+\item[www.grid5000.fr : ]le wiki disponible sur le site internet de grid5000 fut notre principale source de renseignements pour le démarrage du projet.
 \item[www.loria.fr/lnussbau/ : ]nous avons pu y consulter des anciens projets sur Grid5000 ce qui nous a permis d'avoir un premier aperçu de ses possibilités.
 \end{description}
-
+\chapter{Listings}
+\section{Connexion à Grid5000}
+\input{connexion.tex}
+\section{TP2 - Cluster Experiment}
+\input{cluster_experiment.tex}
 \end{document}
