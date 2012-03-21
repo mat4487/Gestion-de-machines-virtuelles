@@ -1,4 +1,12 @@
 \chapter{Installation de virt-manager}
+\section{Pré-requis et considérations pour les hôtes}
+Divers facteurs doivent être considérés avant de créer des hôtes virtualisés.
+\subsubsection{Performance} 
+Les hôtes virtualisés doivent être déployé et configuré en fonction de leurs tâches prévues. Certains systèmes (par exemple, les hôtes ou sont hébergés des serveur de base de données) ont besoin de performances plus élevées que d'habitude; Les hôtes peuvent exiger plus de CPU ou de mémoire attribué en fonction de leur rôle,et de l'utilisation futur qu'il pourrait avoir. projeté la charge du système.
+\subsubsection{Stockage}
+Certains hôtes peuvent avoir besoin d'une plus grande priorité d'accès au stockage, de disques plus rapides, ou peuvent exiger un accès exclusif à des zones de stockage. La quantité de stockage utilisée par les hôtes doit être régulièrement surveillée et prise en compte lors du déploiement et le maintien de stockage.
+\subsubsection{Mise en réseau et l'infrastructure du réseau}
+ En fonction de notre environnement, certains hôtes pourraient exiger des liens réseau plus rapides que d'autres hôtes. La bande passante ou de latence sont souvent des facteurs à prendre en compte lors du déploiement et le maintenance des hôtes.
 \section{Installation côté serveur}
 Cette partie est facile, un simple apt-get install suffit. Nous installons le paquet qui communique avec Xen et remonte les informations au client virt-manager.
 \begin{lstlisting}
@@ -29,7 +37,7 @@ apt-get install virt-manager
 
 1)Pour commencer on démmarre virt-manager, puis on lance le gestionnaire de machines virtuelles à partir du menu en cliquant sur l'icone en forme de pc.
 
-
+\includegraphics[width=250pt]{images/virt.jpg}
 
 3) La fenêtre du gestionnaire de machine virtuelle nous autorise à en créer de nouvelles.
 On clique sur création de nouvelle machine virtuelle pour faire apparaître l'assistant qui va nous aider pour élaborer notre hôte.
@@ -40,9 +48,9 @@ L'assistant décompose la création en cinq étapes:
 -La configuration réseau, l'architecture, et d'autres paramètres matériels
 
 Le processus de création d'hôte commence avec la selection d'un nom et le type d'installation.
--------------------------------
-ON MET UNE IMAGE POUR MONTRER
--------------------------------
+\includegraphics{images/nommachine.jpg}
+
+
 -Local install media(ISO image or CDROM)
 Cette méthode utilise un CD-ROM,DVD ou une image iso.
 
@@ -54,23 +62,22 @@ Cette méthode nous permet de créer un nouvelle hôte et d'y importer une image
 
 La prochaine étape consiste à configurer l'installation.
 On configure le type de système d'exploitation et sa version qui sera installé, cela dépend de la méthode d'installation que l'on a choisie.
------------------------------------------------
-ON MET UNE IMAGE
------------------------------------------------
------------------------------------------------
-ON MET UNE IMAGE
------------------------------------------------
+
+\includegraphics{images/iso.jpg}
+
 
 Configuration du CPU et de la mémoire
 La prochaine étape consiste à configurer le nombre de CPU et la quantité de mémoire à allouer à la machine virtuelle. L'assistant indique le nombre de processeurs et la quantité de mémoire que l'on peut lui allouer.
--------------------------------------------------------
+
 \includegraphics{images/cpu.jpg}
 Configuration de l'espace de stockage
--------------------------------------------------------
+
 \includegraphics{images/Storage.jpg}
--------------------------------------------------------
+
  Si l'on a choisi d'importer une image de disque existante au cours de la première étape, virt-manager va sauter cette étape.
 On doit attribuer un espace suffisant pour notre machine virtuelle et toutes les applications que l'hôte a besoin.
 
 Configuration finale
 On vérifie les paramètres de la machine virtuelle et on clique sur Terminer lorsqu'on est satisfait, cela permettra de créer l'hôte avec les paramètres réseau par défaut, le type de virtualisation, et l'architecture.
+
+\includegraphics{images/reseau.jpg}
