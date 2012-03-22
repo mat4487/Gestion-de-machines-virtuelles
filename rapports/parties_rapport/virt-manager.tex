@@ -37,7 +37,14 @@ apt-get install virt-manager
 
 1)Pour commencer on démmarre virt-manager, puis on lance le gestionnaire de machines virtuelles à partir du menu en cliquant sur l'icone en forme de pc.
 
-\includegraphics[width=300pt]{images/virt.jpg}
+\begin{figure}
+\begin{center}
+\includegraphics[width=350pt]{images/virt.jpg}
+\end{center}
+\caption{Interface de virt-manager}
+\end{figure}
+
+
 
 3) La fenêtre du gestionnaire de machine virtuelle nous autorise à en créer de nouvelles.
 On clique sur création de nouvelle machine virtuelle pour faire apparaître l'assistant qui va nous aider pour élaborer notre hôte.
@@ -48,9 +55,12 @@ L'assistant décompose la création en cinq étapes:
 -La configuration réseau, l'architecture, et d'autres paramètres matériels
 
 Le processus de création d'hôte commence avec la selection d'un nom et le type d'installation.
-\includegraphics[width=300pt]{images/nommachine.jpg}
-
-
+\begin{figure}
+\begin{center}
+\includegraphics[width=350pt]{images/nommachine.jpg}
+\end{center}
+\caption{Choix du nom de la nouvelle machine virtuelle}
+\end{figure}
 -Local install media(ISO image or CDROM)
 Cette méthode utilise un CD-ROM,DVD ou une image iso.
 
@@ -62,22 +72,42 @@ Cette méthode nous permet de créer un nouvelle hôte et d'y importer une image
 
 La prochaine étape consiste à configurer l'installation.
 On configure le type de système d'exploitation et sa version qui sera installé, cela dépend de la méthode d'installation que l'on a choisie.
-
+\begin{figure}
+\begin{center}
 \includegraphics[width=300pt]{images/iso.jpg}
+\end{center}
+\caption{Choix du nom de la nouvelle machine virtuelle}
+\end{figure}
+
 
 
 Configuration du CPU et de la mémoire
 La prochaine étape consiste à configurer le nombre de CPU et la quantité de mémoire à allouer à la machine virtuelle. L'assistant indique le nombre de processeurs et la quantité de mémoire que l'on peut lui allouer.
-
+\begin{figure}
+\begin{center}
 \includegraphics[width=300pt]{images/cpu.jpg}
-Configuration de l'espace de stockage
+\end{center}
+\caption{Choix du nom de la nouvelle machine virtuelle}
+\end{figure}
 
+Configuration de l'espace de stockage
+\begin{figure}
+\begin{center}
 \includegraphics[width=300pt]{images/Storage.jpg}
+\end{center}
+\caption{Choix du nom de la nouvelle machine virtuelle}
+\end{figure}
+
 
  Si l'on a choisi d'importer une image de disque existante au cours de la première étape, virt-manager va sauter cette étape.
 On doit attribuer un espace suffisant pour notre machine virtuelle et toutes les applications que l'hôte a besoin.
 
 Configuration finale
 On vérifie les paramètres de la machine virtuelle et on clique sur Terminer lorsqu'on est satisfait, cela permettra de créer l'hôte avec les paramètres réseau par défaut, le type de virtualisation, et l'architecture.
-
+\begin{figure}
+\begin{center}
 \includegraphics[width=300pt]{images/reseau.jpg}
+\end{center}
+\caption{Choix du nom de la nouvelle machine virtuelle}
+\end{figure}
+

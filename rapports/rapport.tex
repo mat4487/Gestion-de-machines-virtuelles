@@ -1,4 +1,5 @@
 \documentclass{report}[a4paper,12pt]
+\usepackage[top=2.54cm, bottom=2.54cm, left=2.54cm, right=2.54cm]{geometry}
 \usepackage[utf8]{inputenc}
 \usepackage[frenchb]{babel}
 \usepackage[T1]{fontenc}
@@ -6,7 +7,7 @@
 \usepackage{array}
 %\usepackage{fancyhdr}
 \usepackage{listings}
-%\pagestyle{fancy}
+\pagestyle{headings}
 \usepackage{color}
 %\definecolor{javared}{rgb}{0.6,0,0} % for strings
 %\definecolor{javagreen}{rgb}{0.25,0.5,0.35} % comments
@@ -18,8 +19,8 @@
 \definecolor{colComments}{rgb}{1,0,0}
 \definecolor{colString}{rgb}{0,0.5,0}
 \lstset{%
-language=ruby%
-morekeywords={}%
+language=ruby,%
+%morekeywords={},%
 float=hbp,%
 basicstyle=\ttfamily\small, %
 identifierstyle=\color{colIdentifier}, %
@@ -54,7 +55,7 @@ captionpos=b%
 \tableofcontents
 \newpage
 \input{parties_rapport/introduction.tex}
-\input{parties_rapport/ganeti.tex}
+\input{parties_rapport/ganeti3.tex}
 \input{parties_rapport/openxenmanager.tex}
 \input{parties_rapport/virt-manager.tex}
 \appendix

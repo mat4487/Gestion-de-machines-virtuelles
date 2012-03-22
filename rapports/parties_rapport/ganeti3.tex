@@ -1,7 +1,7 @@
 \chapter{Ganeti}
 \section{Introduction}
 Ganeti est un outil de gestion de machines virtuelles se basant sur les technologies de virtualisation existantes comme XEN et KVM.\\
-%Ganeti nécessite un logiciel de virtualisation pré-installé sur les serveurs afin de pouvoir fonctionner. Une fois installé, l'outil prendra en charge la partie gestion des instances virtuelles (Xen DomU), par exemple, la gestion de création de disque, l'installation du système d'exploitation (en coopération avec les scripts d'installation du système d'exploitation spécifique), et le démarrage, l'arrêt, le basculement entre les systèmes physiques. Il a été conçu pour faciliter la gestion de cluster de serveurs virtuels et de fournir une récupération rapide et simple.
+Ganeti nécessite un logiciel de virtualisation pré-installé sur les serveurs afin de pouvoir fonctionner. Une fois installé, l'outil prendra en charge la partie gestion des instances virtuelles (Xen DomU), par exemple, la gestion de création de disque, l'installation du système d'exploitation (en coopération avec les scripts d'installation du système d'exploitation spécifique), et le démarrage, l'arrêt, le basculement entre les systèmes physiques. Il a été conçu pour faciliter la gestion de cluster de serveurs virtuels et de fournir une récupération rapide et simple.
 
 \section{Installation}
 \subsection{Modification des sources}
@@ -58,13 +58,14 @@ umount /dev/sda5
 pvcreate /dev/sda5
 vgcreate xenvg /dev/sda5
 \end{lstlisting}
+
 On a créé un VG qui se nome xenvg sur /dev/sda5.
 
 \subsection{Edition de /usr/share/ganeti/os/debootstrap/common.sh}
 
 Il est nécessaire d'éditer ce fichier pour que ganeti puisse créer des instances :
 
-%Par défaut le mirroir utilisé par ganeti est http://ftp.us.debian.org/debian/. Sur Grid5000 les depots US sont bloqués. Il faut donc indiquer les depots francais. On indique aussi l'adresse du  proxy de grid5000. On peut choisir la version de Debian que l'on souhaite installer. Ici nous avons opter pour squeeze. L'architecture que nous choisi est amd64, car l'hôte la supporte. La variable : EXTRA_PKGS permet d'installer des paquets supplémentaires.
+Par défaut le mirroir utilisé par ganeti est http://ftp.us.debian.org/debian/. Sur Grid5000 les depots US sont bloqués. Il faut donc indiquer les depots francais. On indique aussi l'adresse du  proxy de grid5000. On peut choisir la version de Debian que l'on souhaite installer. Ici nous avons opter pour squeeze. L'architecture que nous choisi est amd64, car l'hôte la supporte. La variable : EXTRA_PKGS permet d'installer des paquets supplémentaires.
 
 \subsection{Configuration et initialisation du cluster}
 L'initialisation du cluster se fait avec la commande gnt-cluster init clusterX
@@ -75,12 +76,11 @@ gnt-cluster init --no-drbd-storage --nic-parameters link=eth0 cluster1
 Ici nous avons précisé les options --no-drbd-storage --nic-parameters link=eth0.
 La première permet d'utiliser ganeti sans utiliser la haute disponibilité.
 La seconde permet de préciser un autre bridge que xen-br0
-
-Enfin il faut renseigner le inird et le root_path, cela est nécessaire pour la création des instances :
+Enfin il faut renseigner le inird et le root\_path, cela est nécessaire pour la création des instances :
 \begin{lstlisting}
 gnt-cluster modify --hypervisor-parameter xen-pvm:initrd_path='/boot/initrd.img-2.6-xenU'
 gnt-cluster modify --hypervisor-parameter xen-pvm:root_path='/dev/xvda1'
-\end{lstlisting}  
+\end{lstlisting}
 \section{Utilisation des nodes}
 \subsection{Ajouter un node}
 Il est possible d'ajouter un node à tout moment :
@@ -115,7 +115,7 @@ Mon Mar 12 07:39:36 2012  - INFO: Node will be a master candidate
 \subsection{Changer les roles des nodes}
 
 \subsubsection {Promouvoir un neud au rang de master :}
-%Il faut d'abord revoquer le rang de master du node principal, sur un node master-candidate :
+Il faut d'abord revoquer le rang de master du node principal, sur un node master-candidate :
 \begin{lstlisting}
 gnt-cluster master-failover
 
@@ -131,8 +131,7 @@ griffon-8.nancy.grid5000.fr  283.2G 283.2G  16.0G  965M 14.8G     0     0
 griffon-78.nancy.grid5000.fr 283.2G 283.2G  16.0G  965M 14.8G     0     0
 griffon-81.nancy.grid5000.fr 283.2G 283.2G  16.0G  965M 14.8G     0     0
 \end{lstlisting}
-%On voit que le node griffon-81 n'était pas master avant l'utilisation de la commande. Ensuite il est possible d'executer les commandes master.
-
+On voit que le node griffon-81 n'était pas master avant l'utilisation de la commande. Ensuite il est possible d'executer les commandes master.
 \subsubsection{Passer un neud en master-candidate :}
 \begin{lstlisting}
 root@griffon-81: gnt-node modify -C yes griffon-8.nancy.grid5000.fr
@@ -183,7 +182,6 @@ griffon-8.nancy.grid5000.fr  283.2G 282.2G  16.0G  965M 14.7G     1     0
 griffon-81.nancy.grid5000.fr 283.2G 283.2G  16.0G  965M 14.8G     0     0
 \end{lstlisting}
 Le node griffon-78 à bien été effacer du cluster.
-
 \subsection{Manipulation du stockage :}
 
 Faire la liste des volumes sur lesquels sont les instances : 
@@ -201,9 +199,6 @@ root@griffon-81:~# gnt-node repair-storage griffon-8.nancy.grid5000.fr lvm-vg xe
 Mon Mar 12 09:56:23 2012 Repairing storage unit 'xenvg' on griffon-8.nancy.grid5000.fr ...
 \end{lstlisting}
 Cela équivau à vgreduce --removemissing.
-
-
-
 \section{Utilisation des instances}
 
 \subsection{Ajouter une instance}
