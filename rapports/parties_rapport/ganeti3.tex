@@ -1,24 +1,11 @@
 \chapter{Ganeti}
 \section{Introduction}
 Ganeti est un outil de gestion de machines virtuelles se basant sur les technologies de virtualisation existantes comme XEN et KVM.\\
-<<<<<<< HEAD
-Ganeti nÈcessite un logiciel de virtualisation prÈ-installÈ sur les serveurs afin de pouvoir fonctionner. Une fois installÈ, 
-l'outil prendra en charge la partie gestion des instances virtuelles (Xen DomU), par exemple, la gestion de crÈation de disque, 
-l'installation du systËme d'exploitation (en coopÈration avec les scripts d'installation du systËme d'exploitation 
-spÈcifique), et le dÈmarrage, l'arrÍt, le basculement entre les systËmes physiques. Il a ÈtÈ conÁu pour faciliter la gestion de 
-cluster de serveurs virtuels et de fournir une rÈcupÈration rapide et simple.
-
-
-\section {Installation}
-\subsection {Modification des sources}
-Nous avons intallÈ ganeti ‡ partir de la branche testing de debian. Pour des raisons techniques le systËme est squeeze. Pour cela il faut ajouter les sources de testing dans le fichier /etc/apt/sources.list :
-=======
-%Ganeti n√©cessite un logiciel de virtualisation pr√©-install√© sur les serveurs afin de pouvoir fonctionner. Une fois install√©, l'outil prendra en charge la partie gestion des instances virtuelles (Xen DomU), par exemple, la gestion de cr√©ation de disque, l'installation du syst√®me d'exploitation (en coop√©ration avec les scripts d'installation du syst√®me d'exploitation sp√©cifique), et le d√©marrage, l'arr√™t, le basculement entre les syst√®mes physiques. Il a √©t√© con√ßu pour faciliter la gestion de cluster de serveurs virtuels et de fournir une r√©cup√©ration rapide et simple.
+Ganeti n√©cessite un logiciel de virtualisation pr√©-install√© sur les serveurs afin de pouvoir fonctionner. Une fois install√©, l'outil prendra en charge la partie gestion des instances virtuelles (Xen DomU), par exemple, la gestion de cr√©ation de disque, l'installation du syst√®me d'exploitation (en coop√©ration avec les scripts d'installation du syst√®me d'exploitation sp√©cifique), et le d√©marrage, l'arr√™t, le basculement entre les syst√®mes physiques. Il a √©t√© con√ßu pour faciliter la gestion de cluster de serveurs virtuels et de fournir une r√©cup√©ration rapide et simple.
 
 \section{Installation}
 \subsection{Modification des sources}
 Nous avons intall√© ganeti √† partir de la branche testing de debian. Pour des raisons techniques le syst√®me est squeeze. Pour cela il faut ajouter les sources de testing dans le fichier /etc/apt/sources.list :
->>>>>>> bdb35216a929de37c6411ee8791b131964b0fad8
 \begin{lstlisting}
 ##Wheezy
 deb http://ftp.fr.debian.org/debian/ wheezy main contrib non-free
@@ -29,18 +16,13 @@ deb http://security.debian.org/ wheezy/updates main contrib non-free
 deb-src http://security.debian.org/ wheezy/updates main contrib non-free
 \end{lstlisting}
 
-IL faut ensuite crÈer le fichier de prÈfÈrence de apt dans le rÈpertoire /etc/apt/apt.conf.d. Nous avons appelÈ le  fichier 80default-distrib (le nom du fichier est libre). Il faut ajouter cette ligne au fichier qui dÈfini la branche stable comme la branche par dÈfaut :
+IL faut ensuite cr√©er le fichier de pr√©f√©rence de apt dans le r√©pertoire /etc/apt/apt.conf.d. Nous avons appel√© le  fichier 80default-distrib (le nom du fichier est libre). Il faut ajouter cette ligne au fichier qui d√©fini la branche stable comme la branche par d√©faut :
 \begin{lstlisting}
 APT::Default-Release "stable";
 \end{lstlisting}
 
-<<<<<<< HEAD
-\subsection {Mise ‡ jour et installation}
-On peut enfin alors mettre le systËme ‡ jour et installer ganeti :
-=======
 \subsection{Mise √† jour et installation}
 On peut enfin alors mettre le syst√®me √† jour et installer ganeti :
->>>>>>> bdb35216a929de37c6411ee8791b131964b0fad8
 
 \begin{lstlisting}
 apt-get update && apt-get dist-upgrade -q -y --force-yes
@@ -49,11 +31,11 @@ apt-get -t testing install -q -y --force-yes ganeti2 ganeti-htools ganeti-instan
 
 \section{Configuration}
 
-La configuration est l'Ètape la plus complexe.
+La configuration est l'√©tape la plus complexe.
 
 \subsection{Configuration du fichier hosts}
 
-Dans le fichier hosts il faut renseigner l'adresse et le nom complet du node primaire de cette maniËre :
+Dans le fichier hosts il faut renseigner l'adresse et le nom complet du node primaire de cette mani√®re :
 \begin{lstlisting}
 172.16.68.10    griffon-10.nancy.grid5000.fr griffon-10
 \end{lstlisting}
@@ -64,39 +46,26 @@ cp vmlinuz-2.6.32-5-xen-amd64 vmlinuz-2.6-xenU
 cp initrd.img-2.6.32-5-xen-amd64 initrd.img-2.6-xenU
 \end{lstlisting}
 
-<<<<<<< HEAD
-\subsection {CrÈation du bridge xen-br0}
-
-\subsection {CrÈation du LVM}
-=======
 \subsection{Cr√©ation du bridge xen-br0}
 BLABLABLA
 \subsection{Cr√©ation du LVM}
->>>>>>> bdb35216a929de37c6411ee8791b131964b0fad8
 
-Ganeti requiËre un LVM d'au moins 20Go pour fonctionner.
+Ganeti requi√®re un LVM d'au moins 20Go pour fonctionner.
 
-Sur les neud de grid5000 il est possible de crÈer un tel LVM sur la partition /dev/sd5.
+Sur les neud de grid5000 il est possible de cr√©er un tel LVM sur la partition /dev/sd5.
 \begin{lstlisting}
 umount /dev/sda5
 pvcreate /dev/sda5
 vgcreate xenvg /dev/sda5
 \end{lstlisting}
-On a crÈÈ un VG qui se nome xenvg sur /dev/sda5.
+
+On a cr√©√© un VG qui se nome xenvg sur /dev/sda5.
 
 \subsection{Edition de /usr/share/ganeti/os/debootstrap/common.sh}
 
-Il est nÈcessaire d'Èditer ce fichier pour que ganeti puisse crÈer des instances :
+Il est n√©cessaire d'√©diter ce fichier pour que ganeti puisse cr√©er des instances :
 
-<<<<<<< HEAD
-Par defaut le mirroir utilisÈ par ganeti est http://ftp.us.debian.org/debian/. Sur Grid5000 les depots US sont bloquÈs. Il faut donc indiquer les depots francais.
-On indique aussi l'adresse du  proxy de grid5000.
-On peut choisir la version de Debian que l'on souhaite installer. Ici nous avons opter pour squeeze.
-L'architecture que nous choisi est amd64, car l'hote la supporte.
-La variable : extra_pkdg permet d'installer des paquets supplÈmentaires.
-=======
-%Par d√©faut le mirroir utilis√© par ganeti est http://ftp.us.debian.org/debian/. Sur Grid5000 les depots US sont bloqu√©s. Il faut donc indiquer les depots francais. On indique aussi l'adresse du  proxy de grid5000. On peut choisir la version de Debian que l'on souhaite installer. Ici nous avons opter pour squeeze. L'architecture que nous choisi est amd64, car l'h√¥te la supporte. La variable : EXTRA_PKGS permet d'installer des paquets suppl√©mentaires.
->>>>>>> bdb35216a929de37c6411ee8791b131964b0fad8
+Par d√©faut le mirroir utilis√© par ganeti est http://ftp.us.debian.org/debian/. Sur Grid5000 les depots US sont bloqu√©s. Il faut donc indiquer les depots francais. On indique aussi l'adresse du  proxy de grid5000. On peut choisir la version de Debian que l'on souhaite installer. Ici nous avons opter pour squeeze. L'architecture que nous choisi est amd64, car l'h√¥te la supporte. La variable : EXTRA_PKGS permet d'installer des paquets suppl√©mentaires.
 
 \subsection{Configuration et initialisation du cluster}
 L'initialisation du cluster se fait avec la commande gnt-cluster init clusterX
@@ -104,25 +73,17 @@ L'initialisation du cluster se fait avec la commande gnt-cluster init clusterX
 #initialisation du cluster
 gnt-cluster init --no-drbd-storage --nic-parameters link=eth0 cluster1
 \end{lstlisting}
-Ici nous avons prÈcisÈ les options --no-drbd-storage --nic-parameters link=eth0.
-La premiËre permet d'utiliser ganeti sans utiliser la haute disponibilitÈ.
-La seconde permet de prÈciser un autre bridge que xen-br0
-
-Enfin il faut renseigner le inird et le root_path, cela est nÈcessaire pour la crÈation des instances :
+Ici nous avons pr√©cis√© les options --no-drbd-storage --nic-parameters link=eth0.
+La premi√®re permet d'utiliser ganeti sans utiliser la haute disponibilit√©.
+La seconde permet de pr√©ciser un autre bridge que xen-br0
+Enfin il faut renseigner le inird et le root\_path, cela est n√©cessaire pour la cr√©ation des instances :
 \begin{lstlisting}
 gnt-cluster modify --hypervisor-parameter xen-pvm:initrd_path='/boot/initrd.img-2.6-xenU'
 gnt-cluster modify --hypervisor-parameter xen-pvm:root_path='/dev/xvda1'
-\end{lstlisting}  
-<<<<<<< HEAD
-
-\section {Utilisation des nodes}
-\subsection {Ajouter un node}
-Il est possible d'ajouter un node ‡ tout moment :
-=======
+\end{lstlisting}
 \section{Utilisation des nodes}
 \subsection{Ajouter un node}
 Il est possible d'ajouter un node √† tout moment :
->>>>>>> bdb35216a929de37c6411ee8791b131964b0fad8
 \begin{lstlisting}
 root@griffon-8: gnt-node add griffon-78.nancy.grid5000.fr
 
@@ -140,7 +101,7 @@ root password:
 Mon Mar 12 07:38:16 2012  - INFO: Node will be a master candidate
 \end{lstlisting}
 \subsection{Reconfigurer un node}
-Il aussi possible de reconfigurer un node deja prÈsent :
+Il aussi possible de reconfigurer un node deja pr√©sent :
 \begin{lstlisting}
 root@griffon-8: gnt-node add --readd griffon-78.nancy.grid5000.fr
 
@@ -154,7 +115,7 @@ Mon Mar 12 07:39:36 2012  - INFO: Node will be a master candidate
 \subsection{Changer les roles des nodes}
 
 \subsubsection {Promouvoir un neud au rang de master :}
-%Il faut d'abord revoquer le rang de master du node principal, sur un node master-candidate :
+Il faut d'abord revoquer le rang de master du node principal, sur un node master-candidate :
 \begin{lstlisting}
 gnt-cluster master-failover
 
@@ -170,12 +131,7 @@ griffon-8.nancy.grid5000.fr  283.2G 283.2G  16.0G  965M 14.8G     0     0
 griffon-78.nancy.grid5000.fr 283.2G 283.2G  16.0G  965M 14.8G     0     0
 griffon-81.nancy.grid5000.fr 283.2G 283.2G  16.0G  965M 14.8G     0     0
 \end{lstlisting}
-<<<<<<< HEAD
-On voit que le node griffon-81 n'Ètait pas master avant l'utilisation de la commande. Ensuite il est possible d'executer les commandes master.
-=======
-%On voit que le node griffon-81 n'√©tait pas master avant l'utilisation de la commande. Ensuite il est possible d'executer les commandes master.
->>>>>>> bdb35216a929de37c6411ee8791b131964b0fad8
-
+On voit que le node griffon-81 n'√©tait pas master avant l'utilisation de la commande. Ensuite il est possible d'executer les commandes master.
 \subsubsection{Passer un neud en master-candidate :}
 \begin{lstlisting}
 root@griffon-81: gnt-node modify -C yes griffon-8.nancy.grid5000.fr
@@ -197,11 +153,7 @@ Modified node griffon-8.nancy.grid5000.fr
  - master_candidate -> False
  - offline -> True
 \end{lstlisting}
-<<<<<<< HEAD
-\subsubsection {Passer un node en mode regular (remise ‡ zero de tous les flags) :}
-=======
 \subsubsection{Passer un node en mode regular (remise √† zero de tous les flags) :}
->>>>>>> bdb35216a929de37c6411ee8791b131964b0fad8
 \begin{lstlisting}
 root@griffon-81: gnt-node modify -O no -D no -C no griffon-8.nancy.grid5000.fr
 Mon Mar 12 08:26:01 2012  - INFO: Ignoring request to unset flag master_candidate, already unset
@@ -212,7 +164,7 @@ Modified node griffon-8.nancy.grid5000.fr
  - master_candidate -> True
  - offline -> False
 \end{lstlisting}
-Le node est de nouveau en master-candidate comme ‡ l'origine.
+Le node est de nouveau en master-candidate comme √† l'origine.
 
 \subsection{Supprimer un node :}
 \begin{lstlisting}
@@ -229,8 +181,7 @@ Node                         DTotal  DFree MTotal MNode MFree Pinst Sinst
 griffon-8.nancy.grid5000.fr  283.2G 282.2G  16.0G  965M 14.7G     1     0
 griffon-81.nancy.grid5000.fr 283.2G 283.2G  16.0G  965M 14.8G     0     0
 \end{lstlisting}
-Le node griffon-78 ‡ bien ÈtÈ effacer du cluster.
-
+Le node griffon-78 √† bien √©t√© effacer du cluster.
 \subsection{Manipulation du stockage :}
 
 Faire la liste des volumes sur lesquels sont les instances : 
@@ -247,10 +198,7 @@ Il est possible de lancer une reparation sur les volume de stockage :
 root@griffon-81:~# gnt-node repair-storage griffon-8.nancy.grid5000.fr lvm-vg xenvg
 Mon Mar 12 09:56:23 2012 Repairing storage unit 'xenvg' on griffon-8.nancy.grid5000.fr ...
 \end{lstlisting}
-Cela Èquivau ‡ vgreduce --removemissing.
-
-
-
+Cela √©quivau √† vgreduce --removemissing.
 \section{Utilisation des instances}
 
 \subsection{Ajouter une instance}
@@ -269,7 +217,7 @@ root@graphene-11: gnt-instance list
 Instance  Hypervisor OS                  Primary_node                  Status  Memory
 instance1 xen-pvm    debootstrap+default graphene-11.nancy.grid5000.fr running   128M
 \end{lstlisting}
-L'instance est bien crÈer sur le neud. Il est possible ‡ partir du maitre de crÈer des instances sur n'importe quels neud d'un cluster. Il aussi possible de crÈer une instance primaire sur un noeud et une instance secondaire sur un autre.
+L'instance est bien cr√©er sur le neud. Il est possible √† partir du maitre de cr√©er des instances sur n'importe quels neud d'un cluster. Il aussi possible de cr√©er une instance primaire sur un noeud et une instance secondaire sur un autre.
 
 \subsection{Supprimer une instance}
 \begin{lstlisting}
@@ -281,7 +229,7 @@ y/[n]/?: y
 root@graphene-11: gnt-instance list
 Instance Hypervisor OS Primary_node Status Memory
 \end{lstlisting}
-L'instance ‡ bien ÈtÈ supprimÈe. Cette commande supprime l'instance quelque soit le ou les neud o˘ elle a ÈtÈ crÈer.
+L'instance √† bien √©t√© supprim√©e. Cette commande supprime l'instance quelque soit le ou les neud o√π elle a √©t√© cr√©er.
 
 
 Arret et demarrage d'une instance
@@ -348,7 +296,7 @@ State: configured to be up, actual state is up
       logical_id:  xenvg/3fe11555-edcd-40dc-bf63-f3fb749825bb.disk0
       on primary:  /dev/xenvg/3fe11555-edcd-40dc-bf63-f3fb749825bb.disk0 (254:0)
 \end{lstlisting}
-Cette commande Èdite les informations relatives ‡ l'instance.
+Cette commande √©dite les informations relatives √† l'instance.
 
 
 Import et export d'instances :
@@ -370,9 +318,9 @@ Sun Mar 11 14:08:38 2012 Removing snapshot of disk/0 on node graphene-100.nancy.
 Sun Mar 11 14:08:39 2012 Finalizing export on graphene-143.nancy.grid5000.fr
 Sun Mar 11 14:08:40 2012 Removing old exports for instance instance1
 \end{lstlisting}
-L'instance ‡ bien ÈtÈ exportÈ dans graphene-143.nancy.grid5000.fr
+L'instance √† bien √©t√© export√© dans graphene-143.nancy.grid5000.fr
 
-Il est tout ‡ fait possible d'exporter une instance sans la redÈmarer en utilisant l'option : --noshutdown.
+Il est tout √† fait possible d'exporter une instance sans la red√©marer en utilisant l'option : --noshutdown.
 
 Import :
 \begin{lstlisting}
@@ -386,7 +334,7 @@ Instance  Hypervisor OS                  Primary_node                   Status  
 instance2 xen-pvm    debootstrap+default graphene-100.nancy.grid5000.fr running   128M
 instance3 xen-pvm    debootstrap+default graphene-143.nancy.grid5000.fr running   128M
 \end{lstlisting}
-Instance1 ‡ ÈtÈ supprimÈe du cluster.
+Instance1 √† √©t√© supprim√©e du cluster.
 \begin{lstlisting}
 root@graphene-100: gnt-backup import -n graphene-100.nancy.grid5000.fr --src-node=graphene-143.nancy.grid5000.fr -t plain instance1
 Sun Mar 11 14:22:29 2012 * disk 0, vg xenvg, name a4cc7447-5ed7-4417-b222-d33a0c2842a0.disk0
@@ -411,7 +359,7 @@ instance1 xen-pvm    debootstrap+default graphene-100.nancy.grid5000.fr ADMIN_do
 instance2 xen-pvm    debootstrap+default graphene-100.nancy.grid5000.fr running      128M
 instance3 xen-pvm    debootstrap+default graphene-143.nancy.grid5000.fr running      128M
 \end{lstlisting}
-L'instance ‡ bien ÈtÈ importÈe.
+L'instance √† bien √©t√© import√©e.
 \begin{lstlisting}
 root@graphene-100: gnt-instance startup instance1
 Waiting for job 32 for instance1...
@@ -425,14 +373,14 @@ instance3 xen-pvm    debootstrap+default graphene-143.nancy.grid5000.fr running 
 L'instance est fonctionnelle sur graphene-100.nancy.grid5000.fr
 
 
-IL est aussi possible d'importer une instance ÈtrangËre ‡ ganeti dont le disque est deja dans un LVM, sans avoir ‡ le recopier.
+IL est aussi possible d'importer une instance √©trang√®re √† ganeti dont le disque est deja dans un LVM, sans avoir √† le recopier.
 
 \begin{lstlisting}
 gnt-instance add -t plain -n HOME_NODE ... \
   --disk 0:adopt=lv_name[,vg=vg_name] INSTANCE_NAME
 \end{lstlisting}
 
-Connexion ‡ la console d'un instance :
+Connexion √† la console d'un instance :
 \begin{lstlisting}
 gnt-instance console instance5
 \end{lstlisting}
