@@ -131,9 +131,9 @@ done
 \end{lstlisting}
 Le script de base ayant configuré chacun des noeuds de la même manière, ils peuvent tous être utilisés pour gérer l'ensemble du réseau, une fois le script exécuté.
 \begin{center}
-  \includegraphics[width=350pt]{images/virt-ajout_noeuds.png}
+  \includegraphics[width=300pt]{images/virt-ajout_noeuds.png}
 \end{center}
-Un simple clic sur un noeud établit la connexion puisque les mêmes clefs ssh ont étées copiées partout et le fichier \emph{known_hosts} a également été répliqué pour éviter de confirmer l'ajout d'un hôte inconnue (opération qui devait se faire en ligne de commande car non gérée par virt).
+Un simple clic sur un noeud établit la connexion puisque les mêmes clefs ssh ont étées copiées partout et le fichier \emph{known\_hosts} a également été répliqué pour éviter de confirmer l'ajout d'un hôte inconnue (opération qui devait se faire en ligne de commande car non gérée par virt).
 \\
 On est ensuite en mesure de créer une machine sur n'importe quel noeud, la procédure étant la même que pour une installation locale, nous n'allons pas la détailler à nouveau.
 
@@ -142,4 +142,8 @@ Une fonctionnalité intéressate d'un gestionnaire de machines virtuelles est la
 Encore une fois virt-manger possède un outil graphique afin d'assister cette étape. Pour commencer, en effectuant un click droit sur une machine virtuelle on obitent un menu contextuel que nous allons détaillé au fur et à mesure.
 \begin{center}
   \includegraphics[width=350pt]{images/virt-menu-context.png}
+\end{center}
+En sélectionnant l'option \emph{Migrate} l'assistant demande alors sur quel autre noeud (préalamblement ajouté à virt) nous souhaitons transférer la machine virtuelle. L'opération peut prendre plusieures minutes en fonctions des capacités des machines et du réseau.
+\begin{center}
+  \includegraphics[width=250pt]{images/migration.png}
 \end{center}
