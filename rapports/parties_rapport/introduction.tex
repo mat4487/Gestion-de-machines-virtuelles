@@ -63,7 +63,7 @@ alors que toutes les machines virtuelles sont isolées entre elles.
 
 La virtualisation est un concept qui a été mis au point pour la première
 fois dans les années 1960 pour permettre la partition dune vaste gamme de matériel mainframe et optimiser l'utilisation du matériel. De nos jours, les ordinateurs basés sur l'architecture x86 sont confrontés aux mêmes problèmes de rigidité et de sous-utilisation que les mainframes dans les années 1960. VMware a inventé la virtualisation pour la plate-forme x86 dans les années 1990 afin de répondre notamment aux problèmes de sous-utilisation, et a surmonté les nombreux défis émergeant au cours de ce processus. Aujourd'hui, VMware est devenu le leader mondial de la virtualisation x86 avec plus de 190 000 clients, dont la totalité des membres du classement Fortune 100.
-\newpage
+
 \subsection{Au commencement, la virtualisation des mainframes}
 
 La virtualisation a été mise en œuvre pour la première fois il y
@@ -71,15 +71,15 @@ a plus de 30 ans par IBM pour partitionner logiquement des mainframes
 en machines virtuelles distinctes. Ces partitions permettaient un
 traitement « multitâche », à savoir l exécution simultanée de plusieurs applications et processus. Étant donné que les mainframes consommaient beaucoup de ressources en même temps, le partitionnement
 constituait un moyen naturel de tirer pleinement parti de l investissement matériel.
-
+\newpage
 \section{Présentation de Grid5000}
-%\begin{figure}
+\begin{figure}
 \begin{center}
 \includegraphics{images/logo.png}
 \caption{Logo de Grid5000}
 \end{center}
 
-%\end{figure}
+\end{figure}
 Aujourd’hui, grâce à Internet, il est possible
 d’interconnecter des machines du monde entier pour
 traiter et stocker des masses de données. Cette collection
@@ -123,10 +123,13 @@ Début 2007, GRID’5000 regroupait plus de 2500 processeurs et près
 de 3500 cœurs.
 
 \newpage
+\begin{figure}
 \begin{center}
 \includegraphics{images/g5k.png}
-\underline{\textit{Architecture Grid5000}}
+\\
+\underline{\textit{Répartition des sites}}
 \end{center}
+\end{figure}
 
 
 
@@ -137,8 +140,12 @@ Chaque site héberge :
 \item un serveur de données, pour centraliser les données utilisateurs ,
 \item plusieurs clusters, c'est-à-dire des grappes de machines homogènes, appelées noeuds (nodes).
 \end{itemize}
+\begin{center}
 \includegraphics[width=10cm,height=15cm]{images/g5k1.png}
+\\
+\underline{\textit{Architecture Grid5000}}
 %%\includegraphics{images/g5k1.png}
+\end{center}
 L'utilisateur de Grid 5000 accède à chaque site par son frontend en utilisant le protocole SSH.\\
 Commande:
 \begin{lstlisting}
