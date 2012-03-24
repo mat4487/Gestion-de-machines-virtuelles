@@ -1,0 +1,61 @@
+\chapter{Ganeti project}
+
+\section{Introduction}
+\includegraphics[width=10cm,height=7cm]{images/logo_ganeti.png}
+
+Ganeti est un un manager de cluster de machine virtuelles. Il combine la virtualization et la réplication en temps réel de disque.
+Ganeti offre un plateforme de haute disponibilité
+
+Ganeti utilse Python, Xen, KVM, DRDB, LVM et OpenSSL.
+Développé par Google depuis Aout 2007
+
+Ce Projet est sous licence GNU GPLv2.
+
+Site du projet :
+
+http://code.google.com/p/ganeti/
+
+
+Abstraction of computer resources
+ CPUs, memory, storage, network
+• Advantages
+ Consolidation, increase hardware utilization
+ Transparent for user
+ Flexibility
+• Disadvantages
+ Depending on application: performance losses
+• Different types
+ Paravirtualization
+ Full virtualization
+• Hypervisor
+Copyright by Google Inc
+3
+What is Ganeti and why should you use it?
+• Software to manage clusters of virtual servers
+ Automation allows you to scale easily
+ Makes it simple to manage 10s of nodes and 100s of instances
+• Combines virtualization and data replication
+ All integrated in a unified interface
+ Virtual systems are portable between nodes
+• Hypervisor backends
+ Abstraction layer
+ Currently based on Xen, but others are possible
+Copyright by Google Inc
+4
+Terms
+• Node
+ Physical machine
+ Xen Dom0
+• Instance
+ Virtual machine
+ Xen DomU
+• DRBD
+ Distributed Replicated Block Device, http://www.drbd.org/
+ Used for data replication
+• LVM (Logical Volume Manager)
+ Used to manage instances' volumes
+
+
+
+
+
