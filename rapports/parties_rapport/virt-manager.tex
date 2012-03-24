@@ -32,18 +32,25 @@ Pour gérer nos serveurs, nous installons virt-manager avec la commande suivante
 \begin{lstlisting} 
 apt-get install virt-manager
 \end{lstlisting}
-
+Virt-manager étant un outil graphique, ses fichiers de configurations sont gérés par gconf. Ainsi, pour automatiser l'ajout des différents noeuds nous avons crée un script qui réécrit le fichier \emph{~/.gconf/apps/virt-manager/connections/\%gconf.xml}
+\begin{lstlisting}
+for node in $(cat $list_nodes)
+do
+    echo '<li type="string">' >> $fichier
+    echo "<stringvalue>xen+ssh://root@$node/</stringvalue>" >> $fichier
+    echo '</li>' >> $fichier
+done
+\end{lstlisting}
+Ce fichier est au format xml et contient pour chaque noeud une entrée. Ici, les connexions sont gérées au-dessus d'un tunnel ssh.
 \section{Création d'hôtes virtualisés avec virt-manager}
 1)Pour commencer on démarre virt-manager, puis on lance le gestionnaire de machines virtuelles à partir du menu en cliquant sur l'icone en forme de pc.
 
-\begin{figure}
+%\begin{figure}
 \begin{center}
 \includegraphics[width=350pt]{images/virt.jpg}
 \end{center}
-\caption{Interface de virt-manager}
-\end{figure}
-
-
+%\caption{Interface de virt-manager}
+%\end{figure}
 
 3) La fenêtre du gestionnaire de machine virtuelle nous autorise à en créer de nouvelles.
 On clique sur création de nouvelle machine virtuelle pour faire apparaître l'assistant qui va nous aider pour élaborer notre hôte.
@@ -54,12 +61,12 @@ L'assistant décompose la création en cinq étapes:
 -La configuration réseau, l'architecture, et d'autres paramètres matériels
 
 Le processus de création d'hôte commence avec la selection d'un nom et le type d'installation.
-\begin{figure}
+%\begin{figure}
 \begin{center}
 \includegraphics[width=350pt]{images/nommachine.jpg}
 \end{center}
-\caption{Choix du nom de la nouvelle machine virtuelle}
-\end{figure}
+%\caption{Choix du nom de la nouvelle machine virtuelle}
+%\end{figure}
 -Local install media(ISO image or CDROM)
 Cette méthode utilise un CD-ROM,DVD ou une image iso.
 
@@ -71,42 +78,68 @@ Cette méthode nous permet de créer un nouvelle hôte et d'y importer une image
 
 La prochaine étape consiste à configurer l'installation.
 On configure le type de système d'exploitation et sa version qui sera installé, cela dépend de la méthode d'installation que l'on a choisie.
-\begin{figure}
+%\begin{figure}
 \begin{center}
 \includegraphics[width=300pt]{images/iso.jpg}
 \end{center}
-\caption{Choix du nom de la nouvelle machine virtuelle}
-\end{figure}
-
-
+%\caption{Choix du nom de la nouvelle machine virtuelle}
+%\end{figure}
 
 Configuration du CPU et de la mémoire
 La prochaine étape consiste à configurer le nombre de CPU et la quantité de mémoire à allouer à la machine virtuelle. L'assistant indique le nombre de processeurs et la quantité de mémoire que l'on peut lui allouer.
-\begin{figure}
+%\begin{figure}
 \begin{center}
 \includegraphics[width=300pt]{images/cpu.jpg}
 \end{center}
-\caption{Choix du nom de la nouvelle machine virtuelle}
-\end{figure}
+%\caption{Configuration du CPU et de la mémoire allouée à la machine virtuelle}
+%\end{figure}
 
 Configuration de l'espace de stockage
-\begin{figure}
+%\begin{figure}
 \begin{center}
 \includegraphics[width=300pt]{images/Storage.jpg}
 \end{center}
-\caption{Choix du nom de la nouvelle machine virtuelle}
-\end{figure}
-
+%\caption{Choix du stockage de la machine virtuelle}
+%\end{figure}
 
  Si l'on a choisi d'importer une image de disque existante au cours de la première étape, virt-manager va sauter cette étape.
 On doit attribuer un espace suffisant pour notre machine virtuelle et toutes les applications que l'hôte a besoin.
 
 Configuration finale
 On vérifie les paramètres de la machine virtuelle et on clique sur Terminer lorsqu'on est satisfait, cela permettra de créer l'hôte avec les paramètres réseau par défaut, le type de virtualisation, et l'architecture.
-\begin{figure}
 \begin{center}
 \includegraphics[width=300pt]{images/reseau.jpg}
 \end{center}
-\caption{Choix du nom de la nouvelle machine virtuelle}
-\end{figure}
+%\caption{Configuration du réseau}
 
+
+\subsection{Controle d'hotes distants}
+On peut facilement manager des hotes distants une fois ceux-ci enregistrés dans virt-manager. Cette opération peut être fastidieuse car virt étant un programme graphique, crée un script pour automatiser l'ajout de plusieurs dizaines de noeuds s'est avéré plus compliqué que prévu.
+Cherchant désespérément un fichier de configuration, nous avons fini par le trouver en lançant une recherche dans tout le système sur les noms des noeuds ajoutés à virt. Le fichier est donc géré par \emph{gconf} en voici un exemple
+\lstinputlisting[language=xml,morekeywords={li,entry,stringvalue,gconf}]{scripts/virt-manager/gconf.xml}
+Après l'installation de virt, le seul lien enregistré est le lien local. Pour ajouter une connexion vers un nouvel hote xen, on peut utiliser l'interface graphique.
+%\includegraphics image ajout d'un noeud
+Cependant, dans notre cas, il était assez fastidieux de renseigner manuellelement chacun des noeuds surtout lors des tests à grande échelle. C'est pourquoi nous avons fait un script (voir annexe \ref{ajout-noeuds} en page \pageref{ajout-noeuds}) donc voici la boucle d'ajout des noeuds:
+\begin{lstlisting}[language=bash]
+#Pour chaque noeud réservé, on ajoute une entrée dans le fichier
+for node in $(cat $list_nodes)
+do
+    echo '<li type="string">' >> $fichier
+    echo "<stringvalue>xen+ssh://root@$node/</stringvalue>" >> $fichier
+    echo '</li>' >> $fichier
+done
+\end{lstlisting}
+Le script de base ayant configuré chacun des noeuds de la même manière, ils peuvent tous être utilisés pour gérer l'ensemble du réseau, une fois le script exécuté.
+\begin{center}
+  \includegraphics[width=350pt]{images/virt-ajout_noeuds.png}
+\end{center}
+Un simple clic sur un noeud établit la connexion puisque les mêmes clefs ssh ont étées copiées partout et le fichier \emph{known_hosts} a également été répliqué pour éviter de confirmer l'ajout d'un hôte inconnue (opération qui devait se faire en ligne de commande car non gérée par virt).
+\\
+On est ensuite en mesure de créer une machine sur n'importe quel noeud, la procédure étant la même que pour une installation locale, nous n'allons pas la détailler à nouveau.
+
+\subsubsection{Migration de machines}
+Une fonctionnalité intéressate d'un gestionnaire de machines virtuelles est la migration des systèmes invités vers un autre hôte pour prévoir des opérations de maintenance, remplacement,...\\
+Encore une fois virt-manger possède un outil graphique afin d'assister cette étape. Pour commencer, en effectuant un click droit sur une machine virtuelle on obitent un menu contextuel que nous allons détaillé au fur et à mesure.
+\begin{center}
+  \includegraphics[width=350pt]{images/virt-menu-context.png}
+\end{center}
