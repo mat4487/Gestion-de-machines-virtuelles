@@ -1,0 +1,36 @@
+\documentclass[a4paper,10pt]{report}
+\usepackage[utf8x]{inputenc}
+
+% Title Page
+\title{Ganeti}
+\author{aubo}
+
+
+\begin{document}
+\maketitle
+\chapter{Ganeti project}
+
+\section{Introduction}
+\includegraphics[width=10cm,height=7cm]{images/logo_ganeti.png}
+
+Ganeti est un un manager de cluster de machine virtuelles. Il combine la virtualization et la réplication en temps réel de disque.
+Ganeti offre un plateforme de haute disponibilité
+
+Ganeti utilse Python, Xen, KVM, DRDB, LVM et OpenSSL.
+Développé par Google depuis Aout 2007
+\includegraphics[width=10cm,height=7cm]{images/image1.png}
+Ce Projet est sous licence GNU GPLv2.
+
+Site du projet :
+
+http://code.google.com/p/ganeti/
+
+
+\section{Architecture}
+
+\end{document}  
+
+
+
+
+
