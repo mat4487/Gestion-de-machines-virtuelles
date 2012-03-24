@@ -70,10 +70,10 @@ On a créé un VG qui se nome xenvg sur /dev/sda5.
 
 Il est nécessaire d'éditer ce fichier pour que ganeti puisse créer des instances :
 
-Par defaut le mirroir utilisé par ganeti est http://ftp.us.debian.org/debian/. Sur Grid5000 les dépots US sont bloqués. Il faut donc indiquer les dépots français.
+Par defaut le mirroir utilisé par ganeti est http://ftp.us.debian.org/debian/. Sur Grid5000 les depots US sont bloqués. Il faut donc indiquer les depots francais.
 On indique aussi l'adresse du  proxy de grid5000.
 On peut choisir la version de Debian que l'on souhaite installer. Ici nous avons opter pour squeeze.
-L'architecture que nous choisisons est amd64, car l'hôte la supporte.
+L'architecture que nous choisi est amd64, car l'hote la supporte.
 La variable : EXTRA\_PKGS permet d'installer des paquets supplémentaires.
 
 \subsection {Configuration et initialisation du cluster}
@@ -127,7 +127,7 @@ Mon Mar 12 07:39:36 2012  - INFO: Node will be a master candidate
 
 \subsubsection {Promouvoir un neud au rang de master :}
 
-Il faut d'abord révoquer le rang de master du node principal, sur un node master-candidate :
+Il faut d'abord revoquer le rang de master du node principal, sur un node master-candidate :
 \begin{lstlisting}
 gnt-cluster master-failover
 
@@ -143,7 +143,7 @@ griffon-8.nancy.grid5000.fr  283.2G 283.2G  16.0G  965M 14.8G     0     0
 griffon-78.nancy.grid5000.fr 283.2G 283.2G  16.0G  965M 14.8G     0     0
 griffon-81.nancy.grid5000.fr 283.2G 283.2G  16.0G  965M 14.8G     0     0
 \end{lstlisting}
-On voit que le node griffon-81 n'était pas master avant l'utilisation de la commande. Ensuite il est possible d'exécuter les commandes master.
+On voit que le node griffon-81 n'était pas master avant l'utilisation de la commande. Ensuite il est possible d'executer les commandes master.
 
 \subsubsection {Passer un neud en master-candidate :}
 \begin{lstlisting}
@@ -207,7 +207,7 @@ griffon-8.nancy.grid5000.fr  /dev/sda5 xenvg 8a85c87b-39fa-4e88-886b-a60c8706cc6
 griffon-8.nancy.grid5000.fr  /dev/sda5 xenvg d84f3842-04d5-4951-aded-b5ea76f19681.disk0 1000M instance1
 griffon-8.nancy.grid5000.fr  /dev/sda5 xenvg ddfea3fc-d7b1-4a06-ae37-3094b1f0de11.disk0 1000M instance3
 \end{lstlisting}
-Il est possible de lancer une réparation sur les volumes de stockage :
+Il est possible de lancer une reparation sur les volume de stockage :
 \begin{lstlisting}
 root@griffon-81:~# gnt-node repair-storage griffon-8.nancy.grid5000.fr lvm-vg xenvg
 Mon Mar 12 09:56:23 2012 Repairing storage unit 'xenvg' on griffon-8.nancy.grid5000.fr ...
@@ -234,7 +234,7 @@ root@graphene-11: gnt-instance list
 Instance  Hypervisor OS                  Primary_node                  Status  Memory
 instance1 xen-pvm    debootstrap+default graphene-11.nancy.grid5000.fr running   128M
 \end{lstlisting}
-L'instance est bien créer sur le noeud. Il est possible à partir du maitre de créer des instances sur n'importe quels noeud d'un cluster. Il aussi possible de créer une instance primaire sur un noeud et une instance secondaire sur un autre.
+L'instance est bien créer sur le neud. Il est possible à partir du maitre de créer des instances sur n'importe quels neud d'un cluster. Il aussi possible de créer une instance primaire sur un noeud et une instance secondaire sur un autre.
 
 \subsection {Supprimer une instance}
 \begin{lstlisting}
@@ -246,10 +246,10 @@ y/[n]/?: y
 root@graphene-11: gnt-instance list
 Instance Hypervisor OS Primary_node Status Memory
 \end{lstlisting}
-L'instance à bien été supprimée. Cette commande supprime l'instance quelque soit le ou les noeuds où elle a été créer.
+L'instance à bien été supprimée. Cette commande supprime l'instance quelque soit le ou les neud où elle a été créer.
 
 
-Arrêt et démarrage d'une instance
+Arret et demarrage d'une instance
 \begin{lstlisting}
 root@graphene-11: gnt-instance list
 Instance  Hypervisor OS                  Primary_node                  Status  Memory
@@ -390,7 +390,7 @@ instance3 xen-pvm    debootstrap+default graphene-143.nancy.grid5000.fr running 
 L'instance est fonctionnelle sur graphene-100.nancy.grid5000.fr
 
 
-IL est aussi possible d'importer une instance étrangère à ganeti dont le disque est déjà dans un LVM, sans avoir à le recopier.
+IL est aussi possible d'importer une instance étrangère à ganeti dont le disque est deja dans un LVM, sans avoir à le recopier.
 
 \begin{lstlisting}
 gnt-instance add -t plain -n HOME_NODE ... \
