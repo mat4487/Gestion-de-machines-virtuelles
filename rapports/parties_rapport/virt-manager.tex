@@ -1,4 +1,4 @@
-\chapter{Installation de virt-manager}
+\chapter{Virt-manager}
 \section{Pré-requis et considérations pour les hôtes}
 Divers facteurs doivent être considérés avant de créer des hôtes virtualisés.
 \subsubsection{Performance} 
@@ -15,7 +15,20 @@ apt-get install libvirt-bin
 Du coté de Xen, nous devons vérifier qu’il peut communiquer avec libvirt.
 
 Libvirt accède aux données de Xen via un socket unix. La configuration consiste à activer cette option dans Xen et à relancer les services.
-Nous éviterons ainsi l’erreur libvirtError: internal error failed to connect to xend dont on trouve peu d’explication sur le net.
+Nous éviterons ainsi l’erreur \emph{libvirtError: internal error failed to connect to xend} dont on trouve peu d’explication sur le net.
+\\
+Un autre bug rencontré nécessite la correction d'un lien symbolique et l'installation de qemu.
+
+\begin{lstlisting}
+# Installation de qemu-dm pour créer des machines virtuelles en mode full virtualisé
+apt-get install xen-qemu-dm-4.0 -y
+
+# Correction d'un bug de qemu qui invalidait un lien symbolique
+mkdir /usr/lib64/xen
+mkdir /usr/lib64/xen/bin
+cd /usr/lib64/xen/bin
+ln -s /usr/lib/xen-4.0/bin/qemu-dm
+\end{lstlisting} 
 
 On édite le fichier de configuration xen
 \begin{lstlisting} 
@@ -137,7 +150,7 @@ Un simple clic sur un noeud établit la connexion puisque les mêmes clefs ssh o
 \\
 On est ensuite en mesure de créer une machine sur n'importe quel noeud, la procédure étant la même que pour une installation locale, nous n'allons pas la détailler à nouveau.
 
-\subsubsection{Migration de machines}
+\subsection{Migration de machines}
 Une fonctionnalité intéressate d'un gestionnaire de machines virtuelles est la migration des systèmes invités vers un autre hôte pour prévoir des opérations de maintenance, remplacement,...\\
 Encore une fois virt-manger possède un outil graphique afin d'assister cette étape. Pour commencer, en effectuant un click droit sur une machine virtuelle on obitent un menu contextuel que nous allons détaillé au fur et à mesure.
 \begin{center}
