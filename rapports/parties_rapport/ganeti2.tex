@@ -1,13 +1,48 @@
-
 \chapter{Ganeti}
-      \section{Introduction}
-Ganeti est un outil de gestion de machines virtuelles se basant sur les technologies de virtualisation existantes comme XEN et KVM.\\
+\section{Introduction}
+
+\includegraphics[width=10cm,height=7cm]{images/logo_ganeti.png}
+
+Ganeti est un outil de gestion de machines virtuelles se basant sur les technologies de virtualisation existantes comme XEN et KVM et LXC.\\
 Ganeti nécessite un logiciel de virtualisation pré-installé sur les serveurs afin de pouvoir fonctionner. Une fois installé, 
 l'outil prendra en charge la partie gestion des instances virtuelles (Xen DomU), par exemple, la gestion de création de disque, 
 l'installation du système d'exploitation (en coopération avec les scripts d'installation du système d'exploitation 
 spécifique), et le démarrage, l'arrêt, le basculement entre les systèmes physiques. Il a été conçu pour faciliter la gestion de 
 cluster de serveurs virtuels et de fournir une récupération rapide et simple.
 
+Ganeti est un un manager de cluster de machine virtuelles. Il combine la virtualization et la réplication en temps réel de disque.
+Ganeti offre un plateforme de haute disponibilité.
+Ce que Ganeti peut faire d'autre :
+\begin{itemize}
+\item Migration en "live" des instance
+\item Souplesse face aux pannes (Redondance des données avec DRBD)
+\item "Cluster balancing"
+\item Facilité pour les réparation et les changements matériel
+\item Possibilité de superviser simultanément entre 1 et environ 200 hôtes physiques.
+\end{itemize}
+
+\includegraphics[width=10cm,height=7cm]{images/principe_ganeti.png}
+
+
+Ganeti utilse Python, Xen, KVM, DRDB, LVM, SAN, socat et Haskell.
+Développé par Google depuis Aout 2007
+
+\includegraphics[width=10cm,height=7cm]{images/image1.png}
+
+Ce Projet est sous licence GNU GPLv2.
+
+Site du projet :
+\begin{lstlisting}
+http://code.google.com/p/ganeti/
+\end{lstlisting}
+
+Terminologie :
+\begin{itemize}
+\item Node : Un hôte physiques
+\item Instance : Un machine virtuelles
+\item Cluster : Un groupe de node supervisés
+\item Job : Une opération de ganeti
+\end{itemize}
 
 \section {Installation}
 \subsection {Modification des sources}
@@ -45,7 +80,7 @@ Dans le fichier hosts il faut renseigner l'adresse et le nom complet du node pri
 \begin{lstlisting}
 172.16.68.10    griffon-10.nancy.grid5000.fr griffon-10
 \end{lstlisting}
-\subsection {Copie de vmlinuz-2.6.32-5-xen-amd64 et initrd.img-2.6.32-5-xen-amd64}
+\subsection {Copie des fichier du noyau}
 Dans /etc/boot copier les fichiers vmlinuz-2.6.32-5-xen-amd64 et initrd.img-2.6.32-5-xen-amd64 :
 \begin{lstlisting}
 cp vmlinuz-2.6.32-5-xen-amd64 vmlinuz-2.6-xenU
@@ -53,6 +88,8 @@ cp initrd.img-2.6.32-5-xen-amd64 initrd.img-2.6-xenU
 \end{lstlisting}
 
 \subsection {Création du bridge xen-br0}
+
+Bien que nous utilisions eth0 comme bridge, la configuration de xen-br0 dans le fichier /etc/network/interfaces est obligatoire pour l'initialisation du cluster. 
 
 \subsection {Création du LVM}
 
@@ -84,7 +121,7 @@ gnt-cluster init --no-drbd-storage --nic-parameters link=eth0 cluster1
 \end{lstlisting}
 Ici nous avons précisé les options --no-drbd-storage --nic-parameters link=eth0.
 La première permet d'utiliser ganeti sans utiliser la haute disponibilité.
-La seconde permet de préciser un autre bridge que xen-br0
+La seconde permet de préciser un autre bridge, et d'utiliser eth0 plutôt que xen-br0
 
 Enfin il faut renseigner le inird et le root\_path, cela est nécessaire pour la création des instances :
 \begin{lstlisting}
@@ -123,8 +160,15 @@ y/[n]/?: y
 Mon Mar 12 07:39:36 2012  - INFO: Readding a node, the offline/drained flags were reset
 Mon Mar 12 07:39:36 2012  - INFO: Node will be a master candidate
 \end{lstlisting}
-\subsection {Changer les roles des nodes}
 
+\subsection {Roles des nodes et opérations}
+Les différents nodes ainsi que leurs rôles :
+\begin{itemize}
+\item Master node : Utilise ganeti-masterd, rapi, noded and confd. Peut accueillir des instances. Toutes les opération de supervision s'effectuent sur ce node.
+\item Master candidates : Possède un copie complete de la configuration, peut prendre le rôle de Master.Utilise ganeti-confd and noded. Peut accueillir des instances.
+\item Regular node : Ne peuvent pas devenir Master et ne possedent qu'une partie de la configuration. Peut accueillir des instances.
+\item Offline node : Ces nodes sont hors-ligne. Ne peut pas accueillir des instances.
+\end{itemize}
 \subsubsection {Promouvoir un neud au rang de master :}
 
 Il faut d'abord revoquer le rang de master du node principal, sur un node master-candidate :
@@ -389,7 +433,6 @@ instance3 xen-pvm    debootstrap+default graphene-143.nancy.grid5000.fr running 
 \end{lstlisting}
 L'instance est fonctionnelle sur graphene-100.nancy.grid5000.fr
 
-
 IL est aussi possible d'importer une instance étrangère à ganeti dont le disque est deja dans un LVM, sans avoir à le recopier.
 
 \begin{lstlisting}
@@ -401,4 +444,8 @@ Connexion à la console d'un instance :
 \begin{lstlisting}
 gnt-instance console instance5
 \end{lstlisting}
-       
+Une fois connecté à la console, l'utilisateur par defaut est root et il n'y pas de mots de passe.
+
+Pour ce projet toutes nos instances sont des Debian 6.0.
+Evidemment il est possible de créer des instances autres que Debian. Nous avons créer les instances à partir de debootstrap, d'autres méthodes existe.
+On peut par exemple créer des instances à partir d'une image ISO. Ce qui permet d'avoir une grande variété d'instances.

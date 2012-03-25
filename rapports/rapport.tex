@@ -8,7 +8,8 @@
 \usepackage{array}
 %\usepackage{fancyhdr}
 \usepackage{listings}
-\pagestyle{headings}
+%\pagestyle{headings}
+\pagestyle{fan}
 \usepackage{color}
 %\definecolor{javared}{rgb}{0.6,0,0} % for strings
 %\definecolor{javagreen}{rgb}{0.25,0.5,0.35} % comments
@@ -64,12 +65,12 @@ captionpos=b%
 \appendix
 \input{parties_rapport/sources.tex}
 \chapter{Scripts}
-\input{parties_rapport/script_reservation.tex}
+\input{parties_rapport/scripts_grid5000.tex}
+%\newpage
+%\input{parties_rapport/script_deploy.tex}
+%\input{parties_rapport/script_config.tex}
 \newpage
-\input{parties_rapport/script_deploy.tex}
-\input{parties_rapport/script_config.tex}
-\newpage
-\input{parties_rapport/script_ganeti_install.tex}
+\input{parties_rapport/scripts_ganeti.tex}
 \newpage
 \input{parties_rapport/scripts_virt.tex}
 \end{document}

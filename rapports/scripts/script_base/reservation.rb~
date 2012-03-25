@@ -1,5 +1,6 @@
 #!/usr/bin/ruby -w
 # -*- coding: utf-8 -*-
+
 puts "-----------------------------------------"
 puts "Souhaitez vous reserver des noeuds?(y/n)"
 loop do
@@ -26,7 +27,7 @@ loop do
     exec "oarsub -I -t deploy -n'virtu' -l slash_22=1+nodes=#{noeuds},walltime=#{temps}"
     break;
   end
-      if test.eql?("y")	
+      if test.eql?("y")
         puts "-----------------------------------------"
         exec "oarsub -I -t deploy -n'virtu' -l {\"type='kavlan-local'\"}/vlan=1+/slash_22=1+nodes=#{noeuds},walltime=#{temps}"
         break;
