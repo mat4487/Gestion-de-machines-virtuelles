@@ -14,7 +14,7 @@ Les fonctionnalités actuellement implémentées sont les suivantes :
 \item création de machines virtuelles
 \end{itemize}
 \section{Installation}
-Pour l'installation nous avons besoin des paquets suivant:
+Pour l'installation nous avons besoin des paquets suivants:
 \begin{lstlisting}
 apt-get install subversion bzip2 python-glade2 python-gtk-vnc shared-mime-info graphviz
 \end{lstlisting}
@@ -26,20 +26,20 @@ On se déplace dans le répertoire trunk:
 \begin{lstlisting}
 cd openxenmanager/trunk
 \end{lstlisting}
-Finalement on lance openxenmanager avec la commande suivante
+Finalement on lance openxenmanager avec la commande suivante:
 \begin{lstlisting}
 python window.py
 \end{lstlisting}
-Une interface graphique d'openxenmanger apparait.
+Une interface graphique d'openxenmanger apparaît.
 
 \section{Problèmes rencontrés avec OpenXenManager}
 
-A l'origine OpenXenManager est destiné à manager XenServer qui fonctionne uniquement avec le système d'exploitation windows.\\Malheureusement nous travaillons dans un environement différent de windows, notre premier problème fu de trouver un équivalent sous linux.
-Après plusieurs jours de recherche nous avons trouver un programme susceptible de fonctionner avec OpenXenManager qui s'appel Xen cloud Platform.
-Très peu de documentation est disponible sur internet, nous avons suivi un tutoriel qui nous sembler être l'un des mieux explicatif pour essayer de l'installer mais celui si n'a pas fonctionné.
+A l'origine, OpenXenManager est destiné à manager XenServer qui fonctionne uniquement avec le système d'exploitation windows.\\Malheureusement nous travaillons dans un environement différent de windows, notre premier problème fût de trouver un équivalent sous linux.
+Après plusieurs jours de recherche, nous avons trouvé un programme susceptible de fonctionner avec OpenXenManager qui s'appelle Xen cloud Platform.
+Très peu de documentation sont disponibls sur internet, nous avons suivi un tutoriel qui nous semble être l'un des mieux explicatif pour essayer de l'installer mais celui ci n'a pas fonctionné.
 Nous allons vous présenter un extrait des étapes de la configuration ansi que les problèmes rencontrés.
 \subsection{Préparation du système}
-La première étape consitait à préparer le système pour l'installation:
+La première étape consistait à préparer le système pour l'installation:
 \begin{itemize}
 \item Rajouter des dépôts dans le source.list
 \item Récupérer la clé pour y accéder.
@@ -70,18 +70,18 @@ On obtient le message suivant :
 
 Il semblerait que nous ne pouvions pas accéder au serveur pour récupérer la clé.
 
-Ensuite nous devions installer python-software-properties une dépendence requise pour que XCP fonctionne.
+Ensuite nous devions installer python-software-properties une dépendance requise pour que XCP fonctionne.
 En faisant un
 \begin{lstlisting} 
 apt-get update
 \end{lstlisting}
-avant installer python-software-properties on obtient le message suivant:
+avant d'installer python-software-properties on obtient le message suivant:
 
 \begin{lstlisting}
 W: GPG error: http://ppa.launchpad.net oneiric Release: The following signatures couldn't be verified because the public key is not available: NO_PUBKEY 79B578FB9273A937
 \end{lstlisting}
 
-Comme nous n'avons pas récuperé la clé il nous est impossible d'installer la dépendence.
+Comme nous n'avons pas récupéré la clé, il nous est impossible d'installer la dépendance.
 
 \subsection{Installation de XCP}
 
@@ -91,7 +91,7 @@ add-apt-repository ppa:ubuntu-xen-org/xcp-unstable
 \end{lstlisting}
 
 \subsubsection{Prblèmes rencontrés durant cette étape}
-Il s'en suit un echec de la commande.
+Il s'en suit un échec de la commande.
 \begin{lstlisting}  
 root@griffon-61:~# add-apt-repository ppa:ubuntu-xen-org/xcp-unstable
 Traceback (most recent call last):
@@ -102,16 +102,16 @@ curl.perform()
 pycurl.error: (28, 'connect() timed out!')
 \end{lstlisting}
 Il nous est impossible d'ajouter les dépôts pour récupérer XCP.
-Pour les étapes suivante nous n'avons rencontré aucuns problèmes:
+Pour les étapes suivantes, nous n'avons rencontré aucun problème:
 \begin{itemize}
-\item Installation de dépendences pour XCP
+\item Installation de dépendances pour XCP
 \item Installation de XCP
 \end{itemize}
 \begin{lstlisting}
 apt-get update
 apt-get install openvswitch-datapath-dkms
 \end{lstlisting}
-Tout s'installe correctement, ce n'est que lors de l'installation de Xen Cloud Platform que plusieurs problèmes sont survenuent.
+Tout s'installe correctement, ce n'est que lors de l'installation de Xen Cloud Platform que plusieurs problèmes sont survenus.
 \begin{lstlisting}
 apt-get update
 apt-get install xcp-xapi
@@ -153,8 +153,8 @@ Suite aux nombreux problèmes rencontrés sur ce sujet nous avons décidé de pa
 
 \section{Xen Cloud Platform}
 Le fait de passer au second sujet nous a permis de débloquer la situation avec OpenXenManager.
-En effet nous avons pu installer XCP grâce à virt-manager dans une machine virtuelle avec l'aide d'une image iso d'XCP téléchargé depuis le site officiel.
-L'installation est simple, depuis la machine virtuelle on boot sur sur l'image iso et l'on suis les étapes suivantes.
+En effe, nous avons pu installer XCP grâce à virt-manager dans une machine virtuelle avec l'aide d'une image iso d'XCP téléchargée depuis le site officiel.
+L'installation est simple, depuis la machine virtuelle on boot sur l'image iso et l'on suit les étapes suivantes.
 \begin{center}
 \includegraphics[width=200pt]{images/1.png}
 \end{center}
@@ -228,8 +228,8 @@ Installation complète
 Interface de Xen Cloud Platform
 \end{center}
 \section{Connexion d'OpenXenManager avec XCP}
-Désormais il est possible de nous connecter avec OpenXenManager sur XCP, il nous suffit de remplir le champ hostname avec l'adresse IP du serveur.
-On indique ensuite le port 80 comme port de connexion, et l'on fini par les login et mots de passe.
+Désormais, il est possible de nous connecter avec OpenXenManager sur XCP, il nous suffit de remplir le champ hostname avec l'adresse IP du serveur.
+On indique ensuite le port 80 comme port de connexion, et l'on finit par les login et mots de passe.
 \begin{center}
 \includegraphics[width=400pt]{images/xenmanager.png}
 \end{center}
