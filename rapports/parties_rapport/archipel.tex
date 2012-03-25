@@ -56,7 +56,7 @@ Au niveau des messages échangés, la notification de toutes les entités n'est 
 pour des raisons de charge de messages. Une solution consisterait à stocker du coté de l'agent, les
 entités et les messages qu'elles doivent recevoir, mais il faudrait alors maintenir des états. L'architecture
 a recours à un mécanisme très intéressant du coté du serveur XMPP. Il s'agit de la partie PubSub (PUBlish-
-SUBscribe) : cela fonctionne comme les groupes de multicast au niveau réseau IP. Les entités qui
+SUBscribe) : celà fonctionne comme les groupes de multicast au niveau réseau IP. Les entités qui
 souhaitent diffuser des informations à plusieurs entités publient via une entrée dans le service PubSub du
 serveur, et les entités qui souhaitent recevoir les messages pour cette entrée s'y abonnent. Ainsi, c'est
 encore une fois le serveur XMPP qui va faire le travail de diffuser aux entités abonnées les messages. Cela
@@ -70,7 +70,7 @@ années.\newline
 La sécurité qui permet de savoir quel utilisateur peut dialoguer avec une entité repose d'abord sur le
 roster de celle-ci, car comme le roster est stocké coté serveur XMPP, c'est sans doute la meilleure solution
 qui puisse être retenue. Il est donc possible de définir clairement quel utilisateur peut dialoguer avec une
-machine virtuelle ou un hyperviseur donnés, et également de savoir qui a accès à une entité donnée.
+machine virtuelle ou un hyperviseur donné, et également de savoir qui a accès à une entité donnée.
 Archipel va encore plus loin dans la gestion de la sécurité. Comme ce sont des stanza qui définissent les
 demandes entre les entités, et que cela se traduit par des appels à l'API de libvirt, un filtrage coté agent
 est en place, il permet d'autoriser ou non certaines actions. Ainsi, actuellement, 110 rôles possibles sont
@@ -84,7 +84,7 @@ dialoguer ensemble, via une autorisation explicite au niveau du serveur pour aut
 Server ), il est possible d'utiliser un autre serveur XMPP existant pour les utilisateurs (comme cela, ils
 peuvent utiliser par exemple une authentification liée à leur ENT). Les messages transitent alors par les
 deux serveurs successivement avant d'arriver aux entités coté Archipel.\newline
-En terme de sécurité, là encore, Archipel se base sur l'existant, et ajoute de la finesse dans la délégations
+En terme de sécurité, là encore, Archipel se base sur l'existant, et ajoute de la finesse dans la délégation
 de droits.\newline
 
     \section{Fonctionnalités}
@@ -123,7 +123,7 @@ Cependant Archipel a encore quelques faiblesses. A force d'exploiter la robustes
 serveurs implémentent tout ce qui est nécessaire. Ejabberd est pour l'instant le seul serveur XMPP qui est
 recommandé. Archipel a également mis en évidence un certain nombre de bugs dans libvirt. En particulier
 la gestion de Xen et de Vmware dans libvirt reste problématique, et rend inopérant Archipel (la balle est
-dans le camp des développeurs de libvirt). Enfin Archipel propose déjà un certain nombre de
+dans le camp des développeurs de libvirt). Enfin, Archipel propose déjà un certain nombre de
 fonctionnalités qui le rend largement utilisable, et il reste de la place pour l'innovation.\newline
 La mise en place n'affecte pas l'existant, elle est relativement aisée à effectuer, ce qui permet de faire
 une migration en douceur.\newline
