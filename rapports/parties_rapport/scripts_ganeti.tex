@@ -1,10 +1,24 @@
 \section{Scripts pour le déploiement de ganeti}
+\subsection{Configuration générale des noeuds}
 \lstinputlisting[language=bash,morekeywords={scp,in,taktuk,bash,chmod},caption={Configuration générale des noeuds}]{scripts/script_base/config_base.sh}
+\subsection{Création de machines virtuelles pour Ganetti }
 \lstinputlisting[language=bash,morekeywords={mkdir,bash,chmod,scp,in,touch,taktuk},caption={}]{scripts/ganeti/common.sh}
+\subsection{Installation et configuration de ganeti}
 \lstinputlisting[language=bash,morekeywords={mkdir,bash,chmod,scp,in,touch,taktuk},caption={Installation et configuration de ganeti}]{scripts/ganeti/instal_ganeti.sh}
+\subsection{Installation et configuration du master node}
 \lstinputlisting[language=bash,morekeywords={mkdir,bash,chmod,scp,in,touch,taktuk},caption={Installation et configuration du master node}]{scripts/ganeti/ganeti_master.sh}
+\subsection{Installation et configuration des noeuds esclaves}
 \lstinputlisting[language=bash,morekeywords={mkdir,bash,chmod,scp,in,touch,taktuk},caption={Installation et configuration des noeuds esclaves}]{scripts/ganeti/ganeti_slave.sh}
+\subsection{Ajout des noeuds au cluster et création des instances}
 \lstinputlisting[language=bash,morekeywords={mkdir,bash,chmod,scp,in,touch,taktuk},caption={Ajout des noeuds au cluster et création des instances}]{scripts/ganeti/node-add.sh}
 
+\subsection{Modification du fichier de configuration de ganeti}
+\lstinputlisting[language=bash,morekeywords={mkdir,bash,chmod,scp,in,touch,taktuk},caption={Modification du fichier de configuration de ganeti}]{scripts/ganeti/setup-ssh}
+Ce fichier a été modifié pour permettre l'automatisation de l'ajout d'un nouveau noeud. Pour faire celà nous avons commenté les lignes 
+\begin{lstlisting}
+ #hexified_key = _FormatFingerprint(server_key.get_fingerprint())
+    #msg = ("Unable to verify hostkey of host %s: %s. Do you want to accept"
+           #" it?" % (host, hexified_key))
 
-
+    #if cli.AskUser(msg):
+\end{lstlisting}
