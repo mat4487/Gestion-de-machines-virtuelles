@@ -45,6 +45,10 @@ Pour gérer nos serveurs, nous installons virt-manager avec la commande suivante
 \begin{lstlisting} 
 apt-get install virt-manager
 \end{lstlisting}
+Au premier lancement, seule la connexion locale est active. Pour ajouter un nouveau noeud, on peut passer par le menu \emph{File>Add Connection} auquel cas il faut modifier le type pour le positionner sur \emph{xen+ssh} et renseigner le nomd du noeud.
+\begin{center}
+\includegraphics[width=250pt]{images/nouvelle_conn.png}
+\end{center}
 Virt-manager étant un outil graphique, ses fichiers de configurations sont gérés par gconf. Ainsi, pour automatiser l'ajout des différents noeuds nous avons crée un script qui réécrit le fichier \emph{~/.gconf/apps/virt-manager/connections/\%gconf.xml}
 \begin{lstlisting}
 for node in $(cat $list_nodes)
