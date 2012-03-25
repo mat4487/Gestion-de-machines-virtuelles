@@ -1,7 +1,5 @@
 #!/bin/bash
 
-##VERIFIER QUE postinstall.sh et ganeti.sh soient dans le meme dossier puis executer postinstall.sh (Sur le frontend)!
-#Ajout des sources testing pour installer la derniere version de ganeti
 echo "## wheezy security" >> /etc/apt/sources.list
 echo "deb http://security.debian.org/ wheezy/updates main contrib non-free" >> /etc/apt/sources.list
 echo "deb-src http://security.debian.org/ wheezy/updates main contrib non-free" >> /etc/apt/sources.list
