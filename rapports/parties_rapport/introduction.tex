@@ -9,15 +9,15 @@ OpenXenManager, virt-manager, Archipel...
 
 
 Une machine virtuelle est un conteneur isolé capable d'exécuter
-ses propres système d'exploitation et applications.
+ses propres systèmes d'exploitation et application.
 Une machine virtuelle se comporte exactement comme un ordinateur physique
 et contient ses propres processeurs, mémoire RAM, disque dur et carte
-d'interface réseau virtuels.Une machine virtuelle
+d'interface réseau virtuel. Une machine virtuelle
 a pour but de générer sur une même machine un ou plusieurs environnements
-d'exécution applicative. On en distingue deux types d'application
+d'exécution applicative. On en distingue deux types d'applications
 : d'une part la virtualisation par le biais d'un hyperviseur jouant
 le rôle d'émulateur de système (PC ou serveur), d'autre part la virtualisation
-applicative qui permet de faire tourner un application sur un poste
+applicative qui permet de faire tourner une application sur un poste
 client quelque soit le système sous-jacent.
 
 \subsection{Hyperviseur }
@@ -33,12 +33,12 @@ d'exécution serveur. Cet émulateur se place comme un niveau supplémentaire qu
 La virtualisation a été mise en œuvre pour la première fois il y
 a plus de 30 ans par IBM pour partitionner logiquement des mainframes
 en machines virtuelles distinctes. Ces partitions permettaient un
-traitement « multitâche », à savoir l exécution simultanée de plusieurs applications et processus. Étant donné que les mainframes consommaient beaucoup de ressources en même temps, le partitionnement constituait un moyen naturel de tirer pleinement parti de l investissement matériel.
+traitement « multitâche », à savoir l'exécution simultanée de plusieurs applications et processus. Étant donné que les mainframes consommaient beaucoup de ressources en même temps, le partitionnement constituait un moyen naturel de tirer pleinement parti de l'investissement matériel.
 
 
 \subsection{Histoire de la virtualisation}
 
-La virtualisation est un concept qui a été mis au point pour la première fois dans les années 1960 pour permettre la partition dune vaste gamme de matériel mainframe et optimiser l'utilisation du matériel. De nos jours, les ordinateurs basés sur l'architecture x86 sont confrontés aux mêmes problèmes de rigidité et de sous-utilisation que les mainframes dans les années 1960. VMware a inventé la virtualisation pour la plate-forme x86 dans les années 1990 afin de répondre notamment aux problèmes de sous-utilisation, et a surmonté les nombreux défis émergeant au cours de ce processus. Aujourd'hui, VMware est devenu le leader mondial de la virtualisation x86 avec plus de 190 000 clients, dont la totalité des membres du classement Fortune 100.
+La virtualisation est un concept qui a été mis au point pour la première fois dans les années 1960 pour permettre la partition d'une vaste gamme de matériel mainframe et optimiser l'utilisation du matériel. De nos jours, les ordinateurs basés sur l'architecture x86 sont confrontés aux mêmes problèmes de rigidité et de sous-utilisation que les mainframes dans les années 1960. VMware a inventé la virtualisation pour la plate-forme x86 dans les années 1990 afin de répondre notamment aux problèmes de sous-utilisation, et a surmonté les nombreux défis émergeant au cours de ce processus. Aujourd'hui, VMware est devenu le leader mondial de la virtualisation x86 avec plus de 190 000 clients, dont la totalité des membres du classement Fortune 100.
 
 \subsection{Enjeux de la virtualisation}
 
@@ -53,17 +53,17 @@ utile d'améliorer des services tels que la disponibilité, la migration,la redo
 Une des solutions pour répondre à ces besoins serait d'acquérir davantage de plateformes de travail.
 
 
-La multiplications des serveurs pose cependant un certain nombre
+La multiplication des serveurs pose cependant un certain nombre
 de problème, augmenter sans cesse son parc informatique est impossible
 pour plusieurs raisons : 
 \begin{itemize}
-\item Tout d'abord au niveau écologique cela entrainerait un surplus de déchets électronique,une consommation d'energie directe et de l'énergie utilisée pour refroidir les salles serveur.
+\item Tout d'abord au niveau écologique celà entrainerait un surplus de déchets électronique, une consommation d'énergie directe et de l'énergie utilisée pour refroidir les salles serveur.
 \item Au niveau de la surface utilisée, les salles machine seraient vite encombrées, puis apparaitra des problèmes tel que la nuisance sonore, le manque de puissance pour alimenter les salles serveur. 
-\item Au niveau économique les couts d'achat, de recyclage, de fonctionnement, de maintenance seraient trop chère. La mise en place de serveur de virtualisation est une solution pour résoudre ces problèmes.
+\item Au niveau économique les coûts d'achat, de recyclage, de fonctionnement, de maintenance seraient trop chers. La mise en place de serveur de virtualisation est une solution pour résoudre ces problèmes.
 \end{itemize}
 
 Le but de la virtualisation est de donner un environnement système
-au programme pour qu'il croie être dans un environnement
+au programme pour qu'il croit être dans un environnement
 matériel. Pour cela, une machine virtuelle est utilisée. Ainsi, plusieurs
 environnements d'exécution sont créés sur une seule
 machine, dont chacun émule la machine hôte. L'utilisateur
@@ -101,23 +101,22 @@ contexte : grappes de grappes, environnements de type
 GridRPC (appel de procédure à distance sur une grille).,
 réseaux pair-à-pair, systèmes de calcul sur Internet, etc...
 Il s’agit d’une manière générale de systèmes dynamiques,
-hétérogènes et distribués à large échelle. Un grand
-nombre de problématiques de recherche sont soulevées
-par les grilles informatiques. Elles touchent plusieurs
+hétérogènes et distribués à large échelle. De grand
+nombre de problématiques de recherche sont soulevés
+par l'informatique. Elles touchent plusieurs
 domaines de l’informatique :algorithmique,
-programmation, intergiciels, applications, réseaux.
+programmation, applications, réseaux.
 
 L’objectif de GRID’5000 est de construire un instrument
 pour réaliser des expériences en informatique dans le
 domaine des systèmes distribués à grande échelle (GRID).
 
-Cette plate-forme, ouverte depuis 2006 aux chercheurs de
-la communauté grille, regroupe un certain nombre de sites
+Cette plate-forme, ouverte depuis 2006 aux chercheurs, regroupe un certain nombre de sites
 répartis sur le territoire national. Chaque site héberge une
 ou plusieurs grappes de processeurs. Ces grappes sont
 alors interconnectées via une infrastructure réseau dédiée
 à 10 Gb/s fournie par RENATER. À ce jour, GRID’5000
-est composé de 9 sites: Lille, Rennes, Orsay, Nancy,
+est composée de 9 sites: Lille, Rennes, Orsay, Nancy,
 Bordeaux, Lyon, Grenoble, Toulouse et Nice.
 
 Début 2007, GRID’5000 regroupait plus de 2500 processeurs et près
@@ -153,18 +152,18 @@ Commande:
 ssh utilisateur@access.grid5000.fr
 \end{lstlisting}
 Sur tous les serveurs du site, un répertoire home, local à chaque site, est monté avec NFS 2 .
-A partir du frontend, il est possible d'accéder aux machines des clusters en exectuant des réservations à l'aide de la commande:
+A partir du frontend, il est possible d'accéder aux machines des clusters en exécutant des réservations à l'aide de la commande:
 \begin{lstlisting}
 oarsub
 \end{lstlisting}
-Gràce à notre tuteur, M. Lucas Nussbaum nous avons pu visiter la salle serveurs du site de Nancy située au Loria, 
-ainsi qu'une présentation de la plate-forme (matériel utilisé, connexions réseau,
+Grâce à notre tuteur, M. Lucas NUSSBAUM nous avons pu visiter la salle serveurs du site de Nancy située au Loria, 
+et avons assisté à une présentation de la plate-forme (matériel utilisé, connexions réseau,
 administration).
 \quotation\textit{Une description détaillée du site de Nancy est disponible sur le site de Grid 5000.}
 
   \subsection{Réseau}
 Les sites et toutes les machines qu'ils comprennent sont interconnectés par RENATER 3 en 10Gbits/s. De
-plus, chaque site peut disposer de plusieurs réseaux locaux 4 :
+plus, chaque site peut disposer de plusieurs réseaux locaux :
 \begin{itemize}
 \item réseau en ethernet, 1 Gb/s
 \item réseaux hautes performances (Infiniband 20 Gb/s ou 10 Gb/s, et Myrinet 20 Gb/s)
@@ -185,7 +184,7 @@ oarsub -I -t deploy -n'virtu' -l slash_22=1+nodes=3,walltime=2
 \end{lstlisting}
 Cette ligne nous permet de réserver 3 nœuds avec sous-réseau en /22.
 
-Après réservation, oarsub ouvre un shell dans lequel des variables d'environnements sont déffnies comme \$OAR\_FILE\_NODE, qui est le nom d'un fichier avec la liste des nœuds réservés, ou \$OAR\_JOB\_ID.
+Après réservation, oarsub ouvre un shell dans lequel des variables d'environnements sont définies comme \$OAR\_FILE\_NODE, qui est le nom d'un fichier avec la liste des nœuds réservés, ou \$OAR\_JOB\_ID.
 \begin{lstlisting}
 cat  $OAR_FILE_NODES | uniq
 griffon-25. nancy . gr id5000 . f r
@@ -197,7 +196,7 @@ echo $OAR_JOB_ID
 \end{lstlisting}
 Pour supprimer le job et libérer les ressources, on utilise la commande oardel.
 \begin{lstlisting}
-$ oardel 387054
+oardel 387054
 \end{lstlisting}
 Kadeploy permet de déployer des environnements personnalisés sur les noeuds réservés à l'aide d'une commande simple. Lorsque la réservation est terminée, le noeud est automatiquement restauré avec un environnement Debian ou autre.
 Pour déployer un environnement sur tous les noeuds réservés, il faut utiliser la commande kadeploy3
@@ -209,7 +208,7 @@ L’option –e permet de spécifier la distribution, -f permet le déploiement 
 
 
 \section{Répartition des tâches}
-Nous avons commencé par prendre en main Grid5000 durant les 2 premières semaines du projet. Pour ce faire nous avons suivi avec soin les tutoriels mis à notre disposition sur le site www.grid5000.fr.
+Nous avons commencé par prendre en main Grid5000 durant les 2 premières semaines du projet. Pour ce faire, nous avons suivi avec soin les tutoriels mis à notre disposition sur le site www.grid5000.fr.
 
 Une fois les manipulations de bases bien assimilées. Nous nous sommes divisés en 2 sous-groupes pour tester les différents outils du projet :
 \begin{itemize}
