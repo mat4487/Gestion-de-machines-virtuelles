@@ -34,7 +34,7 @@ On édite le fichier de configuration xen
 \begin{lstlisting} 
 nano /etc/xen/xend-config.sxp
 \end{lstlisting}
- on active la ligne suivante
+ on active, ou on rajoute la ligne suivante
 \begin{lstlisting} 
 (xend-unix-server yes)
 \end{lstlisting}
@@ -54,9 +54,9 @@ do
     echo '</li>' >> $fichier
 done
 \end{lstlisting}
-Ce fichier est au format xml et contient pour chaque noeud une entrée. Ici, les connexions sont gérées au-dessus d'un tunnel ssh.
+Ce fichier est au format xml et contient pour chaque noeud une entrée. Ici, les connexions sont gérées au-dessus d'un tunnel ssh. Commme nous ne pouvions pas accéder, depuis l'extérieur, aux noeuds de Grid5000, nous avons du installer virt sur les noeuds eux-mêmes (qui sont donc à la fois clients et serveurs) et y accéder via le X Forwarding de la connexion ssh.
 \section{Création d'hôtes virtualisés avec virt-manager}
-1)Pour commencer on démarre virt-manager, puis on lance le gestionnaire de machines virtuelles à partir du menu en cliquant sur l'icone en forme de pc.
+Pour commencer on démarre virt-manager, puis on lance le gestionnaire de machines virtuelles à partir du menu en cliquant sur l'icone en forme de pc.
 
 %\begin{figure}
 \begin{center}
@@ -65,31 +65,31 @@ Ce fichier est au format xml et contient pour chaque noeud une entrée. Ici, les
 %\caption{Interface de virt-manager}
 %\end{figure}
 
-3) La fenêtre du gestionnaire de machine virtuelle nous autorise à en créer de nouvelles.
+La fenêtre du gestionnaire de machine virtuelle nous autorise à en créer de nouvelles.\\
 On clique sur création de nouvelle machine virtuelle pour faire apparaître l'assistant qui va nous aider pour élaborer notre hôte.
 L'assistant décompose la création en cinq étapes:
--La localisation et la configuration des supports d'installation
--La configuration de la mémoire et les options de CPU
--La configuration du stockage de l'invité
--La configuration réseau, l'architecture, et d'autres paramètres matériels
+\begin{itemize}
+\item La localisation et la configuration des supports d'installation.
+\item La configuration de la mémoire et les options de CPU.
+\item La configuration du stockage de l'invité.
+\item La configuration réseau, l'architecture, et d'autres paramètres matériels.
+\end{itemize}
+Le processus de création d'hôte commence avec la sélection d'un nom et le type d'installation.
 
-Le processus de création d'hôte commence avec la selection d'un nom et le type d'installation.
+\subsubsection{Localisation et Configuration des supports d'installation.}
 %\begin{figure}
 \begin{center}
 \includegraphics[width=350pt]{images/nommachine.jpg}
 \end{center}
 %\caption{Choix du nom de la nouvelle machine virtuelle}
 %\end{figure}
--Local install media(ISO image or CDROM)
-Cette méthode utilise un CD-ROM,DVD ou une image iso.
-
--Network install
-Cette méthode utilise le réseau pour installer le système d'exploitation.
-
--Import existing disk image
-Cette méthode nous permet de créer un nouvelle hôte et d'y importer une image disque.
-
-La prochaine étape consiste à configurer l'installation.
+\begin{description}
+  \item[Local install media(ISO image or CDROM) :] Cette méthode utilise un CD-ROM,DVD ou une image iso.
+  \item[Network install :] Cette méthode utilise le réseau pour installer le système d'exploitation.
+  \item[Network Boot :] Ceci permet de résupérer un environement exécutable directement depuis le réseau et donc sans installation nécessaire.
+  \item[Import existing disk image :] Cette méthode nous permet de créer un nouvelle hôte et d'y importer une image disque.
+\end{description}
+La prochaine étape consiste à configurer l'installation.\\
 On configure le type de système d'exploitation et sa version qui sera installé, cela dépend de la méthode d'installation que l'on a choisie.
 %\begin{figure}
 \begin{center}
@@ -98,7 +98,7 @@ On configure le type de système d'exploitation et sa version qui sera installé
 %\caption{Choix du nom de la nouvelle machine virtuelle}
 %\end{figure}
 
-Configuration du CPU et de la mémoire
+\subsubsection{Configuration du CPU et de la mémoire}
 La prochaine étape consiste à configurer le nombre de CPU et la quantité de mémoire à allouer à la machine virtuelle. L'assistant indique le nombre de processeurs et la quantité de mémoire que l'on peut lui allouer.
 %\begin{figure}
 \begin{center}
@@ -107,7 +107,7 @@ La prochaine étape consiste à configurer le nombre de CPU et la quantité de m
 %\caption{Configuration du CPU et de la mémoire allouée à la machine virtuelle}
 %\end{figure}
 
-Configuration de l'espace de stockage
+\subsubsection{Configuration de l'espace de stockage}
 %\begin{figure}
 \begin{center}
 \includegraphics[width=300pt]{images/Storage.jpg}
@@ -118,7 +118,7 @@ Configuration de l'espace de stockage
  Si l'on a choisi d'importer une image de disque existante au cours de la première étape, virt-manager va sauter cette étape.
 On doit attribuer un espace suffisant pour notre machine virtuelle et toutes les applications que l'hôte a besoin.
 
-Configuration finale
+\subsubsection{ Configuration réseau et architecture}
 On vérifie les paramètres de la machine virtuelle et on clique sur Terminer lorsqu'on est satisfait, cela permettra de créer l'hôte avec les paramètres réseau par défaut, le type de virtualisation, et l'architecture.
 \begin{center}
 \includegraphics[width=300pt]{images/reseau.jpg}
@@ -129,7 +129,7 @@ On vérifie les paramètres de la machine virtuelle et on clique sur Terminer lo
 \subsection{Controle d'hotes distants}
 On peut facilement manager des hotes distants une fois ceux-ci enregistrés dans virt-manager. Cette opération peut être fastidieuse car virt étant un programme graphique, crée un script pour automatiser l'ajout de plusieurs dizaines de noeuds s'est avéré plus compliqué que prévu.
 Cherchant désespérément un fichier de configuration, nous avons fini par le trouver en lançant une recherche dans tout le système sur les noms des noeuds ajoutés à virt. Le fichier est donc géré par \emph{gconf} en voici un exemple
-\lstinputlisting[language=xml,morekeywords={li,entry,stringvalue,gconf}]{scripts/virt-manager/gconf.xml}
+\lstinputlisting[language=xml,morekeywords={li,entry,stringvalue,gconf},caption={Fichier .gconf/apps/virt-manager/connections/\%gconf.xml}]{scripts/virt-manager/gconf.xml}
 Après l'installation de virt, le seul lien enregistré est le lien local. Pour ajouter une connexion vers un nouvel hote xen, on peut utiliser l'interface graphique.
 %\includegraphics image ajout d'un noeud
 Cependant, dans notre cas, il était assez fastidieux de renseigner manuellelement chacun des noeuds surtout lors des tests à grande échelle. C'est pourquoi nous avons fait un script (voir annexe \ref{ajout-noeuds} en page \pageref{ajout-noeuds}) donc voici la boucle d'ajout des noeuds:
