@@ -155,69 +155,97 @@ Suite aux nombreux problèmes rencontrés sur ce sujet nous avons décidé de pa
 Le fait de passer au second sujet nous a permis de débloquer la situation avec OpenXenManager.
 En effet nous avons pu installer XCP grâce à virt-manager dans une machine virtuelle avec l'aide d'une image iso d'XCP téléchargé depuis le site officiel.
 L'installation est simple, depuis la machine virtuelle on boot sur sur l'image iso et l'on suis les étapes suivantes.
-\begin{figure}
 \begin{center}
 \includegraphics[width=200pt]{images/1.png}
 \end{center}
-\caption{On choisit le  type de clavier}
-\end{figure}
-\begin{figure}
+\begin{center}
+On choisit le  type de clavier
+\end{center}
 \begin{center}
 \includegraphics[width=200pt]{images/2.png}
 \end{center}
-\caption{On accepte la licence}
-\end{figure}
-\begin{figure}
+\begin{center}
+On accepte la licence
+\end{center}
 \begin{center}
 \includegraphics[width=200pt]{images/3.png}
 \end{center}
-\caption{Choix du disque d'installation}
-\end{figure}
-\begin{figure}
+\begin{center}
+Choix du disque d'installation
+\end{center}
 \begin{center}
 \includegraphics[width=200pt]{images/4.png}
 \end{center}
-\caption{Choix de la source d'installation}
-\end{figure}
-\begin{figure}
+\begin{center}
+Choix de la source d'installation
+\end{center}
 \begin{center}
 \includegraphics[width=200pt]{images/5.png}
 \end{center}
-\caption{Paquets additionnels}
-\end{figure}
-\begin{figure}
+\begin{center}
+Paquets additionnels
+\end{center}
 \begin{center}
 \includegraphics[width=200pt]{images/6.png}
 \end{center}
-\caption{Vérification de la source d'installation}
-\end{figure}
-\begin{figure}
+\begin{center}
+Vérification de la source d'installation
+\end{center}
 \begin{center}
 \includegraphics[width=200pt]{images/7.png}
 \end{center}
-\caption{Choix du password}
-\end{figure}
-\begin{figure}
+\begin{center}
+Choix du password
+\end{center}
 \begin{center}
 \includegraphics[width=200pt]{images/8.png}
 \end{center}
-\caption{Configuration du réseau}
-\end{figure}
-\begin{figure}
+\begin{center}
+Configuration du réseau
+\end{center}
 \begin{center}
 \includegraphics[width=200pt]{images/9.png}
 \end{center}
-\caption{Configuration du DNS}
-\end{figure}
-\begin{figure}
+\begin{center}
+Configuration du DNS
+\end{center}
 \begin{center}
 \includegraphics[width=200pt]{images/10.png}
 \end{center}
-\caption{Installation}
-\end{figure}
-\begin{figure}
+\begin{center}
+Installation
+\end{center}
 \begin{center}
 \includegraphics[width=200pt]{images/11.png}
 \end{center}
-\caption{Installation complète}
-\end{figure}
+\begin{center}
+Installation complète
+\end{center}
+\begin{center}
+\includegraphics[width=300pt]{images/xcp.png}
+\end{center}
+\begin{center}
+Interface de Xen Cloud Platform
+\end{center}
+\section{Connexion d'OpenXenManager avec XCP}
+Désormais il est possible de nous connecter avec OpenXenManager sur XCP, il nous suffit de remplir le champ hostname avec l'adresse IP du serveur.
+On indique ensuite le port 80 comme port de connexion, et l'on fini par les login et mots de passe.
+\begin{center}
+\includegraphics[width=400pt]{images/xenmanager.png}
+\end{center}
+\begin{center}
+Interface graphique
+\end{center}
+\begin{center}
+\includegraphics[width=200pt]{images/addserveur.png}
+\end{center}
+\begin{center}
+Ajout du serveur XCP
+\end{center}
+\begin{center}
+\includegraphics[width=400pt]{images/final.png}
+\end{center}
+\begin{center}
+Vue de toutes les machines virtuelles dans XCP
+\end{center}
+
