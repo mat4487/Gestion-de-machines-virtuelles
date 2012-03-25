@@ -1,4 +1,4 @@
-\chapter{Archipel Project}
+  \chapter{Archipel Project}
     \section{Introduction}
 Archipel repose totalement sur libvirt comme API de gestion des machines virtuelles. De fait, l'outil
 s'impose d'être de plus haut niveau. Pour la gestion des utilisateurs, on peut directement utiliser un
@@ -11,7 +11,7 @@ de l'implémenter, de devoir le débugger et le sécuriser, l'équipe d'Archipel
 réutilisation. Ce protocole est défini par des RFC, et possède de nombreuses implémentations.
 \begin{center}
 \includegraphics[width=10cm,height=7cm]{images/archi_archipel.png}
-\begin{quote}llustration 1: Flux de messages entre les différentes entités\end{quote}
+%\begin{quote}llustration 1: Flux de messages entre les différentes entités\end{quote}
 \end{center}
 
 Il suffit donc d'avoir un client adapté pour les hyperviseurs et pour les machines virtuelles. Les machines
@@ -132,185 +132,8 @@ machines pour certains utilisateurs. La délégation de droits est simple à eff
 interface conviviale et sans client lourd, en HTML5, il n'y a pas de problème pour donner un accès à des
 non informaticiens.
 
-    \section{Installation et configuration sur tous les noeuds}
-	\subsection{Installation et configuration de jabber}
-Archipel a besoin de ejabberd comme XMPP serveur (Pour le moment seulement ejabberd supporte efficacement le protocole XMPP pour les
-besoin de Archipel). 
-
-Installation de ejabberd par les dépôts:
-\begin{lstlisting}
-  apt-get install ejabberd
-\end{lstlisting}
-\begin{quotation}
-Note, il faut une version suppérieure ou égale à la 2.1.0, si la dristribution ne permet pas cela il faut changer de distribution.
-\end{quotation}
-
-Archipel a besoin des modules ejabberd suivants pour fonctionner:
-
-\begin{itemize}
-\item mod\_admin\_extra (installer avec les packages de ejabberd)
-\item ejabberd\_xmlrpc (module optionel)
-\end{itemize} 
- 
-\begin{quotation}
-Si il y a besoin de compiler les modules faire ce qui suit, sinon passer cette étape.
-\end{quotation}
-
-\subsection{Installation de l'environement de erlang}
-\begin{lstlisting}
-apt-get install subversion erlang-dev erlang-xmerl build-essential erlang-tools python-setuptools
-\end{lstlisting}
-
-\subsection{Obtention des module ejabberd}
-\begin{lstlisting}
-cd /usr/local/src
-svn checkout http://svn.process-one.net/ejabberd-modules/
-\end{lstlisting}
-
-\subsection{librairie Erlang xmlrpc}
-Cette librairie n'est pas inclue dans le package Debian il faut donc faire cela:
-\begin{lstlisting}
-cd /usr/local/src
-wget http://ejabberd.jabber.ru/files/contributions/xmlrpc-1.13-ipr2.tgz
-tar -xzf xmlrpc-1.13-ipr2.tgz
-cd xmlrpc-1.13/src
-vi Makefile
-\end{lstlisting}
-
-Puis:
-\begin{lstlisting}
-make
-\end{lstlisting}
-
-Finalement, copier la librairie dans le répertoire contenant les librairie erlang:
-\begin{lstlisting}
-cd /usr/local/src
-cp -a xmlrpc-1.13 /usr/lib/erlang/lib/
-\end{lstlisting}
-
-\subsection{Compilation du module ejabberd\_xmlrpc}
-Compilation de ebin pour le module jabberd\_xmlrpc module:
-\begin{lstlisting}
-cd /usr/local/src/ejabberd-modules/ejabberd_xmlrpc/trunk
-./build.sh
-cp ebin/ejabberd_xmlrpc.beam /usr/lib/ejabberd/ebin/
-\end{lstlisting}
-Il est possible que quelques warning apparaissent: 
-\begin{lstlisting}
-gen_mod, gen_mod.erl:176: Warning: the regexp module is deprecated (will be removed in R15A); use the re module instead...
-\end{lstlisting}
-Mais tout va bien.
-
-\subsection{Compilation et installation de mod\_admin\_extra}
-mod\_admin\_extra peut être inclus dans le package ejabberd, so you certainly don't need to build it
-
-\subsection{configuration de jabber}
-Le fichier de configuration Debian par défaut (ejabberd.cfg)  est une configuration pour le serveur de chat de base 
-(cequi est bien pour un serveur de chat) mais archipel a besoin d'options plus avancées pour être un vrai serveur 
-complet XMPP. il faut donc supprimer le fichier de base:
-\begin{lstlisting}
-rm / etc / ejabberd / ejabberd.cfg
-\end{lstlisting}
-Puis copier l'exemple suivant\newline 
-(https://github.com/primalmotion/Archipel/wiki/Ejabberd\%3A-Configuration) 
-dans un nouveau fichier nommé / etc / ejabberd / ejabberd.cfg, 
-et remplacer l'occurrence de nom de domaine complet par votre nom de domaine 
-réel (et aussi éventuellement mettre à jour le chemin de la certificat TLS).\newline
-
-Puis démarrer ejabberd:
-\begin{lstlisting}
-  ejabberdctl start
-\end{lstlisting}
-
-Attendre 10 secondes puis vérifié si c'est démarré:
-\begin{lstlisting}
-/opt/sbin/ejabberdctl status
-> The node ejabberd@FQDN is started with status: started
-> ejabberd 2.1.8 is running in that node
-\end{lstlisting}
-
-Il faut créer un compte administrateur:
-\begin{lstlisting}
-ejabberdctl register admin votre.domaine.com votrepass
-\end{lstlisting}
-
-\section{Installation de l'agent archipel}
-Pour l'installer depuis le package python:\newline
-En tant que root, lancé depuis l'hyperviseur:
-\begin{lstlisting}
-easy_install archipel-agent
-\end{lstlisting}
-
-Depuis le version téléchargée sur le site\newline
- (http://nightlies.archipelproject.org/latest-archipel-client.tar.gz)
-\begin{lstlisting}
-easy_install apscheduler xmpppy sqlalchemy numpy
-cd /chemin/du/repertoire/ArchipelAgent/
-./buildAgent -d
-\end{lstlisting}
-
-Depuis les sources:\newline
-Valable seulement avec un clone du dépôt:
-\begin{lstlisting}
-easy_install apscheduler xmpppy sqlalchemy numpy
-cd /path/to/clone/ArchipelAgent/
-./buildAgent -d
-\end{lstlisting}
-
-\subsection{Post installation}
-
-Finalisation de  l'installation
-
-Pour finir l'installation de Archipel:
-\begin{lstlisting}
-# archipel-initinstall
-\end{lstlisting}
-
-\subsection{Personaliser l'installation}
-
-Le fichier de configuration de archipel ce trouve dans:\newline
-/etc/archipel/archipel.conf il faut l'adapter en fonction du système. 
-Pour plus d'information ce renseigner sur:\newline
-(https://github.com/primalmotion/Archipel/wiki/Installation\%3A-archipel-agent\%27s-configuration-file)
-
-
-Si vous avez juste installer le server ejabberd, il faut crée les suivant pubsub nodes pour le stockage.Il suffit de lancer:
-\begin{lstlisting}
-archipel-tagnode --jid=admin@FQDN --password=YOURPASSWORD --create
-archipel-rolesnode --jid=admin@FQDN --password=YOURPASSWORD --create
-archipel-adminaccounts --jid=admin@FQDN --password=YOURPASSWORD --create
-archipel-vmparkingnode --jid=admin@FQDN --password=YOURPASSWORD --create
-[OPTIONAL] archipel-vmrequestnode --jid=admin@FQDN --password=YOURPASSWORD --create
-\end{lstlisting}
-
-Si vous voulez utiliser la caractéristique de vmparking, Il faut déclérer l'hyperviseur comme éditeur. 
-Pour ce faire, lancer pour chaque hyperviseurs:
-\begin{lstlisting}
-archipel-vmparkingnode --jid=admin@FQDN --password=YOURPASSWORD -a hypervisor_jid@FQDN
-\end{lstlisting}
-
-
-\subsection{Lancement de l'agent}
-
-Et enfin pour lancer /etc/archipel/archipel.conf faire:
-\begin{lstlisting}
-/etc/init.d/archipel start
-ejabberdctl connected_users
-\end{lstlisting}
-
-vous devriez avoir une réponse comme: hypervisor@votre.domain.com
-\begin{lstlisting}
-Update Archipel Agent
-Update PyPi installation
-\end{lstlisting}
-
-Pour mettre à jour archipel quand un noeud est ajouté:
-\begin{lstlisting}
-# easy_install -U archipel-agent
-# /etc/init.d/archipel restart
-\end{lstlisting}
-
-\section{Installation du client archipel}
-Pour installer le client il suffit de récupérer l'archive du client d'archipel\newline
-(http://nightlies.archipelproject.org/latest-archipel-client.tar.gz)
-puis la décomprésser dans le répertoire du server web et d'y accédé par le navigateur.
+\section{scripts}
+\lstinputlisting{scripts/archipel/config_archipel.sh}
+\newpage
+\lstinputlisting{scripts/archipel/instal_archipel.sh}
+     
