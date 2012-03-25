@@ -1,0 +1,51 @@
+#!/usr/bin/python
+#
+
+# Copyright (C) 2010 Google Inc.
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+# 02110-1301, USA.
+
+"""Tool to setup the SSH configuration on a remote node.
+
+This is needed before we can join the node into the cluster.
+
+"""
+
+def _VerifyServerKey(transport, host, host_keys):
+  """Verify the server keys.
+
+  @param transport: A paramiko.transport instance
+  @param host: Name of the host we verify
+  @param host_keys: Loaded host keys
+  @raises HostkeyVerificationError: When the host identify couldn't be verified
+
+  """
+
+  server_key = transport.get_remote_server_key()
+  keytype = server_key.get_name()
+
+  our_server_key = host_keys.get(host, {}).get(keytype, None)
+  if not our_server_key:
+    #hexified_key = _FormatFingerprint(server_key.get_fingerprint())
+    #msg = ("Unable to verify hostkey of host %s: %s. Do you want to accept"
+           #" it?" % (host, hexified_key))
+
+    #if cli.AskUser(msg):
+      our_server_key = server_key
+
+  if our_server_key != server_key:
+    raise HostKeyVerificationError("Unable to verify host identity")
+

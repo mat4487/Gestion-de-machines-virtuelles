@@ -179,6 +179,33 @@ Il y a deux types de réservation :
 \item par défaut, pour des besoins de calcul avec OpenMPI ;
 \item pour le déploiement d'environnements (deploy ).
 \end{itemize}
+Dans le cadre de notre projet, nous effectuons uniquement des réservations de type deploy. La commande oarsub nous permet de réserver des nœuds sur un site (en créant un job). Voici un exemple d'utilisation d'oarsub, pour réserver 3 nœuds pendant 2 heures en déploiement.
+\begin{lstlisting}
+oarsub -I -t deploy -n'virtu' -l slash_22=1+nodes=3,walltime=2
+\end{lstlisting}
+Cette ligne nous permet de réserver 3 nœuds avec sous-réseau en /22.
+
+Après réservation, oarsub ouvre un shell dans lequel des variables d'environnements sont déffnies comme \$OAR\_FILE\_NODE, qui est le nom d'un fichier avec la liste des nœuds réservés, ou \$OAR\_JOB\_ID.
+\begin{lstlisting}
+cat  $OAR_FILE_NODES | uniq
+griffon-25. nancy . gr id5000 . f r
+griffon-5. nancy . gr id5000 . f r
+graphene-12. nancy . gr id5000 . f r
+
+echo $OAR_JOB_ID
+387054
+\end{lstlisting}
+Pour supprimer le job et libérer les ressources, on utilise la commande oardel.
+\begin{lstlisting}
+$ oardel 387054
+\end{lstlisting}
+Kadeploy permet de déployer des environnements personnalisés sur les noeuds réservés à l'aide d'une commande simple. Lorsque la réservation est terminée, le noeud est automatiquement restauré avec un environnement Debian ou autre.
+Pour déployer un environnement sur tous les noeuds réservés, il faut utiliser la commande kadeploy3
+\begin{lstlisting}
+ kadeploy3 -e squeeze-x64-xen -f $OAR_FILE_NODES -k $HOME/.ssh/id_rsa.pub
+\end{lstlisting}
+
+L’option –e permet de spécifier la distribution, -f permet le déploiement sur tous les nœuds et –k permet de copier la clé ssh du frontend sur les nœuds.
 
 
 \section{Répartition des tâches}
