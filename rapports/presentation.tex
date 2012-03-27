@@ -1,6 +1,7 @@
 \documentclass{beamer}
 \usepackage[utf8]{inputenc}
 \usepackage{colortbl}
+\usepackage{multimedia}
 \usetheme{JuanLesPins}
 \mode<presentation>
 \useoutertheme{smoothtree}
@@ -16,7 +17,7 @@
 %\addtobeamertemplate{footline}{\insertframenumber/\inserttotalframenumber}
 \begin{document}
 
-\AtBeginSubsection[]
+\AtBeginSection[]
 {
   \begin{frame}<beamer>
     \frametitle{Plan}
@@ -104,34 +105,10 @@ Mettre en place, évaluer et comparer différents outils de gestion centralisée
 \section{Logiciels testés}
 \subsection{Ganeti}
 %%%%%%%% LOGO
-\begin{frame}{Présentation}
-  Et c'est facile.
-\end{frame}
-\begin{frame}{Installation}
-  Et c'est facile.
-\end{frame}
-\begin{frame}{Utilisation}
-  Et c'est facile.
-\end{frame}
-\begin{frame}{Démo}
-  Et c'est facile.
-\end{frame}
-
+\input{parties_presentation/ganeti.tex}
 \subsection{Virt-Manager}
 %%%%%%% LOGO
-\begin{frame}{Présentation}
-  Et c'est facile.
-\end{frame}
-\begin{frame}{Installation}
-  Et c'est facile.
-\end{frame}
-\begin{frame}{Utilisation}
-  Et c'est facile.
-\end{frame}
-\begin{frame}{Démo}
-  Et c'est facile.
-\end{frame}
-
+\input{parties_presentation/virt.tex}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Logiciels non-testés}
 
@@ -148,16 +125,9 @@ Mettre en place, évaluer et comparer différents outils de gestion centralisée
 \end{frame}
 
 \subsection{OpenXenManager}
+\input{parties_presentation/oxm.tex}
 %%%%% LOGO
-\begin{frame}{Présentation}
-  Et c'est facile.
-\end{frame}
-\begin{frame}{Installation}
-  Et c'est facile.
-\end{frame}
-\begin{frame}{Utilisation}
-  Et c'est facile.
-\end{frame}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Conclusion}

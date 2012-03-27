@@ -1,85 +1,115 @@
-\documentclass{beamer}
+%\documentclass{beamer}
 
-\usepackage[utf8x]{inputenc}
-\usepackage{default}
-\usepackage{graphicx}
+%\usepackage[utf8x]{inputenc}
+%\usepackage{default}
+%\usepackage{graphicx}
 
-\begin{document}
+%\begin{document}
 
 \begin{frame}
-Cluster de ganeti:\\
- \includegraphics[width=10cm,height=5cm]{images/ganeti_cluster.png}
+  \begin{center}
+   \huge{Ganeti}
+  \end{center}
 \end{frame}
 
-\begin{frame}
-Ganeti, qu'est-ce que c'est?\\
+\begin{frame}{Ganeti, qu'est-ce que c'est?}
 \begin{itemize}
 \item Un outil de gestion de cluster de serveur virtuel
+\pause
 \item Il utilise l'hyperviseurs existant (XEN hypervisor,kvm)
+\pause
 \item Récupération rapide et simple, après des crashs physique
+\pause
 \item Utilisation de peu de ressources matériel
+\pause
 \item IaaS privés (L'infrastructure en tant que service)
 \end{itemize}
 \end{frame}
 
-\begin{frame}
-Background du projet:\\
-\begin{itemize}
-\item Projet financé par Google
-\item Open source depuis 2007 GPLv2
-\item Équipe Google basée en Suisse
-\item Liste de diffusion active et canal IRC
-\end{itemize}
-Organisations utilisant ganeti:\\
-\begin{itemize}
-\item Google (utilisé dans leur infrastructure)
-\item Ggrnet.gr (Greek Research \& Technology Network)
-\item osuosl.org (Oregon State University Open Source Lab)
-\end{itemize}
+\begin{frame}{Cluster de ganeti}
+\begin{center}
+ \includegraphics[width=10cm,height=5cm]{images_presentation/ganeti_cluster.png}
+\end{center}
 \end{frame}
 
-\begin{frame}
-Composants:\\
+
+\begin{frame}{Background du projet}
+\begin{block}{Historique}
+  \begin{itemize}
+  \item Projet financé par Google
+\pause
+  \item Open source depuis 2007 GPLv2
+\pause
+  \item Équipe Google basée en Suisse
+\pause
+  \item Liste de diffusion active et canal IRC
+\pause
+  \end{itemize}
+\end{block}
+\begin{block}{Organisations utilisant ganeti:}
+  \begin{itemize}
+  \item Google (utilisé dans leur infrastructure)
+\pause
+  \item Ggrnet.gr (Greek Research \& Technology Network)
+\pause
+  \item osuosl.org (Oregon State University Open Source Lab)
+  \end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}{Composants}
 \begin{itemize}
 \item Python et quelques modules
+\pause
 \item Haskell
+\pause
 \item DRBD
+\pause
 \item LVM
+\pause
 \item Hyperviseur
 \end{itemize}
-\includegraphics[width=7cm,height=1.5cm]{images/module.png}
+\begin{center}
+  \includegraphics[width=7cm,height=1.5cm]{images_presentation/module.png}
+\end{center}
 \end{frame}
 
-\begin{frame}
-Architechture:\\
-\includegraphics[width=8cm,height=4cm]{images/archi.png}
+\begin{frame}{Architechture}
+\begin{center}
+  \includegraphics[width=8cm,height=4cm]{images_presentation/archi1.png}
+\end{center}
 \end{frame}
 
 \begin{frame}
 Noeud:\\
 \begin{itemize}
 \item machine physique
+\pause
 \item La tolérance aux pannes n'est pas nécessaire
+\pause
 \item Ajouté / supprimé à volonté à partir du cluster
+\pause
 \item Aucune perte de données avec une perte de noeud
 \end{itemize}
 \end{frame}
 
-\begin{frame}
-Daemons:\\
+\begin{frame}{Daemons}
 \begin{itemize}
 \item ganeti-noded : contrôler les ressources matérielles, qui fonctionne sur tous les noeuds
+\pause
 \item ganeti-confd : seulement fonctionnel sur le maître, et s'exécute sur tous les noeuds
+\pause
 \item ganeti-rapi : seulement sur l'API-HTTP  pour le cluster, fonctionne sur le maître
+\pause
 \item ganeti-masterd :  permet un contrôle du cluster, fonctionne sur le maître
 \end{itemize}
 \end{frame}
 
-\begin{frame}
-Instance:\\
-\includegraphics[width=3cm,height=3cm]{images/instance.png}
+\begin{frame}{Instance}
+\includegraphics[width=3cm,height=3cm]{images_presentation/instance.png}
 \begin{itemize}
 \item Machine virtuelle qui s'exécute sur le cluster
+\pause
 \item tolérant aux pannes / Haute disponibilité au sein du cluster
 \end{itemize}
 \end{frame}
@@ -88,61 +118,74 @@ Instance:\\
 Distributions suportées:\\
 \begin{itemize}
 \item Debian - trés bien supporté
+\pause
 \item Gentoo - un support est apporté pour l'installation
+\pause
 \item Ubuntu - devrait fonctionner
+\pause
 \item CentOS - fonctionne mais quelques problèmes d'installation
 \end{itemize}
 \end{frame}
 
-\begin{frame}
-planification réseau:\\
-\includegraphics[width=3cm,height=3cm]{images/network.png}
+\begin{frame}{Planification réseau}
+\begin{center}
+  \includegraphics[width=3cm,height=3cm]{images_presentation/network.png}
+\end{center}
 \begin{itemize}
 \item La connexion via un bridge est la supportée
+\pause
 \item Un réseau routé est également soutenu
+\pause
 \item Noeuds sur un NAT privé
 \end{itemize}
 \end{frame}
 
-\begin{frame}
-configuration du système d'exploitation:\\
+\begin{frame}{Configuration du système d'exploitation}
 \begin{itemize}
 \item installation minimale du système
+\pause
 \item Minimum le volume du système de 20 Go
+\pause
 \item Simple groupe de volumes LVM pour les instances
+\pause
 \item 64bit est préférable
+\pause
 \item Matériel / logiciels similaires pour la configuration des nœuds
 \end{itemize}
 \end{frame}
 
-\begin{frame}
-Hyperviseur requis:\\
+\begin{frame}{Hyperviseur requis}
 Obligatoire sur tous les nœuds
 \begin{itemize}
 \item Xen 3.0 et au-dessus \\ou
+\pause
 \item KVM 0,11 et au-dessus
 \end{itemize}
 \end{frame}
 
-\begin{frame}
-Installation:\\
+\begin{frame}{Installation}
 \begin{itemize}
 \item Installation (facile par les dépots) et configuration de ganeti pour le réseau
+\pause
 \item Pour la haute disponibilité il faut installer et configurer DRDB pour le réseau
 \end{itemize}
 \end{frame}
 
-\begin{frame}
-Ce qui est installé:\\
+\begin{frame}{Ce qui est installé}
 \begin{itemize}
 \item Bibliothèques Python sous le nom ganeti
-\item Ensemble des programmes dans / usr / local / sbin ou / usr / sbin
-\item Ensemble d'outils dans lib / ganeti / répertoire des outils
-\item Scripts IAllocator sous lib / ganeti / outils annuaire
+\pause
+\item Ensemble des programmes dans \emph{/usr/local/sbin ou /usr/sbin}
+\pause
+\item Ensemble d'outils dans \emph{lib/ganeti/} répertoire des outils
+\pause
+\item Scripts IAllocator sous \emph{lib/ganeti/outils\_annuaire}
+\pause
 \item Cron jobs nécessaires pour la maintenance du cluster
+\pause
 \item Script d'initialisation pour les démons ganeti
 \end{itemize}
 \end{frame}
 
 
-\end{document}
+%\end{document}
