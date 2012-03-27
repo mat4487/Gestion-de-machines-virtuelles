@@ -1,43 +1,53 @@
-\documentclass{beamer}
+%\documentclass{beamer}
 
-\usepackage[utf8x]{inputenc}
-\usepackage{default}
+%\usepackage[utf8x]{inputenc}
+%\usepackage{default}
 
-\begin{document}
-
+%\begin{document}
 \begin{frame}
- Architectures :\\
+  \begin{center}
+  % \huge{Archipel}
+   \includegraphics[width=200pt]{images_presentation/logo_archipel.png}
+  \end{center}
+\end{frame}
+
+\begin{frame}{Architectures}
 \begin{itemize}
  \item avec un site
 \end{itemize}
-\includegraphics{images_presentation/archipel.png}
+\begin{center}
+  \includegraphics[width=250pt]{images_presentation/archipel.png}
+\end{center}
 \end{frame}
 
-\begin{frame}
+\begin{frame}{Architectures}
 \begin{itemize}
  \item avec plusieurs sites
 \end{itemize}
-\includegraphics{images_presentation/archipel1.png}
+\begin{center}
+\includegraphics[width=200pt]{images_presentation/archipel1.png}
+\end{center}
 \end{frame}
 
-\begin{frame}
-Architecture inetrne:\\
-\includegraphics{images_presentation/intern.png}
+\begin{frame}{Architecture interne}
+\begin{center}
+\includegraphics[width=200pt]{images_presentation/intern.png}
+\end{center}
 \end{frame}
 
-\begin{frame}
-Fonctionalités : \\
+\begin{frame}{Fonctionalitées}
 \begin{itemize}
 \item Un système de module qui permet d'apporter de nouvelles fonctions
+\pause
 \item La plus part des opérations de base sont disponibles : définition d'une nouvelle VM, manipulations du réseau et du stockage,
 accès à la console VNC, gestions des snapshots, etc... 
 Les opérations de migration sont également prises en charge
+\pause
 \item Reporting sur l'état de hyperviseur,VMCast, planifications de taches, gestions des droits des
 utilisateurs, création d'une machine avec load balacing sur les serveurs
+\pause
 \item Haute disponibilité
 \end{itemize}
 
 \end{frame}
 
-
-\end{document}

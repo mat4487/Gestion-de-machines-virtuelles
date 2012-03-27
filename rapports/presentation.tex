@@ -2,18 +2,47 @@
 \usepackage[utf8]{inputenc}
 \usepackage{colortbl}
 \usepackage{multimedia}
+\usepackage{listings}
 \usetheme{JuanLesPins}
 \mode<presentation>
 \useoutertheme{smoothtree}
 \usecolortheme{whale}
 \usecolortheme{orchid}
 \useinnertheme[shadow=true]{rounded}
+\definecolor{hellgelb}{rgb}{1,1,0.8}
+\definecolor{colKeys}{rgb}{0,0,1}
+\definecolor{colIdentifier}{rgb}{0,0,0}
+\definecolor{colComments}{rgb}{1,0,0}
+\definecolor{colString}{rgb}{0,0.5,0}
+\lstset{%
+language=xml,%
+morekeywords={li,stringvalue},%
+float=hbp,%
+basicstyle=\ttfamily\small, %
+identifierstyle=\color{colIdentifier}, %
+keywordstyle=\color{colKeys}, %
+stringstyle=\color{colString}, %
+commentstyle=\color{colComments}, %
+columns=flexible, %
+tabsize=2, %
+frame=single, %
+extendedchars=true, %
+showspaces=false, %
+showstringspaces=false, %
+numbers=left, %
+numberstyle=\tiny, %
+breaklines=true, %
+backgroundcolor=\color{hellgelb}, %
+breakautoindent=true, %
+captionpos=b%
+}
 % profondeur table des matieres
 \setcounter{tocdepth}{1}
 \setbeamerfont{block title}{size={}}
 \title{Projet Tuteuré \\Gestion centralisée de machines virtuelles}
 \author{Augustin Bocca Julien Tournois\\Sébastien Michaux Mathieu Lamouroux}
-\institute{IUT de Nancy Charlemagne}
+\institute{IUT de Nancy Charlemagne\\Licence Professionnelle ASRALL}
+\date{Mercredi 28 Mars 2012}
 %\addtobeamertemplate{footline}{\insertframenumber/\inserttotalframenumber}
 \begin{document}
 
@@ -85,7 +114,7 @@ Mettre en place, évaluer et comparer différents outils de gestion centralisée
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{La virtualisation}
-\subsection{Historique}
+%\subsection{Historique}
 \begin{frame}{Il était une fois la virtualisation...}
   \begin{description}
     \item[1960 : ] inventée par IBM pour optimiser l'utilisation du matériel sur les serveurs
@@ -97,7 +126,20 @@ Mettre en place, évaluer et comparer différents outils de gestion centralisée
 \end{frame}
 
 \subsection{Enjeux}
-\begin{frame}{Pourquoi virtualisé?}
+\begin{frame}{Buts de la gestion centralisée}
+\begin{center}
+\begin{itemize}
+\item  monitoring des machines virtuelles
+\pause
+\item accès à la console des machines virtuelles
+\pause
+\item opérations d'administration (démarrage, arrèt, reboot, ...)
+\pause
+\item création de machines virtuelles
+\end{itemize}
+\end{center}
+\end{frame}
+
   Et c'est facile.
 \end{frame}
 
@@ -114,15 +156,7 @@ Mettre en place, évaluer et comparer différents outils de gestion centralisée
 
 \subsection{Archipel}
 %%%%% LOGO
-\begin{frame}{Présentation}
-  Et c'est facile.
-\end{frame}
-\begin{frame}{Installation}
-  Et c'est facile.
-\end{frame}
-\begin{frame}{Utilisation}
-  Et c'est facile.
-\end{frame}
+\input{parties_presentation/archipel.tex}
 
 \subsection{OpenXenManager}
 \input{parties_presentation/oxm.tex}
@@ -173,5 +207,12 @@ Flexibilité & \includegraphics[width=10pt]{images_presentation/question.png}& \
 \begin{frame}{Bénéfices}
   Et c'est facile.
 \end{frame}
+
+\begin{frame}
+  \begin{center}
+   \huge{Questions ?}
+  \end{center}
+\end{frame}
+
 
 \end{document}
