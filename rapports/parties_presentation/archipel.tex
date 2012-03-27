@@ -39,15 +39,36 @@
 \begin{itemize}
 \item Un système de module qui permet d'apporter de nouvelles fonctions
 \pause
-\item La plus part des opérations de base sont disponibles : définition d'une nouvelle VM, manipulations du réseau et du stockage,
+\item La plus part des opérations de bases sont disponibles : définition d'une nouvelle VM, manipulations du réseau et du stockage,
 accès à la console VNC, gestions des snapshots, etc... 
 Les opérations de migration sont également prises en charge
 \pause
-\item Reporting sur l'état de hyperviseur,VMCast, planifications de taches, gestions des droits des
-utilisateurs, création d'une machine avec load balacing sur les serveurs
+\item Reporting sur l'état de l'hyperviseur,VMCast, planifications de taches, gestions des droits des
+utilisateurs, création d'une machine avec load balancing sur les serveurs
 \pause
 \item Haute disponibilité
 \end{itemize}
-
+\end{frame}
+\begin{frame}{Problèmes rencontrés}
+ \begin{alertblock}{Problèmes}
+   \begin{enumerate}
+     \item Ajout des différents noeuds
+       \pause
+     \item Connexions ssh
+       \pause
+     \item Création d'une nouvelle machine
+       \pause
+   \end{enumerate}
+ \end{alertblock}
+\pause
+ \begin{exampleblock}{Solutions}
+   \begin{enumerate}
+     \item Script qui ajoute les noeuds
+       \pause
+     \item Réplication des clefs
+       \pause
+     \item Correction d'un bug inhérent à qemu
+   \end{enumerate}
+ \end{exampleblock}
 \end{frame}
 
