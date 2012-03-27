@@ -1,0 +1,67 @@
+
+\begin{frame}
+  \begin{center}
+   \huge{Virt-Manager}
+  \end{center}
+\end{frame}
+
+\begin{frame}{Présentation}
+  \begin{block}{Fonctionnalitées}
+    \begin{itemize}
+    \item Interface graphique
+      \pause
+    \item Assistant pour la création
+      \pause
+    \item Configuration assistée du réseau
+      \pause
+    \item Migration
+      \pause
+    \item Clonage
+    \end{itemize}
+  \end{block}
+\end{frame}
+\begin{frame}[fragile]{Installation}
+  \begin{itemize}
+    \item Disponible dans les dépôts
+\pause
+    \item Activation des communications entre libvirt et xend
+\pause
+    \item Réécriture d'un fichier de configuration
+  \end{itemize}
+\begin{lstlisting}
+<li type="string">
+   <stringvalue>xen+ssh://root@griffon-85/</stringvalue>
+</li>
+\end{lstlisting}
+\end{frame}
+\begin{frame}{Problèmes rencontrés}
+ \begin{alertblock}{Problèmes}
+   \begin{enumerate}
+     \item Ajout des différents noeuds
+       \pause
+     \item Connexions ssh
+       \pause
+     \item Création d'une nouvelle machine
+       \pause
+   \end{enumerate}
+ \end{alertblock}
+\pause
+ \begin{exampleblock}{Solutions}
+   \begin{enumerate}
+     \item Script qui ajoute les noeuds
+       \pause
+     \item Réplication des clefs
+       \pause
+     \item Correction d'un bug inhérent à qemu
+   \end{enumerate}
+ \end{exampleblock}
+\end{frame}
+
+\begin{frame}{Démo}
+\movie[width=3cm,height=2cm,poster]{}{naga.avi}
+\end{frame}
+
+\begin{frame}{Utilisation}
+  Et c'est facile.
+\end{frame}
+
