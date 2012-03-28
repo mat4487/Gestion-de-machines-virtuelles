@@ -132,22 +132,24 @@ Distributions suportées:\\
 \begin{center}
   \includegraphics[width=3cm,height=3cm]{images_presentation/network.png}
 \end{center}
+\begin{block}{Ganeti supporte :}
 \begin{itemize}
-\item La connexion via un bridge est la supportée
+\item La connexion via un bridge
 \pause
-\item Un réseau routé est également soutenu
+\item Un réseau routé
 \pause
 \item Noeuds sur un NAT privé
 \end{itemize}
+\end{block}
 \end{frame}
 
 \begin{frame}{Configuration du système d'exploitation}
 \begin{itemize}
 \item installation minimale du système
 \pause
-\item Minimum le volume du système de 20 Go
+\item Volume du système de 20 Go minimum
 \pause
-\item Simple groupe de volumes LVM pour les instances
+\item Création d'un LVM pour les instances
 \pause
 \item 64bit est préférable
 \pause
@@ -166,26 +168,32 @@ Obligatoire sur tous les nœuds
 
 \begin{frame}{Installation}
 \begin{itemize}
-\item Installation (facile par les dépots) et configuration de ganeti pour le réseau
+\item Installation et configuration de ganeti
 \pause
-\item Pour la haute disponibilité il faut installer et configurer DRDB pour le réseau
+\item Mise en place de la haute disponibilité
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Ce qui est installé}
-\begin{itemize}
-\item Bibliothèques Python sous le nom ganeti
-\pause
-\item Ensemble des programmes dans \emph{/usr/local/sbin ou /usr/sbin}
-\pause
-\item Ensemble d'outils dans \emph{lib/ganeti/} répertoire des outils
-\pause
-\item Scripts IAllocator sous \emph{lib/ganeti/outils\_annuaire}
-\pause
-\item Cron jobs nécessaires pour la maintenance du cluster
-\pause
-\item Script d'initialisation pour les démons ganeti
-\end{itemize}
+%\begin{frame}{Ce qui est installé}
+%\begin{itemize}
+%\item Bibliothèques Python sous le nom ganeti
+%\pause
+%\item Ensemble des programmes dans \emph{/usr/local/sbin ou /usr/sbin}
+%\pause
+%\item Ensemble d'outils dans \emph{lib/ganeti/} répertoire des outils
+%\pause
+%\item Scripts IAllocator sous \emph{lib/ganeti/outils\_annuaire}
+%\pause
+%\item Cron jobs nécessaires pour la maintenance du cluster
+%\pause
+%\item Script d'initialisation pour les démons ganeti
+%\end{itemize}
+%\end{frame}
+
+\begin{frame}
+  \begin{center}
+   \huge{Démo}
+  \end{center}
 \end{frame}
 
 \begin{frame}{Problèmes rencontrés}
@@ -207,10 +215,6 @@ Obligatoire sur tous les nœuds
  \end{exampleblock}
 \end{frame}
 
-\begin{frame}
-  \begin{center}
-   \huge{Démo}
-  \end{center}
-\end{frame}
+
 
 %\end{document}
